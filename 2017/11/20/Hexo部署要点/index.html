@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="Xuer80">
 <meta property="og:description" content="先吐槽​    本网站基于Hexo(Hueman主题)+GitHub+自定义域名建设，未来可能加入七牛云用来放图。第一次用Hexo来搭建，研究了两天，期间基本把网上所有的坑都踩一遍，没有的坑自己摸索也算解决了，有的坑回头看简直无语，还好本人耐力极佳，爱好钻研，一直不放弃，最终成功，为了过坑，我差点为此去学前端语言(当然前端本来就在学习计划内)，呜呜~ ​    好吧，现在来讲述我几个很无语的坑~~">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2017-12-07T07:47:32.516Z">
+<meta property="og:updated_time" content="2018-04-20T08:27:07.977Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo主题部署要点">
 <meta name="twitter:description" content="先吐槽​    本网站基于Hexo(Hueman主题)+GitHub+自定义域名建设，未来可能加入七牛云用来放图。第一次用Hexo来搭建，研究了两天，期间基本把网上所有的坑都踩一遍，没有的坑自己摸索也算解决了，有的坑回头看简直无语，还好本人耐力极佳，爱好钻研，一直不放弃，最终成功，为了过坑，我差点为此去学前端语言(当然前端本来就在学习计划内)，呜呜~ ​    好吧，现在来讲述我几个很无语的坑~~">
@@ -169,7 +169,10 @@ var _hmt = _hmt || [];
 </ul>
 <h3 id="插件坑"><a href="#插件坑" class="headerlink" title="插件坑"></a>插件坑</h3><p>​    总之，少装插件</p>
 <h3 id="关评论"><a href="#关评论" class="headerlink" title="关评论"></a>关评论</h3><p>​    由于Hueman主题默认disqus评论，这是非常坑的评论系统，需要翻墙(你需要lantern)，然而这并不是关闭它的理由，因为他在评论下方会推荐其他五湖四海的博客，相当于广告。。。。自己枕边岂留她人酣睡！！！，找到themes/hueman/layout/comment文件夹，这里面是内置的评论系统布局文件，找到disqus.ejs,打开，找到<code>dsq.src = &#39;//&#39; + disqus_shortname + &#39;.disqus.com/&lt;% if (page.comments) { %&gt;embed.js&lt;% } else { %&gt;count.js&lt;% } %&gt;</code>这行代码，前面加//注释掉，这样无论你在墙内还是墙外，整个世界都干净了</p>
-<h3 id="文章内错误导致的无法提交"><a href="#文章内错误导致的无法提交" class="headerlink" title="文章内错误导致的无法提交"></a>文章内错误导致的无法提交</h3><p>之前博客提交都正常，突然一个文章写完后提交不正常了，显示什么模板错误之类的，可能是因为文章内的符号导致的。本人之前在写数组时，多维数组的嵌套，会导致提交失败，还有正则表达式，实验之后也是失败，所以谨慎使用，修改之后就可以提交了​</p>
+<h3 id="文章内错误导致的无法提交"><a href="#文章内错误导致的无法提交" class="headerlink" title="文章内错误导致的无法提交"></a>文章内错误导致的无法提交</h3><p>之前博客提交都正常，突然一个文章写完后提交不正常了，显示什么模板错误之类的，可能是因为文章内的符号导致的。本人之前在写数组时，多维数组的嵌套，会导致提交失败，还有正则表达式，实验之后也是失败，所以谨慎使用，修改之后就可以提交了</p>
+<p><strong>重装系统后如何继续写作</strong></p>
+<p>由PC换了台式机，可博客有时还是要写，那该如何继续呢</p>
+<p>首先把原硬盘上的博客文件夹拷贝，把其中的git和node的安装文件删除，然后，重新安装git和nodejs，配置环境变量。然后重新生成密钥，把公钥拷贝到github上保存。git要设置邮箱和登录名，然后安装hexo，npm无响应，可以安装来自淘宝的源cnpm，效果一样，之后就是cnpm install,以及deployer-git安装，完毕后既可以继续写作了</p>
 
         </div>
         <footer class="article-footer">
