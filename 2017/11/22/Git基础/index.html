@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>Git基础 | Xuer80</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="git" />
+    
+    <meta name="description" content="Git是Android开发必不可收的版本控制工具，本人用了git之后，完全抛弃了svn，哈哈，Git教程网上很多，我基本是自己摸索的，我觉得廖雪峰 的网站Git教程讲的最浅显易懂，现在把我当初学习的笔记分享下咯~ Git是目前世界上最先进的分布式版本控制系统。版本控制是一种记录一个或若干文件内容变化，以便将来查阅特定版本修订情况的系统。  Git简史 Linus1991创建开源linux，随着代码">
+<meta name="keywords" content="git">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git基础">
+<meta property="og:url" content="http://xuer80.com/2017/11/22/Git基础/index.html">
+<meta property="og:site_name" content="Xuer80">
+<meta property="og:description" content="Git是Android开发必不可收的版本控制工具，本人用了git之后，完全抛弃了svn，哈哈，Git教程网上很多，我基本是自己摸索的，我觉得廖雪峰 的网站Git教程讲的最浅显易懂，现在把我当初学习的笔记分享下咯~ Git是目前世界上最先进的分布式版本控制系统。版本控制是一种记录一个或若干文件内容变化，以便将来查阅特定版本修订情况的系统。  Git简史 Linus1991创建开源linux，随着代码">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://p05pz65vj.bkt.clouddn.com/Git%E7%89%88%E6%9C%AC%E5%BA%93%E6%BC%94%E7%A4%BA%E5%9B%BE.jpg">
+<meta property="og:updated_time" content="2017-12-09T04:20:22.345Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Git基础">
+<meta name="twitter:description" content="Git是Android开发必不可收的版本控制工具，本人用了git之后，完全抛弃了svn，哈哈，Git教程网上很多，我基本是自己摸索的，我觉得廖雪峰 的网站Git教程讲的最浅显易懂，现在把我当初学习的笔记分享下咯~ Git是目前世界上最先进的分布式版本控制系统。版本控制是一种记录一个或若干文件内容变化，以便将来查阅特定版本修订情况的系统。  Git简史 Linus1991创建开源linux，随着代码">
+<meta name="twitter:image" content="http://p05pz65vj.bkt.clouddn.com/Git%E7%89%88%E6%9C%AC%E5%BA%93%E6%BC%94%E7%A4%BA%E5%9B%BE.jpg">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?5afbe52ffe1cab6bf0db3773c7af2e11";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+    
+
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">大道无为</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Android/">Android</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Android/Android应用层/">Android应用层</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/屠龙技/">屠龙技</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/屠龙技/数据结构与算法/">数据结构与算法</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/屠龙技/设计模式/">设计模式</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发工具/">开发工具</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发工具/Git/">Git</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/操作系统/">操作系统</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/操作系统/Linux/">Linux</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/散文/">散文</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/编程语言/">编程语言</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/编程语言/C/">C</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/编程语言/Java/">Java</a></li></ul></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">关于</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/booklist/index.html">书单</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><input type="hidden" name="sitesearch" value="http://xuer80.com"></form>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/开发工具/">开发工具</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/开发工具/Git/">Git</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-Git基础" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        Git基础
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2017/11/22/Git基础/" class="article-date">
+            <time datetime="2017-11-22T09:22:25.000Z" itemprop="datePublished">2017-11-22</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/git/">git</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <p>Git是Android开发必不可收的版本控制工具，本人用了git之后，完全抛弃了svn，哈哈，Git教程网上很多，我基本是自己摸索的，我觉得<a href="https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000" target="_blank" rel="noopener">廖雪峰</a> 的网站Git教程讲的最浅显易懂，现在把我当初学习的笔记分享下咯~</p>
+<p>Git是目前世界上最先进的分布式版本控制系统。版本控制是一种记录一个或若干文件内容变化，以便将来查阅特定版本修订情况的系统。</p>
+<ol>
+<li><p>Git简史</p>
+<p>Linus1991创建开源linux，随着代码库增大，代码合并变得重要，于是2005年linus大神用了两周时间用C写了Git，这是有多牛掰。Git之后迅速成为最流行的分布式版本控制系统。</p>
+</li>
+<li><p>集中式VS分布式</p>
+<p>CVS和SVN都是集中式的版本控制系统。</p>
+<ol>
+<li><p>集中式版本控制系统</p>
+<p>版本库是集中存放在中央服务器的，业务用自己的电脑，需先从中央服务器取得最新的版本，然后开始进行修改扩展等工作，完成后再推送给中央服务器。这项工作必须联网才行，这也限制了工作效率的提升。</p>
+</li>
+<li><p>分布式版本控制系统</p>
+<p>而分布式版本控制系统没有“中央服务器”，每个人的电脑上都是一个完整的版本库，因此没有了联网的需求，而且在团队协作时，可以互相看到对方修改的地方。</p>
+</li>
+</ol>
+<p>和集中式版本控制系统比，分布式版本控制系统的安全性要高的多，因为团队每个人都有一个完整的版本库，而集中式版本控制系统的中央服务器一旦出了问题，就无法进行工作了。</p>
+<p>实际上，团队工作时，Git也需要有一台充当“中央服务器”的电脑，但作用仅仅是用来方便“交换”大家的修改，有利于协作开发。</p>
+<p>Git的优势不仅在于不必联网，其还具备强大的分支管理能力，在众多分布时管理软件中，Git依然是最快，最简单，也是最流行的。</p>
+</li>
+<li><p>Git安装与设置</p>
+<p>Git官网下载，默认安装即可</p>
+<p>安装完成后，右键git bash，在命令行输入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git config --global user.name &quot;Your Name&quot;</span><br><span class="line">$ git config --global user.email &quot;email@example.com&quot;</span><br></pre></td></tr></table></figure>
+<p>Git是分布式版本控制系统，每个机器须自报家门，即名字和email地址。–global参数表示这台机器所有的Git仓库都会使用这个配置，当然也可以对某个仓库指定不同的用户名和Email地址。</p>
+</li>
+<li><p>版本库</p>
+<p>版本库(仓库)，即repository，可以理解为一个目录，其中所有的文件都可以被Git管理起来，每个文件的修改、删除，Git都可以跟踪其历史，以便未来需要的时候进行还原。</p>
+<p>版本库创建</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir gittest1</span><br><span class="line">$ cd gittest1</span><br><span class="line">$ pwd</span><br><span class="line">/d/gittest1</span><br></pre></td></tr></table></figure>
+<p>pwd命令用于显示当前目录，当前目录为/d/gittest1，目录尽量不要出现中文</p>
+<p>然后通过 <code>git init</code> 命令把这个目录变成Git可以管理的仓库。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git init</span><br><span class="line">Initialized empty Git repository in D:/gittest1/.git/</span><br></pre></td></tr></table></figure>
+<p>这样仓库就建好了，而且是空仓库，empty git repository。目录中多了.git文件夹，其实Git用来跟踪管理版本库的，不能随意改动。如果没看到.git，那是因为目录默认是隐藏的(防止被更改)，用ls -ah可以看到。PS：不一定必须在空目录下创建Git仓库，已经有东西的目录也是可以得。</p>
+</li>
+<li><p>把文件添加到版本库</p>
+<p>所有的版本控制系统，其实只能跟踪“文本文件”的改动，如txt文件，网页，所有的程序代码等，Git也不例外。而二进制文件，如图片、视频等，只能跟踪其大小的变动，内容改动则不知道(word也是二进制格式，同理)。因此如果真正使用版本控制系统，就要以纯文本方式编写文件。</p>
+<p>因为文本是有编码的，常用中文GBK，日文Shift_JIS编码等，建议统一UTF-8编码，可以被所有平台支持。windows自带记事本保存UTF-8文件，开头会添加0xefbbbf字符，会导致一些错误，避免使用。</p>
+<p>编写一个readme.txt文件，内容随意，把文件放到Git仓库只需要两步。</p>
+<p>第一步，用命令 <code>git add</code>告诉Git，把文件添加到仓库：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git add readme.txt</span><br></pre></td></tr></table></figure>
+<p>执行命令，没有任何提示既是成功。</p>
+<p>第二步，用命令<code>git commit</code> 告诉GIt，把文件提交到仓库：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ git commit -m &quot;write a file&quot;</span><br><span class="line">[master (root-commit) b16ec58] write a file</span><br><span class="line"> 1 file changed, 2 insertions(+)</span><br><span class="line"> create mode 100644 readme.txt</span><br></pre></td></tr></table></figure>
+<p><code>git commit</code> 命令后的-m后面输入的是本次提交的说明，可输入任意内容，可从历史纪录中方便找到改动记录。提交后，会反馈给你文件以及内容改动情况。</p>
+<p>为何Git添加文件需要add,commit两步呢？因为commit可以一次提交很多文件，而add可以多次添加不同的文件。</p>
+<p>如果一个文件没有被add进仓库，那么提交的时候会报错。</p>
+</li>
+<li><p>查看仓库文件状态</p>
+<p>git status命令可以让我们时刻掌握仓库当前的状态，哪些文件被修改，以及是否提交都会显示出来。显示红色表示文件已经更改，但是没有add进仓库，显示绿色标识，表示文件已经添加进仓库，但没提交</p>
+<p>git diff  故名思意就是查看difference,即查看修改内容。显示格式是Unix通用的diff格式，增加的内容前会有+号。文件已经提交或添加进仓库则不会显示数据。</p>
+</li>
+<li><p>版本回退</p>
+<p>git log命令显示时间从最近到最远的提交日志，即提交历史</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">$ git log</span><br><span class="line">commit 92c9dc561f76899c17d099c33ec5adabfd18e9cf (HEAD -&gt; master)</span><br><span class="line">Author: xuer80 &lt;zxscool@outlook.com&gt;</span><br><span class="line">Date:   Sat Nov 25 19:42:58 2017 +0800</span><br><span class="line"></span><br><span class="line">    还是test</span><br><span class="line"></span><br><span class="line">commit a2d28c36df12f9a4387b8480d70030fecdb7c525</span><br><span class="line">Author: xuer80 &lt;zxscool@outlook.com&gt;</span><br><span class="line">Date:   Sat Nov 25 19:35:52 2017 +0800</span><br><span class="line"></span><br><span class="line">    test2</span><br><span class="line"></span><br><span class="line">commit 3b24803affb2225f8dec6e495661dbc5f27e6127</span><br><span class="line">Author: xuer80 &lt;zxscool@outlook.com&gt;</span><br><span class="line">Date:   Sat Nov 25 19:32:22 2017 +0800</span><br><span class="line"></span><br><span class="line">    test</span><br><span class="line"></span><br><span class="line">commit 0e69418caf79cffa7feeae8abf095268c62e255c</span><br><span class="line">Author: xuer80 &lt;zxscool@outlook.com&gt;</span><br><span class="line">Date:   Sat Nov 25 18:57:12 2017 +0800</span><br><span class="line"></span><br><span class="line">    再次提交</span><br></pre></td></tr></table></figure>
+<p>那一大串的数字是commit id，是SHA1计算出来的一个数字，用十六进制表示。每提交一个新版本，git就会把他们自动串成一条时间线。</p>
+<p>Git中，用HEAD表示当前版本，上个版本就是HEAD^，上上个版本就是HEAD^^，一次类推，也可以写作HEAD~100，HEAD指向的版本就是当前版本。</p>
+<p>git reset命令回退版本 git reset –hard commit_id</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git reset --hard HEAD^</span><br><span class="line">HEAD is now at a2d28c3 test2</span><br></pre></td></tr></table></figure>
+<p>此时再git log看下版本提交信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">$ git log</span><br><span class="line">commit a2d28c36df12f9a4387b8480d70030fecdb7c525 (HEAD -&gt; master)</span><br><span class="line">Author: xuer80 &lt;zxscool@outlook.com&gt;</span><br><span class="line">Date:   Sat Nov 25 19:35:52 2017 +0800</span><br><span class="line"></span><br><span class="line">    test2</span><br><span class="line"></span><br><span class="line">commit 3b24803affb2225f8dec6e495661dbc5f27e6127</span><br><span class="line">Author: xuer80 &lt;zxscool@outlook.com&gt;</span><br><span class="line">Date:   Sat Nov 25 19:32:22 2017 +0800</span><br><span class="line"></span><br><span class="line">    test</span><br><span class="line"></span><br><span class="line">commit 0e69418caf79cffa7feeae8abf095268c62e255c</span><br><span class="line">Author: xuer80 &lt;zxscool@outlook.com&gt;</span><br><span class="line">Date:   Sat Nov 25 18:57:12 2017 +0800</span><br><span class="line"></span><br><span class="line">    再次提交</span><br><span class="line"></span><br><span class="line">commit c3774d3d1bfbba14614d7b331124d65ee4f9f53d</span><br><span class="line">Author: xuer80 &lt;zxscool@outlook.com&gt;</span><br><span class="line">Date:   Wed Nov 22 22:32:23 2017 +0800</span><br><span class="line"></span><br><span class="line">    write lala</span><br></pre></td></tr></table></figure>
+<p>最新的版本已经看不到了，已经回退到此前的版本。如果再想返回之前的最新提交的版本，需要记得他的commit id，这样就可以定点返回</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git reset --hard 92c9dc561f76899c17d099c33ec5adabfd18e9cf</span><br><span class="line">HEAD is now at 92c9dc5 还是test</span><br></pre></td></tr></table></figure>
+<p>如此就又返回到原来的版本啦。版本号也就是commit id没必要写全，前几位Git就可以自动查找。Git版本回退速度非常快，因为Git在内部有个指向当前版本的HEAD指针，当回退版本时，Git仅仅是把HEAD从指向“还是test”改为指向“test2”而已，然后顺便就把工作区的文件更新了，因此HEAD指向哪个版本号，就把当前版本定位在哪。</p>
+<p>那么有个问题很关键，如何查找<strong>过去的Commit id</strong> ，Git提供了命令git reflog来记录每一次命令,查看命令历史：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ git reflog</span><br><span class="line">92c9dc5 (HEAD -&gt; master) HEAD@&#123;0&#125;: reset: moving to 92c9dc561f76899c17d099c33ec5adabfd18e9cf</span><br><span class="line">a2d28c3 HEAD@&#123;1&#125;: reset: moving to HEAD^</span><br><span class="line">92c9dc5 (HEAD -&gt; master) HEAD@&#123;2&#125;: reset: moving to HEAD</span><br><span class="line">92c9dc5 (HEAD -&gt; master) HEAD@&#123;3&#125;: commit: 还是test</span><br><span class="line">a2d28c3 HEAD@&#123;4&#125;: commit: test2</span><br><span class="line">3b24803 HEAD@&#123;5&#125;: commit: test</span><br><span class="line">0e69418 HEAD@&#123;6&#125;: commit: 再次提交</span><br><span class="line">c3774d3 HEAD@&#123;7&#125;: commit: write lala</span><br><span class="line">b16ec58 HEAD@&#123;8&#125;: commit (initial): write a file</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>工作区和暂存区</p>
+<p>Git和其他版本控制系统如SVN的一个不同之处就是有暂存区的概念。</p>
+<p>工作区 working Directory:就是当前的目录，比如我现在gittest1文件夹就是工作区</p>
+<p>版本库 Repository：工作区有个隐藏目录.git，这个就是Git的版本库</p>
+<p>Git的版本库存了很多东西，其中最重要的就是stage(或叫index)的暂存区，还有Git自动创建的master，以及指向master的一个指针HEAD。</p>
+<p><img src="http://p05pz65vj.bkt.clouddn.com/Git%E7%89%88%E6%9C%AC%E5%BA%93%E6%BC%94%E7%A4%BA%E5%9B%BE.jpg" alt="Git版本库演示图"> </p>
+<p>​</p>
+<p>由图示可知，我们把文件添加进Git版本库的时候，分两步</p>
+<ol>
+<li>git add进暂存区</li>
+<li>git commit把暂存区的所有内容提交到当前分支，即自动创建的master分支。</li>
+</ol>
+</li>
+<li><p>管理修改</p>
+<p>Git之所以比其他版本控制系统设计的优秀，因为Git跟踪并管理的是修改，而非文件。所谓修改就是所有的增删改查都是修改。cat [文件名]可以显示文件的内容。</p>
+<p>用git diff HEAD –[文件名]可以查看工作区和版本库里面最新版本的区别。</p>
+<p>如果文件修改后没有add暂存区，那么commit时就不会提交到版本库。</p>
+</li>
+<li><p>撤销修改</p>
+<p>git checkout –[文件名]  意思是把文件在<strong>工作区</strong> 的修改全部撤销</p>
+<p>文件修改后没放进暂存区，现在撤销修改就回到和版本库一摸一样的状态；</p>
+<p>如果修改add到了暂存区，还没有commit，可以用命令git reset HEAD [file]把暂存区的修改撤销掉，重新放回工作区(注意这个时候只是把暂存区的文件回退到工作区，工作区的文件内容修改并没有撤销，可以用git checkout 撤销修改，或者直接删除修改)。git reset命令既可以回退版本，也可以把暂存区的修改回退到工作区。用HEAD时，表示最新的版本。</p>
+<p>如果不小心commit到了版本库，就只能用版本回退了。如果是推送到了远程仓库。。。额。。。┏┛墓┗┓…(((m -__-)m</p>
+<p>​</p>
+</li>
+<li><p>删除文件</p>
+<ul>
+<li>删除工作区文件 rm [文件名]即可</li>
+<li>删除版本库文件 git rm [文件名]，然后git commit</li>
+<li>如果工作区文件删错了，git checkout – [文件名] 即可还原。其实是用版本库里的版本替换工作区的版本</li>
+</ul>
+</li>
+<li><p>远程仓库</p>
+<p>Git是分布式版本控制系统，支持SSH协议，同一个Git仓库，可以分布在不同的机器上。实际情况往往是，找一台电脑充当服务器的角色，24h开机，其他每个人从这个“服务器”仓库克隆一份到自己电脑上，并且各自把各自的提交推送到服务器仓库，也从服务器仓库拉取别人的提交。</p>
+<p>在Github上免费托管的Git仓库，任何人都可以看到(但只有自己能改)，所以不要把敏感信息放进去。</p>
+<ol>
+<li><p>添加远程库</p>
+<p>在Github上新建仓库，并在本地的gittest仓库运行命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git remote add origin git@github.com:xuer80/newRepo.git</span><br></pre></td></tr></table></figure>
+<p>这样本地仓库就会和远程仓库进行关联了，远程仓库名为origin,是Git默认叫法，可以改，但不建议改，因为很多公司都是默认这个。。。</p>
+<p>下一步把本地仓库所有内容推送到远程库上：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ git push -u origin master</span><br><span class="line">Counting objects: 18, done.</span><br><span class="line">Delta compression using up to 8 threads.</span><br><span class="line">Compressing objects: 100% (14/14), done.</span><br><span class="line">Writing objects: 100% (18/18), 1.63 KiB | 837.00 KiB/s, done.</span><br><span class="line">Total 18 (delta 1), reused 0 (delta 0)</span><br><span class="line">remote: Resolving deltas: 100% (1/1), done.</span><br><span class="line">To github.com:xuer80/newRepo.git</span><br><span class="line"> * [new branch]      master -&gt; master</span><br><span class="line">Branch &apos;master&apos; set up to track remote branch &apos;master&apos; from &apos;origin&apos;.</span><br></pre></td></tr></table></figure>
+<p>把本地库内容推送到远程用<code>git push</code>命令 ，实际是把当前分支master推送到远程。</p>
+<p>由于远程库是空的，第一次推送master分支时，加上了<code>-u</code> 参数，Git不但会把本地的master分支内容推送到远程新的master分支，还会把本地的master分支和远程master分支关联起来，在以后的推送或拉取时就可以简化命令。</p>
+<p>以后只要本地做了提交，即add和commit之后，就可以通过<code>git push origin master</code> 把本地master分支的最新修改推送到Github。</p>
+</li>
+<li><p>从远程库克隆</p>
+<p>用<code>git clone</code> 可以把远程仓库克隆岛本地库</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone git@github.com:xuer80/newRepo.git</span><br></pre></td></tr></table></figure>
+<p>Github给出了两个地址分别支持不同的协议，https以及默认git://的ssh协议。具体根据公司实际开发情况而定</p>
+</li>
+</ol>
+</li>
+<li><p>分支管理</p>
+<p>我们可以在主master的基础上，进行分支开发，分支之间互不干扰</p>
+<ol>
+<li><p>创建与合并分支</p>
+<p>任务的每次提交，Git都会把他们串成时间线，最初的时间线称为主分支，即master。HEAD其实就是指向master，master指向提交，即HEAD指向的就是当前分支。每次提交mater分支都会前移一步，不断提交，master分支就会越长</p>
+<p>创建新的分支，如ox时，指向master相同的提交，再把HEAD指向ox，就表示当前分支在ox上</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout -b ox</span><br><span class="line">Switched to a <span class="keyword">new</span> branch <span class="string">'ox'</span></span><br></pre></td></tr></table></figure>
+<p>git checkout 命令加上-b参数表示创建并切换分支，相当于下面两条命令</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git branch ox</span><br><span class="line">$ git checkout ox</span><br><span class="line">Swithced to branch <span class="string">'ox'</span></span><br></pre></td></tr></table></figure>
+<p>然后用git branch 命令查看当前分支</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git branch</span><br><span class="line">  master</span><br><span class="line">* ox</span><br></pre></td></tr></table></figure>
+<p>git branch会列出所有分支，当前分支钱会有个*号标记</p>
+<p>然后我们就可在ox分支上正常提交了，如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ git add lala.txt</span><br><span class="line">$ git commit -m &quot;new branch ox&quot;</span><br><span class="line">[ox b96c9e3] new branch ox</span><br><span class="line"> 1 file changed, 2 insertions(+), 1 deletion(-)</span><br></pre></td></tr></table></figure>
+<p>现在ox分支工作完成，我们切换回master分支：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout master</span><br><span class="line">Switched to branch <span class="string">'master'</span></span><br><span class="line">Your branch is up to date with <span class="string">'origin/master'</span>.</span><br></pre></td></tr></table></figure>
+<p>再查看lala.txt文件，发现刚添加的内容没有了，因为那是提交在ox分支上，而master分支的提交点并没有变。</p>
+<p>把dev分支的工作成果合并到master上：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ git merge ox</span><br><span class="line">Updating <span class="number">92</span>c9dc5..b96c9e3</span><br><span class="line">Fast-forward</span><br><span class="line"> lala.txt | <span class="number">3</span> ++-</span><br><span class="line"> <span class="number">1</span> file changed, <span class="number">2</span> insertions(+), <span class="number">1</span> deletion(-)</span><br></pre></td></tr></table></figure>
+<p>git merge命令用于合并指定分支到当前分支。合并后，再查看lala.txt内容，发现和dev之前提交内容一样了。</p>
+<p>Fast-forward是指此次合并是“快进模式”,就是直接把master指向dev的当前提交，所以合并速度非常快。当然也不是每次合并都能Fast-forward。</p>
+<p>合并后，删除dev分支</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ git branch -d ox</span><br><span class="line"><span class="function">Deleted branch <span class="title">ox</span> <span class="params">(was b96c9e3)</span>.</span></span><br><span class="line"><span class="function">$ git branch</span></span><br><span class="line"><span class="function">* master</span></span><br></pre></td></tr></table></figure>
+<p>删除后查看branch发现就剩下master分支了。</p>
+<p>​</p>
+</li>
+</ol>
+<p>​</p>
+</li>
+</ol>
+
+        </div>
+        <footer class="article-footer">
+            
+    <div class="jiathis_style">
+    <span class="jiathis_txt">分享到：</span>
+    <a class="jiathis_button_qzone">QQ空间</a>
+    <a class="jiathis_button_tsina">新浪微博</a>
+    <a class="jiathis_button_tqq">腾讯微博</a>
+    <a class="jiathis_button_weixin">微信</a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+    <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<style>
+    .jiathis_style div:first-child:not(.jiadiv_01) {
+        width: auto !important;
+        border: none !important;
+    }
+    .jiathis_style .jiadiv_01 {
+        margin: 10px 0;
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .jiathis_style .jiadiv_01 div:first-child {
+        display: none;
+    }
+    .jiathis_style .jiadiv_02 {
+        padding: 7px 0 !important;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle {
+        width: 85px;
+        border: none;
+        height: auto;
+        margin: 3px 10px;
+        padding: 6px 10px;
+        border-radius: 4px;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:hover {
+        border: none;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:nth-child(even) {
+        margin-left: 0;
+    }
+    .jiathis_style .jtico:hover {
+        opacity: 1;
+    }
+    .jiathis_style .ckepopBottom,
+    .jiathis_style .centerBottom {
+        width: auto !important;
+        padding: 5px;
+        background: #f7f7f7;
+    }
+</style>
+
+
+
+
+        </footer>
+    </div>
+</article>
+<!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zMjA1Ni84NjIw">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/xuer80" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2017/11/23/第三章-Java的基本程序设计结构/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            第三章-Java的基本程序设计结构
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2017/11/21/第一章-初识C语言/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">第一章 初识C语言</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="no-thumbnail">
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/散文/">散文</a></p>
+                            <p class="item-title"><a href="/2018/04/20/中兴良药/" class="title">中兴良药</a></p>
+                            <p class="item-date"><time datetime="2018-04-20T03:52:53.000Z" itemprop="datePublished">2018-04-20</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Android/">Android</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/Android/Android应用层/">Android应用层</a></p>
+                            <p class="item-title"><a href="/2018/04/06/MVC架构/" class="title">MVC架构</a></p>
+                            <p class="item-date"><time datetime="2018-04-06T14:47:52.000Z" itemprop="datePublished">2018-04-06</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/屠龙技/">屠龙技</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/屠龙技/设计模式/">设计模式</a></p>
+                            <p class="item-title"><a href="/2018/04/05/第二十五章-易混淆设计模式盘点/" class="title">第二十五章-易混淆设计模式盘点</a></p>
+                            <p class="item-date"><time datetime="2018-04-05T09:16:34.000Z" itemprop="datePublished">2018-04-05</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/屠龙技/">屠龙技</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/屠龙技/设计模式/">设计模式</a></p>
+                            <p class="item-title"><a href="/2018/03/29/第二十四章-桥接模式/" class="title">第二十四章-桥接模式</a></p>
+                            <p class="item-date"><time datetime="2018-03-29T14:01:20.000Z" itemprop="datePublished">2018-03-29</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/屠龙技/">屠龙技</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/屠龙技/设计模式/">设计模式</a></p>
+                            <p class="item-title"><a href="/2018/03/23/第二十三章-外观模式/" class="title">第二十三章-外观模式</a></p>
+                            <p class="item-date"><time datetime="2018-03-23T09:26:58.000Z" itemprop="datePublished">2018-03-23</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/Android应用层/">Android应用层</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/Android应用层/Android架构/">Android架构</a><span class="category-list-count">2</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/屠龙技/">屠龙技</a><span class="category-list-count">26</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/屠龙技/数据结构与算法/">数据结构与算法</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/屠龙技/数据结构与算法/算法/">算法</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/屠龙技/设计模式/">设计模式</a><span class="category-list-count">25</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发工具/">开发工具</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/开发工具/Git/">Git</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/操作系统/">操作系统</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/操作系统/Linux/">Linux</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/操作系统/Linux/linux基础/">linux基础</a><span class="category-list-count">2</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/散文/">散文</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/">编程语言</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/C/">C</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/C/C-Primer-Plus/">C Primer Plus</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/Java/">Java</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/Java/Java核心技术/">Java核心技术</a><span class="category-list-count">2</span></li></ul></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">13</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Android架构/" style="font-size: 13.33px;">Android架构</a> <a href="/tags/C/" style="font-size: 16.67px;">C</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Java/" style="font-size: 13.33px;">Java</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/linux/" style="font-size: 13.33px;">linux</a> <a href="/tags/散文/" style="font-size: 13.33px;">散文</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/设计模式/" style="font-size: 20px;">设计模式</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 xuer80</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'http://xuer80.com/2017/11/22/Git基础/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

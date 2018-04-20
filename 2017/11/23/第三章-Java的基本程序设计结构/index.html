@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>第三章-Java的基本程序设计结构 | Xuer80</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="Java" />
+    
+    <meta name="description" content="Java应用程序分析 看代码： 12345public class FirstSample&amp;#123;  public static void main(String[] args)&amp;#123;    System.out.println(&quot;我就是不用 &apos;Hello,world&apos;&quot;);  &amp;#125;&amp;#125; 分析这道程序：  首先Java区分大小写，拼写错误，会导致程序无法运行。 关键字p">
+<meta name="keywords" content="Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第三章-Java的基本程序设计结构">
+<meta property="og:url" content="http://xuer80.com/2017/11/23/第三章-Java的基本程序设计结构/index.html">
+<meta property="og:site_name" content="Xuer80">
+<meta property="og:description" content="Java应用程序分析 看代码： 12345public class FirstSample&amp;#123;  public static void main(String[] args)&amp;#123;    System.out.println(&quot;我就是不用 &apos;Hello,world&apos;&quot;);  &amp;#125;&amp;#125; 分析这道程序：  首先Java区分大小写，拼写错误，会导致程序无法运行。 关键字p">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://p05pz65vj.bkt.clouddn.com/%E7%89%B9%E6%AE%8A%E5%AD%97%E7%AC%A6%E7%9A%84%E8%BD%AC%E4%B9%89%E5%BA%8F%E5%88%97.jpg">
+<meta property="og:updated_time" content="2017-12-07T02:41:28.556Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="第三章-Java的基本程序设计结构">
+<meta name="twitter:description" content="Java应用程序分析 看代码： 12345public class FirstSample&amp;#123;  public static void main(String[] args)&amp;#123;    System.out.println(&quot;我就是不用 &apos;Hello,world&apos;&quot;);  &amp;#125;&amp;#125; 分析这道程序：  首先Java区分大小写，拼写错误，会导致程序无法运行。 关键字p">
+<meta name="twitter:image" content="http://p05pz65vj.bkt.clouddn.com/%E7%89%B9%E6%AE%8A%E5%AD%97%E7%AC%A6%E7%9A%84%E8%BD%AC%E4%B9%89%E5%BA%8F%E5%88%97.jpg">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?5afbe52ffe1cab6bf0db3773c7af2e11";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+    
+
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">大道无为</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Android/">Android</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Android/Android应用层/">Android应用层</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/屠龙技/">屠龙技</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/屠龙技/数据结构与算法/">数据结构与算法</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/屠龙技/设计模式/">设计模式</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发工具/">开发工具</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发工具/Git/">Git</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/操作系统/">操作系统</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/操作系统/Linux/">Linux</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/散文/">散文</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/编程语言/">编程语言</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/编程语言/C/">C</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/编程语言/Java/">Java</a></li></ul></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">关于</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/booklist/index.html">书单</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><input type="hidden" name="sitesearch" value="http://xuer80.com"></form>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/编程语言/">编程语言</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/编程语言/Java/">Java</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/编程语言/Java/Java核心技术/">Java核心技术</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-第三章-Java的基本程序设计结构" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        第三章-Java的基本程序设计结构
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2017/11/23/第三章-Java的基本程序设计结构/" class="article-date">
+            <time datetime="2017-11-23T01:12:41.000Z" itemprop="datePublished">2017-11-23</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Java/">Java</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <ol>
+<li><p>Java应用程序分析</p>
+<p>看代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FirstSample</span></span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">    System.out.println(<span class="string">"我就是不用 'Hello,world'"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>分析这道程序：</p>
+<ol>
+<li>首先Java区分大小写，拼写错误，会导致程序无法运行。</li>
+<li>关键字public成为访问修饰符，用于控制程序的其他部分对这段代码的访问级别。关键字class表明Java程序中的全部内容都包含在类中。此处只需要将类作为一个加载程序逻辑的容器，程序逻辑定义了应用程序的行为。类是构建所有Java应用程序和applet的构建块。</li>
+<li>关键字class后紧跟类名，类名必须以字母开头，由字母和数字组成。类名首字母须大写，如果多个单词组成，每个单词首字母都要大写。源代码的文件名必须与公共类的名字相同，扩展名为.java。</li>
+<li>运行已编译的程序时，Java虚拟机将从指定的类中的main方法(此处“方法”就是Java中所说的函数)开始执行，因此类的源文件中必须包含一个main方法，main方法必须声明为public，</li>
+<li>Java中所有的函数都属于某个类的方法，因此Java中的main方法必须有个外壳类，main是静态的，没有返回值。</li>
+<li>一对大括号表示方法的开始和结束。点号  .   用于调用方法。</li>
+</ol>
+</li>
+<li><p>注释</p>
+<p>与其他语言一样，Java中的注释不会出现在可执行程序中。不必担心可执行代码会因此膨胀。</p>
+<p>最常用“//”，其注释内容从//开始到本行结尾。长篇注释可以用/<em>开头，</em>/结尾。</p>
+<p>第三种注释可以自动生成文档。以/**开始，以x/结束。</p>
+<p>需要注意的是/**/注释不能嵌套</p>
+</li>
+<li><p>数据类型</p>
+<p>Java是一种强类型语言。每个变量都必须声明一种类型。Java中有8中基本类型(primitive type)，4中整型，2种浮点型，1种用于表示Unicode编码的字符单元的字符类型char和1种用于表示真值的boolean类型。</p>
+<p>PS:Java中的“大数值”，big number，可以表示任意精度的算书包，但其是一个Java对象，而不是Java类型。</p>
+<ol>
+<li><p>整型</p>
+<p>整型用于表示没有小数部分的数值，可以是负数。Java提供了4种整型。</p>
+<p>|  类型   | 存储空间 |     取值范围     |<br>| :—: | :–: | :———-: |<br>|  int  | 4字节  |   -20亿~20亿   |<br>| short | 2字节  | -32768~32767 |<br>| long  | 8字节  |     很大很大     |<br>| byte  | 1字节  |   -128~127   |</p>
+<p>int最常用，long用于超大数值，byte和short用于特定场合，如文件流或数组计算时。</p>
+<p>Java中，整型的范围与Java运行平台无关，其在所有机器都能得到相同的运行结果，解决了移植问题。</p>
+<p>长整型数值有一个后缀L，十六进制前缀0x，八进制前缀0，但八进制容易混淆，最好不用八进制常数。</p>
+<p>自Java7开始，加前缀0b表示二进制数，还可以在数字字面量加下划线，目的是为了易读，和注释效果一样。</p>
+<p>PS:c/c++中，int,long等的数值与目标平台有关。Java没有任何无符合(unsigned)形式的类型。</p>
+</li>
+<li><p>浮点类型</p>
+<p>浮点类型用于表示有小数部分的数值。</p>
+<p>|   类型   | 存储需求 |       取值范围       |<br>| :—-: | :–: | :————–: |<br>| float  | 4字节  | 和int差不多，有效位数6~7位 |<br>| double | 8字节  |  同样很大很大，有效位数15位  |</p>
+<p>double是双精度数值，因为其类型的数值精度是float类型的两倍。大部分情况采用double类型，float只适合精度低的场合，如需要单精度数据的库，存储大量数据时。</p>
+<p>float类型的数值后缀为F,f，没有后缀默认为double，也可以加后缀d,D。</p>
+<p>所有浮点数计算都遵循IEEE 754规范。正无穷大，负无穷大，NaN(非数值)表示溢出和出错情况。常量Double.POSITIVE_INFINITY，Double_NEGATIVE_INFINITY和Double.NaN表示这三种情况。用Double.isNaN来判断其值是否出错。</p>
+<p>如果在数值计算中不允许有任何舍入误差，可以用BigDecimal类j精确表示。</p>
+</li>
+<li><p>char类型</p>
+<p>char类型用来表示单个字符，通常用来表示字符常量。其字面量值需用单引号‘’括起来。如‘A’表示编码值为65所对应的字符常量。而“A”表示的是包含字符A的字符串。char类型对应Unicode编码，可以表示为十六进制值，范围为\u0000到\Uffff。</p>
+<p>转义序列\u(其后必须跟4个16进制数)表示Unicode代码单元的编码，所有的转义序列都可以出现在加引号的字符字面量或字符串中。而只有\u才可以出现在字符常量或字符串的引号之外。</p>
+<p>特殊字符的转义序列符：(Unicode转义序列会在解析代码前得到处理)</p>
+<p><img src="http://p05pz65vj.bkt.clouddn.com/%E7%89%B9%E6%AE%8A%E5%AD%97%E7%AC%A6%E7%9A%84%E8%BD%AC%E4%B9%89%E5%BA%8F%E5%88%97.jpg" alt="转义字符序列"> </p>
+</li>
+<li><p>Unicode和char类型</p>
+<p>之前各国都有自己的传统字符编码机制，美国ASCII、西欧ISO 8859-1、中国的GB18030等，由此产生问题一、同样的代码值，不同的编码对应不同的字母；二、采用打字符集的语言，其编码长度可能不同，如有的字符采用单字节，有的则两个或更多。</p>
+<p>设计Unicode编码就是为了统一和规范标准，以此解决问题。Java采用16位的Unicode字符集，Unicode字符超过了65536个，因为增加了大量的汉语、日语和韩语中的表意文字。现在16位的char类型已不能满足所有的Unicode字符的需要了。</p>
+<p>在Java中，char类型描述了UTF-16编码中的一个代码单元。强烈建议不要再程序中使用char类型，最好将字符串作为抽象数据类型处理。</p>
+</li>
+<li><p>boolean类型</p>
+<p>boolean类型有false和true两个值，用来判定逻辑条件。整型值和布尔值不能相互转换。</p>
+<p>PS:C++中，0相当于false，非0相当于true，这在Java中并不成立。</p>
+</li>
+</ol>
+</li>
+<li><p>变量</p>
+<p>在Java中，每个变量都必须声明自己的类型 ge</p>
+<p>类型 变量名;      声明是一条完整的语句，必须以分号结束。</p>
+<p>变量名命名规则：</p>
+<ul>
+<li>必须以字母开头，由字母或数字构成</li>
+<li>字母包括A~Z，a~z、_、$，数字包括0~9，或者表示字母和数字的任何Unicode字符。</li>
+<li>变量名大小写敏感，长度没有限制，所以字符都有意义</li>
+</ul>
+<p>可在一行中声明多个变量，不过不推荐，逐一声明每个变量可以提高程序的可读性。</p>
+<ol>
+<li><p>变量初始化</p>
+<p>变量声明后，需要用“=”赋值后才能使用。</p>
+<ul>
+<li>变量声明可以放在代码任何地方</li>
+<li>Java中变量声明尽可能靠近变量第一次使用的地方，便于阅读</li>
+<li>C/C++中区分变量的声明与定义，没赋值前是声明，赋值后是定义。Java不区分声明与定义</li>
+</ul>
+</li>
+<li><p>常量</p>
+<p>在Java中利用关键字final指示常量，表示这个变量只能被赋值一次。习惯上，常量名全大写。</p>
+<p>如果希望某个常量可在类中多个方法使用，这样的常量称为类常量，用static final修饰，如果声明为public，那么其他类也可以使用这个常量</p>
+</li>
+</ol>
+</li>
+<li><p>运算符</p>
+<p>Java中参与/运算的两个操作数都是整数，表示整数除法，否则就表示浮点除法。整数的取余操作用%表示。整数被0除将会产生异常，而浮点数被0除将会得到无穷大或NaN结果。</p>
+<p>简化的二元赋值运算符+=、-=、*=、%=。通常将运算符放在赋值号左侧。</p>
+<ol>
+<li><p>数学函数与常量</p>
+<p>Math类中，包含了许多常用的数学函数</p>
+<p>如计算数值平方根，可以使用sqrt方法<code>Math.sqrt(x)</code></p>
+<p>如幂运算，借用pow方法<code>Math.pow(x,a)</code></p>
+<p>以及常用三角函数sin,cos,tan等</p>
+<p>还有指数函数以及反函数<code>Math.log,Math.log10</code></p>
+<p>Java还提供了两个用于表示π和e的近似值：<code>Math.PI,Math.E</code></p>
+<blockquote>
+<p>Math类中，为达到最快性能，所有方法都使用计算机浮点单元中的例程。如果得到一个完全可预测的结果比运行速度更重要的话，可以使用StrictMath，其使用自由发布的Math库(fdkubm)实现算法，以确所有平台得到相同的结果。</p>
+</blockquote>
+</li>
+<li><p>数值类型之间的转换</p>
+<p><img src="http://p05pz65vj.bkt.clouddn.com/%E6%95%B0%E5%80%BC%E7%B1%BB%E5%9E%8B%E4%B9%8B%E9%97%B4%E7%9A%84%E8%BD%AC%E6%8D%A2.jpg" alt="img"> </p>
+<p>程序运行时，经常会有数值类型间的转换，程序默认自动转化如下</p>
+<p>byte–&gt;short–&gt;int–&gt;long  int–&gt;double</p>
+<p>char–&gt;int   float–&gt;double都可在无精度丢失的情况下转化。</p>
+<p>int–&gt;float  long–&gt;float   long–&gt;double都会有精度损失。</p>
+<ul>
+<li><p>如两个操作数有一个是double类型，那另一个操作数就会转换为double类型</p>
+</li>
+<li><p>否则，如果其中一个操作数时float类型，那另一个操作数就会转换为float类型</p>
+</li>
+<li><p>否则。。long….long</p>
+</li>
+<li><p>否则，<strong><em>都将被转换为int类型</em></strong></p>
+<p>也就是说byte，short，char参与运算时都会被自动提升为int类型运算。</p>
+</li>
+</ul>
+</li>
+<li><p>强制类型转换</p>
+<p>强制类型转换也会造成数据精度丢失，double转化int时，其会通过截断小数部分将浮点值转换为整数，如果想对浮点数进行四舍五入运输，可以用Math.round方法。</p>
+<blockquote>
+<p>如果试图将一个数值转换但超出目标类型的表示范围，结果就会截断成一个完全不同的值。</p>
+</blockquote>
+</li>
+<li><p>自增自减运算符</p>
+<p>前缀和后缀两种形式，在表达式中，前缀形式会先完成+1，而后缀形式会使用变量原来的值。建议表达式中不要用++。</p>
+</li>
+<li><p>关系和boolean运算符</p>
+<p>==检测相等性    ！= 检测不相等    其他常用的&lt;,&gt;,&lt;=,&gt;=运算符</p>
+<p>&amp;&amp;表示与逻辑运算符，||表示或逻辑运算符，二者都是按照短路方式求值：如果左侧操作数已经能够确定表达式的值，右侧就不必计算了。这种方式推荐使用，避免复杂运算的错误。</p>
+<p>！是逻辑非运算符</p>
+<p>Java也支持三元运算符？：，如果条件为true就第一个表达式，否则为第二个表达式</p>
+<p>condition?expression1:expression2</p>
+</li>
+<li><p>位运算符</p>
+<p>处理整型类型时，可以直接对组成整型数值的各个位完成操作，这意味着可以使用掩码技术得到整数中的各个位。</p>
+<p>位运算符包括：&amp;与，|或，^异或，~非</p>
+<p>这些运算符按位模式处理。</p>
+<blockquote>
+<p>&amp;和| 运算符应用于布尔值，结果也是布尔值，不是短路运算，左右两侧都要运算</p>
+</blockquote>
+<p>》和《运算符将二进制进行右移或左移操作。》&gt;运算符会用0填充高位，而》会用符号位填充高位不存在&lt;&lt;&lt;运算符</p>
+</li>
+<li><p>括号与运算符级别</p>
+<p>如果不使用()就按照运算符优先次序进行计算，同一级别运算符从左到右的次序进行计算</p>
+<p>​</p>
+<p><img src="http://p05pz65vj.bkt.clouddn.com/%E8%BF%90%E7%AE%97%E7%AC%A6%E4%BC%98%E5%85%88%E7%BA%A71.jpg" alt="img"><img src="http://p05pz65vj.bkt.clouddn.com/%E8%BF%90%E7%AE%97%E7%AC%A6%E4%BC%98%E5%85%88%E7%BA%A72.jpg" alt="img"></p>
+</li>
+<li><p>枚举类型</p>
+<p>有时候变量的取值只在一个有限的集合内。可以自定义枚举类型，包括有限个命名的值。</p>
+<p>如：enum Size{SMALL,MEDIUM,LARGE}</p>
+<p>也可以声明这种类型的变量：Size s = Size.MEDIUM;</p>
+<p>Size类型的变量只能存储这个类型声明中给定的某个枚举值，或为null值，null表示这个变量没有设置任何值。</p>
+</li>
+</ol>
+</li>
+<li><p>字符串</p>
+<p>概念上讲，Java字符串就是Unicode字符序列。Java没有内置的字符串类型，而是在标准Java类库中提供了一个预定义类String，每个用双引号括起来的字符串都是String类的一个实例</p>
+<ol>
+<li><p>子串</p>
+<p>String类的substring(x,y)方法可以从字符串提取子串，要提取的字符位置包括x,但不包括y，即范围为[x,y)，优点是容易计算子串长度y-x。</p>
+</li>
+<li><p>拼接</p>
+<p>Java允许使用+拼接两个字符串</p>
+<p>当将一个字符串与一个非字符串的值进行拼接时，后者被转换成字符串(任何一个Java对象都可以转换成字符串)</p>
+</li>
+<li><p>不可变字符串</p>
+<p>String类没有提供用于修改字符串的方法，Java文档中将String类对象称为不可变字符串。只能通过剪切拼接重新赋值，任何对String的改变都会引发新的String对象产生。String类用字符数组保存字符串，并用final修饰，也保证了String对象的不可变。</p>
+<p>不可变字符串的优点是：编译器可以让字符串共享。这样将各种字符串存放在公共的存储池中，字符串变量指向存储值中相应的位置。如果复制一个字符串变量，原始字符串与复制字符串共享相同字符。Java设计者认为共享效率大于提取和拼接字符串所带来的低效率。</p>
+</li>
+<li><p>检测字符串是否相等</p>
+<p>可用equals方法检测两个字符串是否相等(equals注重的是内容相同相同，不需要对比地址是否相同)，如果不区分大小写，可以使用equalsIgnoreCase方法</p>
+<p>不要使用== 运算符检测是否相等！因为==只能确定两个字符串是否放在同一位置，而不能确定字面量是否一致。(当然地址相同，必然相等)。如果虚拟机始终将相同的字符串共享，就可以使用 == 运算符检测是否相等，但实际上只有字符串常量是共享的，而+或substring等操作产生的结果并不是共享的。因此不要用 ==</p>
+</li>
+<li><p>空串与null串</p>
+<p>空串“”是长度为0的字符串，可用if(str.length() == 0)或if(str.equals(“”))判断。</p>
+<p>空串是一个Java对象，有自己的串长度0和内容 空。String变量还可以存放一个特殊值，null，表示目前没有任何对象与该变量关联。用if(str == null)判断字符串是否为null。</p>
+</li>
+<li><p>代码点与代码单元</p>
+<p>str.length   str.charAt()</p>
+</li>
+<li><p>String API</p>
+<ul>
+<li>char charAt(int index) 返回给定位置的代码单元。不建议使用此方法</li>
+<li>int compareTo(String other) 按字典顺序排序，若字符串位于other之前，返回负数，之后返回正数，相等，返回0</li>
+<li>boolean equals/equalsIgnoreCase() 字符串是否相等</li>
+<li>boolean startsWith/endsWith(String str) 字符串以str开头或结尾  返回true</li>
+<li>int indexof(String str/String str,int fromIndex/int cp/int cp ,int fromIndex)返回与字符串str或代码点cp匹配的第一个子串的开始位置，这个位置从0或fromIndex开始计算。如果str不存在，返回-1。</li>
+<li>int lastIndexof(同上)返回与字符串str……最后一个子串的开始位置，这个位置从串尾或fromIndex开始计算。</li>
+<li>int length()返回字符串长度</li>
+<li>String replace(oldstring,newstring)，用newstring 代替oldstring</li>
+<li>boolean startsWith(str)判断是否以str开始</li>
+<li>String substring(int    int)</li>
+<li>String toLowerCase()/toUpperCase()返回新字符串，将原始字符串中的大写改小写或小写改大写</li>
+<li>String trim() 返回新字符串，删除字符串头尾的空格</li>
+<li>String join() 返回新字符串，用给定的定界符连接所有元素</li>
+</ul>
+</li>
+<li><p>构建字符串</p>
+<p>String类型的字符串每次连接新的字符串都会构建一个新的String对象，即耗时又浪费空间，可用StringBuilder类避免这个问题</p>
+<p>用builder.append(str)添加字符，用builder.tostring()构建字符串。</p>
+</li>
+</ol>
+</li>
+<li><p>控制流程</p>
+<ol>
+<li><p>块作用域</p>
+<p>块是由一对大括号括起来的若干条简单的Java语句，其确定了变量的作用域。一个块可以嵌套在另一个块中，但是，不能再嵌套的两个块中声明同名的变量。</p>
+</li>
+<li><p>条件语句</p>
+<p>if(condition)statement</p>
+</li>
+<li><p>循环语句</p>
+<p>while(condition)statement</p>
+</li>
+<li><p>确定循环</p>
+<p>for是while循环的简化形式</p>
+</li>
+<li><p>多重选择：switch语句</p>
+<p>switch语句将从与选项值相匹配的case标签处开始执行，直到遇到break语句或执行到switch语句的结束。如果没有相匹配的case，而有default语句，就执行默认语句。</p>
+<p>case标签支持类型：char,byte,short,int，枚举常量，字符串字面量(j7开始支持的)</p>
+</li>
+<li><p>中断控制流程语句</p>
+<p>break在循环中时，可用于退出循环</p>
+<p>continue中断此次循环，继续下次循环</p>
+</li>
+</ol>
+</li>
+<li><p>大数值</p>
+<p>如果基本的整数和浮点数精度不能满足需求，可以用Java.math包提供的BigInteger和BitDecimal，这两个类可以处理包含任意长度数字序列的数值。都可以实现任意精度的整数或浮点数运算。</p>
+<p>可以用valueOf方法将普通数值转换为大数值。不能用算术运算符来处理大数值，只能用add，multiply等处理。</p>
+<p>add()加，subtract减，multiply乘，divide除</p>
+<p>int compareTo(BitInteger/BigDecimal other)如果大数值与另一个大数值相等，返回0，小于返回负数，大于返回正数</p>
+<p>value of(x)返回值等于x的大数值。</p>
+<p>BigInteger mod(other) 返回这个大整数和另一个大整数的和、差、积、商和余数</p>
+<p>BigDecimal divide(BigDecimal other,RoundingMode mode) 5.0  返回这个大实数和另一个大实数的和、差、积、商和余数。要计算商，必须给出四舍五入rounding mode。RoundingMode.HALF_UP就是四舍五入方式。</p>
+</li>
+<li><p>数组</p>
+<p>数组是一种数据结构，用来存储同一类型值的集合，通过其下标可以访问数值的每一个值。</p>
+<p>数据类型 [] x;</p>
+<p>可使用new运算创建数组。数组长度可以使常量，也可以是n。数组下标从0开始。</p>
+<p>数字数组，所有元素初始化为0；boolean元素数组为false;对象元素则为null，表示还没存入任何对象。</p>
+<p>如果想获取数组元素的个数可以用array.length</p>
+<p>数组一旦创建，就不能改变大小(尽管可以改变每一个数组元素)。如果需要在运行过程中扩展数组大小，需要数组列表(array list)</p>
+<ol>
+<li><p>for each循环</p>
+<p>即增强for循环</p>
+<p>for(variable:collection)statement。</p>
+<p>定义一个变量variable用于暂存集合中的每一个元素，并执行相应的语句。collection这一集合表达式必须是一个数组或者是一个实现了Iterable接口的类对象。</p>
+</li>
+<li><p>数组初始化以及匿名数组</p>
+<p>int [] arr ={x,y}这种表示方法，可以创建数组对象的同时进行初始化赋值</p>
+<p>new int[]{x,y}匿名数组</p>
+<p>Java中，允许数组长度为0。PS：数组长度为0与null不同</p>
+</li>
+<li><p>数组拷贝</p>
+<p>Java中允许一个数组变量拷贝给另一个数组变量，这时两个变量将引用同一个数组。</p>
+<p>使用Arrays类的copyOf也可以达到复制效果</p>
+<p>int copyarr[] =Arrays.copyOf(arr,arr.length)</p>
+<p>如果长度大于arr.length，多余元素将按照类型初始化值，如int类型，赋值0，布尔型，为false.如果长度小于arr.lenth，则只拷贝最前面的数据元素。</p>
+</li>
+<li><p>数组排序</p>
+<p>Arrays类的sort方法可以对数值型数组进行优化的快速排序，效率较高</p>
+<p>API:</p>
+<ul>
+<li><p>static String toString(type[] a)  5.0 </p>
+<p>返回包含a中数据元素的字符串 a的类型可以为int long short char byte boolean float或double数组</p>
+</li>
+<li><p>static type copyOf/copyOfRange(type[ ] a,int start,int end) 6</p>
+<p>返回与a相同的一个数组，其长度为length或end-start，数组元素为a的值。PSlength根据实际情况变化</p>
+</li>
+<li><p>static int binarySearch(type[ ] a,int start ,int end , type v)</p>
+<p>采用二分查找搜索算法查找值V，找到成功，返回相应的下标值，否则返回负数r。</p>
+</li>
+<li><p>static void fill(type[] a ,type v)</p>
+<p>将数组的所有元素值设置为v</p>
+</li>
+<li><p>static boolean equals (type[ ] a,type[ ] b)</p>
+<p>如果两个数组大小相同，并且下标相同的元素都对应相等，返回true</p>
+</li>
+</ul>
+</li>
+<li><p>多维数组</p>
+<p>多维数组将使用多个下标访问数组元素，适用于表示表格或更加复杂的排列形式。</p>
+<p>声明一个二维数组：数据类型  [][] [ ]0[ ]数组名; </p>
+<p>也可以简写形式初始化{花括号，花括号，花括号}  PS：不这么写无法上传，理解就好。。。</p>
+<p>遍历二维数组时，for each循环不能自动处理二维数组的每一个元素，它是按照一维数组处理的，要想访问二维数组的所有元素，需要使用两个嵌套循环。</p>
+<p>如需要快速打印一个二维数组元素列表，可调用Array.deepToString()</p>
+</li>
+<li><p>不规则数组</p>
+<p>Java本质上只有一维数组，多维数组又被称为：数组的数组。</p>
+<p>如b[a]/[c]实际上表示二维数组b有a个子数组，每个子数组的长度为c。</p>
+<p>b[i]表示引用第i个子数组，也就是二维表的第i行，其本身也是一个数组，b[i]0[j]表示引用第i行数组的第j个元素。</p>
+<p>因为可以单独存取数组的某一行，所以可以让这两方交换。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">double</span> temp = balance[i];</span><br><span class="line">balance[i] = balance[i+<span class="number">1</span>];</span><br><span class="line">balance[i+<span class="number">1</span>] = temp;</span><br></pre></td></tr></table></figure>
+<p> 由此也可以构造数组每行不同长度的不规则数组。</p>
+</li>
+</ol>
+</li>
+</ol>
+
+        </div>
+        <footer class="article-footer">
+            
+    <div class="jiathis_style">
+    <span class="jiathis_txt">分享到：</span>
+    <a class="jiathis_button_qzone">QQ空间</a>
+    <a class="jiathis_button_tsina">新浪微博</a>
+    <a class="jiathis_button_tqq">腾讯微博</a>
+    <a class="jiathis_button_weixin">微信</a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+    <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<style>
+    .jiathis_style div:first-child:not(.jiadiv_01) {
+        width: auto !important;
+        border: none !important;
+    }
+    .jiathis_style .jiadiv_01 {
+        margin: 10px 0;
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .jiathis_style .jiadiv_01 div:first-child {
+        display: none;
+    }
+    .jiathis_style .jiadiv_02 {
+        padding: 7px 0 !important;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle {
+        width: 85px;
+        border: none;
+        height: auto;
+        margin: 3px 10px;
+        padding: 6px 10px;
+        border-radius: 4px;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:hover {
+        border: none;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:nth-child(even) {
+        margin-left: 0;
+    }
+    .jiathis_style .jtico:hover {
+        opacity: 1;
+    }
+    .jiathis_style .ckepopBottom,
+    .jiathis_style .centerBottom {
+        width: auto !important;
+        padding: 5px;
+        background: #f7f7f7;
+    }
+</style>
+
+
+
+
+        </footer>
+    </div>
+</article>
+<!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zMjA1Ni84NjIw">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/xuer80" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2017/11/23/第一章-Linux初探/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            第一章 Linux初探
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2017/11/22/Git基础/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">Git基础</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="no-thumbnail">
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/散文/">散文</a></p>
+                            <p class="item-title"><a href="/2018/04/20/中兴良药/" class="title">中兴良药</a></p>
+                            <p class="item-date"><time datetime="2018-04-20T03:52:53.000Z" itemprop="datePublished">2018-04-20</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Android/">Android</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/Android/Android应用层/">Android应用层</a></p>
+                            <p class="item-title"><a href="/2018/04/06/MVC架构/" class="title">MVC架构</a></p>
+                            <p class="item-date"><time datetime="2018-04-06T14:47:52.000Z" itemprop="datePublished">2018-04-06</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/屠龙技/">屠龙技</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/屠龙技/设计模式/">设计模式</a></p>
+                            <p class="item-title"><a href="/2018/04/05/第二十五章-易混淆设计模式盘点/" class="title">第二十五章-易混淆设计模式盘点</a></p>
+                            <p class="item-date"><time datetime="2018-04-05T09:16:34.000Z" itemprop="datePublished">2018-04-05</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/屠龙技/">屠龙技</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/屠龙技/设计模式/">设计模式</a></p>
+                            <p class="item-title"><a href="/2018/03/29/第二十四章-桥接模式/" class="title">第二十四章-桥接模式</a></p>
+                            <p class="item-date"><time datetime="2018-03-29T14:01:20.000Z" itemprop="datePublished">2018-03-29</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/屠龙技/">屠龙技</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/屠龙技/设计模式/">设计模式</a></p>
+                            <p class="item-title"><a href="/2018/03/23/第二十三章-外观模式/" class="title">第二十三章-外观模式</a></p>
+                            <p class="item-date"><time datetime="2018-03-23T09:26:58.000Z" itemprop="datePublished">2018-03-23</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/Android应用层/">Android应用层</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/Android应用层/Android架构/">Android架构</a><span class="category-list-count">2</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/屠龙技/">屠龙技</a><span class="category-list-count">26</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/屠龙技/数据结构与算法/">数据结构与算法</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/屠龙技/数据结构与算法/算法/">算法</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/屠龙技/设计模式/">设计模式</a><span class="category-list-count">25</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发工具/">开发工具</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/开发工具/Git/">Git</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/操作系统/">操作系统</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/操作系统/Linux/">Linux</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/操作系统/Linux/linux基础/">linux基础</a><span class="category-list-count">2</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/散文/">散文</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/">编程语言</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/C/">C</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/C/C-Primer-Plus/">C Primer Plus</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/Java/">Java</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/Java/Java核心技术/">Java核心技术</a><span class="category-list-count">2</span></li></ul></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">13</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Android架构/" style="font-size: 13.33px;">Android架构</a> <a href="/tags/C/" style="font-size: 16.67px;">C</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Java/" style="font-size: 13.33px;">Java</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/linux/" style="font-size: 13.33px;">linux</a> <a href="/tags/散文/" style="font-size: 13.33px;">散文</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/设计模式/" style="font-size: 20px;">设计模式</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 xuer80</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'http://xuer80.com/2017/11/23/第三章-Java的基本程序设计结构/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>第二十四章-桥接模式 | Xuer80</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="设计模式" />
+    
+    <meta name="description" content="一、介绍 桥接模式也称为桥梁模式，结构型设计模式，用于把抽象部分与实现部分解耦，使二者可独立变化。这种模式涉及到一个作为作为桥接的接口，使得实现类的功能独立于接口实现类。这两种类型的类可被结构化改变而互不影响。 该模式主要解决在有多种可能会变化的情况下，用继承会造成类爆炸问题，扩展起来不灵活。主要通过把多角度分类分离出来，让他们独立变化，减少相互之间的耦合。关键代码就是抽象类依赖实现类。 二、定义">
+<meta name="keywords" content="设计模式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第二十四章-桥接模式">
+<meta property="og:url" content="http://xuer80.com/2018/03/29/第二十四章-桥接模式/index.html">
+<meta property="og:site_name" content="Xuer80">
+<meta property="og:description" content="一、介绍 桥接模式也称为桥梁模式，结构型设计模式，用于把抽象部分与实现部分解耦，使二者可独立变化。这种模式涉及到一个作为作为桥接的接口，使得实现类的功能独立于接口实现类。这两种类型的类可被结构化改变而互不影响。 该模式主要解决在有多种可能会变化的情况下，用继承会造成类爆炸问题，扩展起来不灵活。主要通过把多角度分类分离出来，让他们独立变化，减少相互之间的耦合。关键代码就是抽象类依赖实现类。 二、定义">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://p05pz65vj.bkt.clouddn.com/%E6%A1%A5%E6%8E%A5%E6%A8%A1%E5%BC%8F.png">
+<meta property="og:updated_time" content="2018-04-04T16:11:44.847Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="第二十四章-桥接模式">
+<meta name="twitter:description" content="一、介绍 桥接模式也称为桥梁模式，结构型设计模式，用于把抽象部分与实现部分解耦，使二者可独立变化。这种模式涉及到一个作为作为桥接的接口，使得实现类的功能独立于接口实现类。这两种类型的类可被结构化改变而互不影响。 该模式主要解决在有多种可能会变化的情况下，用继承会造成类爆炸问题，扩展起来不灵活。主要通过把多角度分类分离出来，让他们独立变化，减少相互之间的耦合。关键代码就是抽象类依赖实现类。 二、定义">
+<meta name="twitter:image" content="http://p05pz65vj.bkt.clouddn.com/%E6%A1%A5%E6%8E%A5%E6%A8%A1%E5%BC%8F.png">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?5afbe52ffe1cab6bf0db3773c7af2e11";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+    
+
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">大道无为</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Android/">Android</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Android/Android应用层/">Android应用层</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/屠龙技/">屠龙技</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/屠龙技/数据结构与算法/">数据结构与算法</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/屠龙技/设计模式/">设计模式</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发工具/">开发工具</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发工具/Git/">Git</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/操作系统/">操作系统</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/操作系统/Linux/">Linux</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/散文/">散文</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/编程语言/">编程语言</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/编程语言/C/">C</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/编程语言/Java/">Java</a></li></ul></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">关于</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/booklist/index.html">书单</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><input type="hidden" name="sitesearch" value="http://xuer80.com"></form>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/屠龙技/">屠龙技</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/屠龙技/设计模式/">设计模式</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-第二十四章-桥接模式" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        第二十四章-桥接模式
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2018/03/29/第二十四章-桥接模式/" class="article-date">
+            <time datetime="2018-03-29T14:01:20.000Z" itemprop="datePublished">2018-03-29</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/设计模式/">设计模式</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <p>一、介绍</p>
+<p>桥接模式也称为桥梁模式，结构型设计模式，用于把抽象部分与实现部分解耦，使二者可独立变化。这种模式涉及到一个作为作为桥接的接口，使得实现类的功能独立于接口实现类。这两种类型的类可被结构化改变而互不影响。</p>
+<p>该模式主要解决在有多种可能会变化的情况下，用继承会造成类爆炸问题，扩展起来不灵活。主要通过把多角度分类分离出来，让他们独立变化，减少相互之间的耦合。关键代码就是抽象类依赖实现类。</p>
+<p>二、定义</p>
+<p>将抽象部分与实现部分分离，使它们都可以独立进行变化</p>
+<ul>
+<li><p>抽象化</p>
+<p>从众多的事物中抽取出共同的、本质性的特征，而舍弃非本质性的特征，就是抽象化。要抽象，就有比较，这样才能找到本质上共同的部分。抽取事物共同特征就是抽取事物的本质特征，舍弃非本质特征。抽象的同于不同，取决于从什么角度上来抽象。抽象的角度取决于分析问题的目的。 通常，一组对象如果有相同特征，那么就可以用共同的类来描述；如果一些类具有相同的特征，那么就可以通过一个共同的抽象类来描述</p>
+</li>
+<li><p>实现化</p>
+<p>抽象化的具体实现就是实现化。一般而言，一个类的实例就是这个类的实例化，一个具体的子类就是他的抽象超类的实例化。</p>
+</li>
+<li><p>解耦</p>
+<p>所谓耦合，就是两个实体行为的强关联。而将其强关联去掉就是解耦。解耦是将抽象化和实现化之间的耦合疏松开，或者将强关联换成弱关联。</p>
+<p>强关联是在编译时就已确定，无法在运行时期动态改变的关联；弱关联可以动态确定，并可以在运行时期动态改变的关联。java中，继承关系就是强关联，聚合关系就是弱关联。因此将继承关系改成聚合关系就是解耦的目的，也是桥接模式的用意。</p>
+</li>
+</ul>
+<p>三、使用场合</p>
+<p>定义来看，桥接模式用于连接抽象部分和实现部分，实际应用中，任何多维度或树状类之间的耦合都可以使用桥接模式来实现解耦。</p>
+<ul>
+<li>如果一个系统需要在构件的抽象化角色和具体化角色之间增加更多的灵活性，避免在两个层次之间建立静态的继承联系，通过桥接模式可以使它们在抽象层建立一个关联关系。</li>
+<li>对于那些不希望使用继承或因为多层次继承导致系统类的个数急剧增加的系统，桥接模式尤为适用。</li>
+<li>一个类存在两个独立变化的维度，且这两个维度都需要进行扩展</li>
+</ul>
+<p>四、分析</p>
+<p><img src="http://p05pz65vj.bkt.clouddn.com/%E6%A1%A5%E6%8E%A5%E6%A8%A1%E5%BC%8F.png" alt=""></p>
+<p>由UML图可以很明显看出系统结构含有两个等级结构</p>
+<ul>
+<li>由抽象类以及优化抽象类组成的抽象部分等级结构</li>
+<li>由实现类和两个具体实现类所组成的实现部分等级结构</li>
+</ul>
+<p>Abstraction:抽象部分  该类保持一个对实现部分对象的引用，抽象部分中的方法需要调用实现部分的对象来实现，该类为一般抽象类</p>
+<p>RefinedAbstraction:优化的抽象部分   一般为抽象的具体实现，该类一般是对抽象部分的方法进行扩展和完善</p>
+<p>Implementor：实现部分  可以是接口或抽象类，其方法不一定要与抽象部分一致，一般由实现部分提供基本操作，而抽象部分定义的则是基于实现部分的这些基础操作的业务方法。也就是说实现部分提供底层操作，而抽象部分提供基于底层操作的更高一层的操作</p>
+<p>ConcreteImplementorA/B:具体实现部分    完善实现部分中方法定义的具体逻辑</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//抽象部分</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Abstraction</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> Implementor impl; <span class="comment">//声明一个私有成员变量引用实现部分的对象</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Abstraction</span><span class="params">(Implementor impl)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.impl = impl;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//通过调用实现部分具体的方法实现具体的功能</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">operation</span><span class="params">()</span></span>&#123;</span><br><span class="line">        </span><br><span class="line">        impl.operationImpl();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//抽象部分的子类</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RefinedAbstraction</span> <span class="keyword">extends</span> <span class="title">Abstraction</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">RefinedAbstraction</span><span class="params">(Implementor impl)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(impl);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//对父类抽象部分的方法进行扩展</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">otherOperation</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="comment">//对Abstraction中的方法进行扩展</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//实现部分</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Implementor</span> </span>&#123;  <span class="comment">//抽象或接口</span></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 实现抽象部分需要的某些具体功能</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">operationImpl</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteImplementorA</span> <span class="keyword">extends</span> <span class="title">Implementor</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">operationImpl</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">//具体操作</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteImplementorB</span> <span class="keyword">extends</span> <span class="title">Implementor</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">operationImpl</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">//具体操作</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">一般而言，实现部分中的每个方法都应有抽象部分的某个方法与之对应，反之不一定。抽象部分除了提供实现部分相关方法外，还提供其他方法；而实现部分则往往为实现抽象化角色的相关行为而存在。</span><br></pre></td></tr></table></figure>
+<p>五、总结</p>
+<p>桥接模式系统中可见到，但应用中却不多，一个重要的原因是抽象与实现的分离的把握，并不容易设计。</p>
+<p>优点：</p>
+<ul>
+<li>分离抽象和实现部分   极大提高了系统灵活性。让抽象和实现独立出来，分别定义接口，有利于系统分层</li>
+<li>灵活扩展性  桥梁模式让抽象部分和实现部分可以独立扩展 互不影响，从而极大提高了系统的可扩展性</li>
+<li>实现对客户透明</li>
+</ul>
+<p>缺点</p>
+<p>桥接模式的引入会增加系统的理解与设计难度，由于聚合关联关系建立在抽象层，要求开发者针对抽象进行设计与编程</p>
+
+        </div>
+        <footer class="article-footer">
+            
+    <div class="jiathis_style">
+    <span class="jiathis_txt">分享到：</span>
+    <a class="jiathis_button_qzone">QQ空间</a>
+    <a class="jiathis_button_tsina">新浪微博</a>
+    <a class="jiathis_button_tqq">腾讯微博</a>
+    <a class="jiathis_button_weixin">微信</a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+    <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<style>
+    .jiathis_style div:first-child:not(.jiadiv_01) {
+        width: auto !important;
+        border: none !important;
+    }
+    .jiathis_style .jiadiv_01 {
+        margin: 10px 0;
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .jiathis_style .jiadiv_01 div:first-child {
+        display: none;
+    }
+    .jiathis_style .jiadiv_02 {
+        padding: 7px 0 !important;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle {
+        width: 85px;
+        border: none;
+        height: auto;
+        margin: 3px 10px;
+        padding: 6px 10px;
+        border-radius: 4px;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:hover {
+        border: none;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:nth-child(even) {
+        margin-left: 0;
+    }
+    .jiathis_style .jtico:hover {
+        opacity: 1;
+    }
+    .jiathis_style .ckepopBottom,
+    .jiathis_style .centerBottom {
+        width: auto !important;
+        padding: 5px;
+        background: #f7f7f7;
+    }
+</style>
+
+
+
+
+        </footer>
+    </div>
+</article>
+<!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zMjA1Ni84NjIw">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/xuer80" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2018/04/05/第二十五章-易混淆设计模式盘点/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            第二十五章-易混淆设计模式盘点
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2018/03/23/第二十三章-外观模式/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">第二十三章-外观模式</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="no-thumbnail">
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/散文/">散文</a></p>
+                            <p class="item-title"><a href="/2018/04/20/中兴良药/" class="title">中兴良药</a></p>
+                            <p class="item-date"><time datetime="2018-04-20T03:52:53.000Z" itemprop="datePublished">2018-04-20</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Android/">Android</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/Android/Android应用层/">Android应用层</a></p>
+                            <p class="item-title"><a href="/2018/04/06/MVC架构/" class="title">MVC架构</a></p>
+                            <p class="item-date"><time datetime="2018-04-06T14:47:52.000Z" itemprop="datePublished">2018-04-06</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/屠龙技/">屠龙技</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/屠龙技/设计模式/">设计模式</a></p>
+                            <p class="item-title"><a href="/2018/04/05/第二十五章-易混淆设计模式盘点/" class="title">第二十五章-易混淆设计模式盘点</a></p>
+                            <p class="item-date"><time datetime="2018-04-05T09:16:34.000Z" itemprop="datePublished">2018-04-05</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/屠龙技/">屠龙技</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/屠龙技/设计模式/">设计模式</a></p>
+                            <p class="item-title"><a href="/2018/03/29/第二十四章-桥接模式/" class="title">第二十四章-桥接模式</a></p>
+                            <p class="item-date"><time datetime="2018-03-29T14:01:20.000Z" itemprop="datePublished">2018-03-29</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/屠龙技/">屠龙技</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/屠龙技/设计模式/">设计模式</a></p>
+                            <p class="item-title"><a href="/2018/03/23/第二十三章-外观模式/" class="title">第二十三章-外观模式</a></p>
+                            <p class="item-date"><time datetime="2018-03-23T09:26:58.000Z" itemprop="datePublished">2018-03-23</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/Android应用层/">Android应用层</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/Android应用层/Android架构/">Android架构</a><span class="category-list-count">2</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/屠龙技/">屠龙技</a><span class="category-list-count">26</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/屠龙技/数据结构与算法/">数据结构与算法</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/屠龙技/数据结构与算法/算法/">算法</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/屠龙技/设计模式/">设计模式</a><span class="category-list-count">25</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发工具/">开发工具</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/开发工具/Git/">Git</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/操作系统/">操作系统</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/操作系统/Linux/">Linux</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/操作系统/Linux/linux基础/">linux基础</a><span class="category-list-count">2</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/散文/">散文</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/">编程语言</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/C/">C</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/C/C-Primer-Plus/">C Primer Plus</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/Java/">Java</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/Java/Java核心技术/">Java核心技术</a><span class="category-list-count">2</span></li></ul></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">13</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Android架构/" style="font-size: 13.33px;">Android架构</a> <a href="/tags/C/" style="font-size: 16.67px;">C</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Java/" style="font-size: 13.33px;">Java</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/linux/" style="font-size: 13.33px;">linux</a> <a href="/tags/散文/" style="font-size: 13.33px;">散文</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/设计模式/" style="font-size: 20px;">设计模式</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 xuer80</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'http://xuer80.com/2018/03/29/第二十四章-桥接模式/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

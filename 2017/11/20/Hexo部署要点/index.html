@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>Hexo主题部署要点 | Xuer80</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="Hexo" />
+    
+    <meta name="description" content="先吐槽​    本网站基于Hexo(Hueman主题)+GitHub+自定义域名建设，未来可能加入七牛云用来放图。第一次用Hexo来搭建，研究了两天，期间基本把网上所有的坑都踩一遍，没有的坑自己摸索也算解决了，有的坑回头看简直无语，还好本人耐力极佳，爱好钻研，一直不放弃，最终成功，为了过坑，我差点为此去学前端语言(当然前端本来就在学习计划内)，呜呜~ ​    好吧，现在来讲述我几个很无语的坑~~">
+<meta name="keywords" content="Hexo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo主题部署要点">
+<meta property="og:url" content="http://xuer80.com/2017/11/20/Hexo部署要点/index.html">
+<meta property="og:site_name" content="Xuer80">
+<meta property="og:description" content="先吐槽​    本网站基于Hexo(Hueman主题)+GitHub+自定义域名建设，未来可能加入七牛云用来放图。第一次用Hexo来搭建，研究了两天，期间基本把网上所有的坑都踩一遍，没有的坑自己摸索也算解决了，有的坑回头看简直无语，还好本人耐力极佳，爱好钻研，一直不放弃，最终成功，为了过坑，我差点为此去学前端语言(当然前端本来就在学习计划内)，呜呜~ ​    好吧，现在来讲述我几个很无语的坑~~">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2017-12-07T07:47:32.516Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo主题部署要点">
+<meta name="twitter:description" content="先吐槽​    本网站基于Hexo(Hueman主题)+GitHub+自定义域名建设，未来可能加入七牛云用来放图。第一次用Hexo来搭建，研究了两天，期间基本把网上所有的坑都踩一遍，没有的坑自己摸索也算解决了，有的坑回头看简直无语，还好本人耐力极佳，爱好钻研，一直不放弃，最终成功，为了过坑，我差点为此去学前端语言(当然前端本来就在学习计划内)，呜呜~ ​    好吧，现在来讲述我几个很无语的坑~~">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?5afbe52ffe1cab6bf0db3773c7af2e11";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+    
+
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">大道无为</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Android/">Android</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Android/Android应用层/">Android应用层</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/屠龙技/">屠龙技</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/屠龙技/数据结构与算法/">数据结构与算法</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/屠龙技/设计模式/">设计模式</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发工具/">开发工具</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发工具/Git/">Git</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/操作系统/">操作系统</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/操作系统/Linux/">Linux</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/散文/">散文</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/编程语言/">编程语言</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/编程语言/C/">C</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/编程语言/Java/">Java</a></li></ul></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">关于</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/booklist/index.html">书单</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><input type="hidden" name="sitesearch" value="http://xuer80.com"></form>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/开发工具/">开发工具</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-Hexo部署要点" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        Hexo主题部署要点
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2017/11/20/Hexo部署要点/" class="article-date">
+            <time datetime="2017-11-20T09:57:58.000Z" itemprop="datePublished">2017-11-20</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Hexo/">Hexo</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h3 id="先吐槽"><a href="#先吐槽" class="headerlink" title="先吐槽"></a>先吐槽</h3><p>​    本网站基于Hexo(Hueman主题)+GitHub+自定义域名建设，未来可能加入七牛云用来放图。第一次用Hexo来搭建，研究了两天，期间基本把网上所有的坑都踩一遍，没有的坑自己摸索也算解决了，有的坑回头看简直无语，还好本人耐力极佳，爱好钻研，一直不放弃，最终成功，为了过坑，我差点为此去学前端语言(当然前端本来就在学习计划内)，呜呜~</p>
+<p>​    好吧，现在来讲述我几个很无语的坑~~</p>
+<h3 id="二级目录坑"><a href="#二级目录坑" class="headerlink" title="二级目录坑"></a>二级目录坑</h3><p>​    此坑甚深，为了在hueman主题增加二级目录，遍寻网页其他hueman主题的帖子，找不到答案，为此还自己修改失败，导致重新加载hexo，可怜啊，最后发现，只需要categories: [一级目录,二级目录,三级目录]即可，我简直蠢。。。</p>
+<p>​    不，都怪Hueman<a href="https://github.com/ppoffice" target="_blank" rel="noopener">作者</a>啊，这样自动集成功能，只字未提。。。不，不能怪我蠢，都是作者的问题。。。</p>
+<h3 id="兼容坑"><a href="#兼容坑" class="headerlink" title="兼容坑"></a>兼容坑</h3><p>​    这是最大的坑，搭建网站期间，需要用到git，node以及相关插件，需要适配相关的环境变量等等，稍有差池。。重新来过。。。。这只是吐槽。。。</p>
+<h3 id="删除文章"><a href="#删除文章" class="headerlink" title="删除文章"></a>删除文章</h3><p>​    删除文章只需要删除blog/source/_post目录下相关文章即可</p>
+<h3 id="空格坑"><a href="#空格坑" class="headerlink" title="空格坑"></a>空格坑</h3><p>​    站点部署时，_congfig-yml中须在url中填写自己的域名或者yourname.github.io地址，由于语法问题，文件中所有冒号：后必须空一格。</p>
+<h3 id="域名坑"><a href="#域名坑" class="headerlink" title="域名坑"></a>域名坑</h3><p>​    由于本地文件上传后都会被解析成html文件，最好在本地blog/source文件夹下，添加CNAME格式文件，不是txt格式哦，里面写上自己的域名即可，如xuer80.com，写<a href="http://www.xuer80.com可能会限制搜索范围。" target="_blank" rel="noopener">www.xuer80.com可能会限制搜索范围。</a></p>
+<h3 id="deployer-git坑-待解决"><a href="#deployer-git坑-待解决" class="headerlink" title="deployer-git坑(待解决)"></a>deployer-git坑(待解决)</h3><p>​    这个坑很大，应该是插件问题。在用npm install hexo-deployer-git –save后，这个插件时而会失效，一旦失效后果很严重，知乎网上都有说删除deployer-git文件重新下，不顶用，没效果，即使成功也是只把public中的文件上传到git。</p>
+<p>npm install hexo-deployer-git</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">    npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@1.1.3 (node_modules\fsevents)</span><br><span class="line"></span><br><span class="line">    npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.1.3: wanted           &#123;&quot;os&quot;:&quot;darwin&quot;,&quot;arch&quot;:&quot;any&quot;&#125; (current: &#123;&quot;os&quot;:&quot;win32&quot;,&quot;arch&quot;:&quot;x64&quot;&#125;)</span><br><span class="line"></span><br><span class="line">- hexo-deployer-git@0.3.1</span><br><span class="line">  added 116 packages and updated 1 package in 20.996s</span><br></pre></td></tr></table></figure>
+<p>然(⊙﹏⊙)，这根本不是deployer 的错，是npm的锅(接好。。)，因为npm install之后也是这个问题，一喵一样的，更新npm之后(npm i npm -g)也是这样的。。。。</p>
+<p>rm -rf .deploy_git之后再hexo d，时而管用，时而。。。好吧，我没管用过</p>
+<ul>
+<li><p>终于解决了，正确的做法，如果hexo d之后，最后没有显示INFO  Deploy done: git，那么部署是不成功的，这个时候删除.deploy_git，然后再hexo -g d就行了，只是hexo d的话，只会提交public文件夹下的内容，网站不会更新。现在回头看，好。。。算了，，不吐槽了</p>
+<p>​</p>
+</li>
+</ul>
+<h3 id="插件坑"><a href="#插件坑" class="headerlink" title="插件坑"></a>插件坑</h3><p>​    总之，少装插件</p>
+<h3 id="关评论"><a href="#关评论" class="headerlink" title="关评论"></a>关评论</h3><p>​    由于Hueman主题默认disqus评论，这是非常坑的评论系统，需要翻墙(你需要lantern)，然而这并不是关闭它的理由，因为他在评论下方会推荐其他五湖四海的博客，相当于广告。。。。自己枕边岂留她人酣睡！！！，找到themes/hueman/layout/comment文件夹，这里面是内置的评论系统布局文件，找到disqus.ejs,打开，找到<code>dsq.src = &#39;//&#39; + disqus_shortname + &#39;.disqus.com/&lt;% if (page.comments) { %&gt;embed.js&lt;% } else { %&gt;count.js&lt;% } %&gt;</code>这行代码，前面加//注释掉，这样无论你在墙内还是墙外，整个世界都干净了</p>
+<h3 id="文章内错误导致的无法提交"><a href="#文章内错误导致的无法提交" class="headerlink" title="文章内错误导致的无法提交"></a>文章内错误导致的无法提交</h3><p>之前博客提交都正常，突然一个文章写完后提交不正常了，显示什么模板错误之类的，可能是因为文章内的符号导致的。本人之前在写数组时，多维数组的嵌套，会导致提交失败，还有正则表达式，实验之后也是失败，所以谨慎使用，修改之后就可以提交了​</p>
+
+        </div>
+        <footer class="article-footer">
+            
+    <div class="jiathis_style">
+    <span class="jiathis_txt">分享到：</span>
+    <a class="jiathis_button_qzone">QQ空间</a>
+    <a class="jiathis_button_tsina">新浪微博</a>
+    <a class="jiathis_button_tqq">腾讯微博</a>
+    <a class="jiathis_button_weixin">微信</a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+    <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<style>
+    .jiathis_style div:first-child:not(.jiadiv_01) {
+        width: auto !important;
+        border: none !important;
+    }
+    .jiathis_style .jiadiv_01 {
+        margin: 10px 0;
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .jiathis_style .jiadiv_01 div:first-child {
+        display: none;
+    }
+    .jiathis_style .jiadiv_02 {
+        padding: 7px 0 !important;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle {
+        width: 85px;
+        border: none;
+        height: auto;
+        margin: 3px 10px;
+        padding: 6px 10px;
+        border-radius: 4px;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:hover {
+        border: none;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:nth-child(even) {
+        margin-left: 0;
+    }
+    .jiathis_style .jtico:hover {
+        opacity: 1;
+    }
+    .jiathis_style .ckepopBottom,
+    .jiathis_style .centerBottom {
+        width: auto !important;
+        padding: 5px;
+        background: #f7f7f7;
+    }
+</style>
+
+
+
+
+        </footer>
+    </div>
+</article>
+<!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zMjA1Ni84NjIw">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/xuer80" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2017/11/21/第一章-Java程序设计概述/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            第一章 Java程序设计概述
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="no-thumbnail">
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/散文/">散文</a></p>
+                            <p class="item-title"><a href="/2018/04/20/中兴良药/" class="title">中兴良药</a></p>
+                            <p class="item-date"><time datetime="2018-04-20T03:52:53.000Z" itemprop="datePublished">2018-04-20</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Android/">Android</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/Android/Android应用层/">Android应用层</a></p>
+                            <p class="item-title"><a href="/2018/04/06/MVC架构/" class="title">MVC架构</a></p>
+                            <p class="item-date"><time datetime="2018-04-06T14:47:52.000Z" itemprop="datePublished">2018-04-06</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/屠龙技/">屠龙技</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/屠龙技/设计模式/">设计模式</a></p>
+                            <p class="item-title"><a href="/2018/04/05/第二十五章-易混淆设计模式盘点/" class="title">第二十五章-易混淆设计模式盘点</a></p>
+                            <p class="item-date"><time datetime="2018-04-05T09:16:34.000Z" itemprop="datePublished">2018-04-05</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/屠龙技/">屠龙技</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/屠龙技/设计模式/">设计模式</a></p>
+                            <p class="item-title"><a href="/2018/03/29/第二十四章-桥接模式/" class="title">第二十四章-桥接模式</a></p>
+                            <p class="item-date"><time datetime="2018-03-29T14:01:20.000Z" itemprop="datePublished">2018-03-29</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/屠龙技/">屠龙技</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/屠龙技/设计模式/">设计模式</a></p>
+                            <p class="item-title"><a href="/2018/03/23/第二十三章-外观模式/" class="title">第二十三章-外观模式</a></p>
+                            <p class="item-date"><time datetime="2018-03-23T09:26:58.000Z" itemprop="datePublished">2018-03-23</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/Android应用层/">Android应用层</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/Android应用层/Android架构/">Android架构</a><span class="category-list-count">2</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/屠龙技/">屠龙技</a><span class="category-list-count">26</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/屠龙技/数据结构与算法/">数据结构与算法</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/屠龙技/数据结构与算法/算法/">算法</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/屠龙技/设计模式/">设计模式</a><span class="category-list-count">25</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发工具/">开发工具</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/开发工具/Git/">Git</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/操作系统/">操作系统</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/操作系统/Linux/">Linux</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/操作系统/Linux/linux基础/">linux基础</a><span class="category-list-count">2</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/散文/">散文</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/">编程语言</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/C/">C</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/C/C-Primer-Plus/">C Primer Plus</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/Java/">Java</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/Java/Java核心技术/">Java核心技术</a><span class="category-list-count">2</span></li></ul></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">13</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Android架构/" style="font-size: 13.33px;">Android架构</a> <a href="/tags/C/" style="font-size: 16.67px;">C</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Java/" style="font-size: 13.33px;">Java</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/linux/" style="font-size: 13.33px;">linux</a> <a href="/tags/散文/" style="font-size: 13.33px;">散文</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/设计模式/" style="font-size: 20px;">设计模式</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 xuer80</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'http://xuer80.com/2017/11/20/Hexo部署要点/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

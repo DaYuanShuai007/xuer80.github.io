@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>第二十一章-组合模式 | Xuer80</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="设计模式" />
+    
+    <meta name="description" content="一、介绍 组合模式也称为部分整体模式，其将一组相似的对象当作一个对象处理，并根据树形结构来组合对象，用来表示部分以及整体的层次感，然后提供一个统一的方法去访问相应的对象，以此忽略对象与对象集合之中的差异。属于结构性设计模式，其创建了对象组的树形结构。这种模式创建了一个包含自己对象组的类，该类提供了修改相同对象组的方式。 组合模式再树形结构的问题中，模糊了简单元素与复杂元素的概念，客户程序可以像处理">
+<meta name="keywords" content="设计模式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第二十一章-组合模式">
+<meta property="og:url" content="http://xuer80.com/2018/03/22/第二十一章-组合模式/index.html">
+<meta property="og:site_name" content="Xuer80">
+<meta property="og:description" content="一、介绍 组合模式也称为部分整体模式，其将一组相似的对象当作一个对象处理，并根据树形结构来组合对象，用来表示部分以及整体的层次感，然后提供一个统一的方法去访问相应的对象，以此忽略对象与对象集合之中的差异。属于结构性设计模式，其创建了对象组的树形结构。这种模式创建了一个包含自己对象组的类，该类提供了修改相同对象组的方式。 组合模式再树形结构的问题中，模糊了简单元素与复杂元素的概念，客户程序可以像处理">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://p05pz65vj.bkt.clouddn.com/%E7%BB%84%E5%90%88%E6%A8%A1%E5%BC%8F%E2%80%94%E5%AE%89%E5%85%A8%E5%BC%8F.png">
+<meta property="og:updated_time" content="2018-03-29T14:10:11.904Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="第二十一章-组合模式">
+<meta name="twitter:description" content="一、介绍 组合模式也称为部分整体模式，其将一组相似的对象当作一个对象处理，并根据树形结构来组合对象，用来表示部分以及整体的层次感，然后提供一个统一的方法去访问相应的对象，以此忽略对象与对象集合之中的差异。属于结构性设计模式，其创建了对象组的树形结构。这种模式创建了一个包含自己对象组的类，该类提供了修改相同对象组的方式。 组合模式再树形结构的问题中，模糊了简单元素与复杂元素的概念，客户程序可以像处理">
+<meta name="twitter:image" content="http://p05pz65vj.bkt.clouddn.com/%E7%BB%84%E5%90%88%E6%A8%A1%E5%BC%8F%E2%80%94%E5%AE%89%E5%85%A8%E5%BC%8F.png">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?5afbe52ffe1cab6bf0db3773c7af2e11";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+    
+
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">大道无为</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Android/">Android</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Android/Android应用层/">Android应用层</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/屠龙技/">屠龙技</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/屠龙技/数据结构与算法/">数据结构与算法</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/屠龙技/设计模式/">设计模式</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发工具/">开发工具</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发工具/Git/">Git</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/操作系统/">操作系统</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/操作系统/Linux/">Linux</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/散文/">散文</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/编程语言/">编程语言</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/编程语言/C/">C</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/编程语言/Java/">Java</a></li></ul></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">关于</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/booklist/index.html">书单</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><input type="hidden" name="sitesearch" value="http://xuer80.com"></form>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/屠龙技/">屠龙技</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/屠龙技/设计模式/">设计模式</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-第二十一章-组合模式" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        第二十一章-组合模式
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2018/03/22/第二十一章-组合模式/" class="article-date">
+            <time datetime="2018-03-21T16:15:30.000Z" itemprop="datePublished">2018-03-22</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/设计模式/">设计模式</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <p>一、介绍</p>
+<p>组合模式也称为部分整体模式，其将一组相似的对象当作一个对象处理，并根据树形结构来组合对象，用来表示部分以及整体的层次感，然后提供一个统一的方法去访问相应的对象，以此忽略对象与对象集合之中的差异。属于结构性设计模式，其创建了对象组的树形结构。这种模式创建了一个包含自己对象组的类，该类提供了修改相同对象组的方式。</p>
+<p>组合模式再树形结构的问题中，模糊了简单元素与复杂元素的概念，客户程序可以像处理简单元素一样来处理复杂元素，从而使得客户程序与复杂元素的内部结构解耦。组合模式中，再系统树形结构图中，我们将拥有分支的节点称为枝干构件，位于树状结构顶点的枝干结构称为根结构件，对于处于尾端，没有分支的结构称为叶子构件。</p>
+<p>二、定义</p>
+<p>将对象组合成树形结构以表示 部分–整体 的结构层次结构，使得用户对单个对象和组合对象的使用具有一致性。</p>
+<p>三、使用场景</p>
+<ul>
+<li>当需要表示对象的部分–整体层次结构时</li>
+<li>从一个整体中能够独立出部分模块或功能的场景</li>
+<li>希望用户忽略组合对象与单个对象的不同，用户将统一地使用组合结构中的所有对象</li>
+</ul>
+<p>四、分析</p>
+<p>组合模式可以不提供父对象的管理方法，但必须在合适地方提供子对象的管理方法，诸如：add(),remove(),getChild()等。</p>
+<p>组合模式的实现根据所实现接口的区别分为两种形式，安全式和透明式。</p>
+<p><strong>安全式组合模式</strong> 安全模式的组合模式要求管理聚集的方法只出现在枝干结构类中，而不出现在叶子构件类中。</p>
+<p><img src="http://p05pz65vj.bkt.clouddn.com/%E7%BB%84%E5%90%88%E6%A8%A1%E5%BC%8F%E2%80%94%E5%AE%89%E5%85%A8%E5%BC%8F.png" alt="组合安全模式"></p>
+<p>涉及的三个角色</p>
+<p>Component:抽象根节点，为组合中的对象声明接口。在适当情况下，实现所有类共有接口的缺省行为。声明一个接口用于访问和管理component的子节点。可在递归结构中定义一个接口，用于访问一个父节点，并在合适的情况实现它。组合对象通常把其包含的子对象当作类型为Component的对象，在安全模式里，构件角色并不定义出管理子对象的方法，这一定义有枝干构件对象给出</p>
+<p>Leaf:组合中表示叶子节点对象，其没有下级子对象，在组合中定义节点对象的行为或者说参加组合的原始对象的行为。</p>
+<p>Composite:枝干构件对象，代表参加组合的有下级子对象的对象。在Component接口中实现与子对象有关的操作，即给出了所有的管理子对象的方法，如add,remove，getChild等。</p>
+<p>Client:通过Component接口操纵组合对象的对象。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//抽象根节点</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Component</span></span>&#123;</span><br><span class="line">  <span class="keyword">protected</span> String name;<span class="comment">//节点名</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">Component</span><span class="params">(String name)</span></span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name = name;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">//具体逻辑的方法由子类实现</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">doSomething</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//枝干节点</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Composite</span> <span class="keyword">extends</span> <span class="title">Component</span></span>&#123;</span><br><span class="line">  <span class="comment">//存储节点的容器</span></span><br><span class="line">  <span class="keyword">private</span> List&lt;Component&gt; components = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">  <span class="comment">//name 组合对象或节点的名字</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">Composite</span><span class="params">(String name)</span></span>&#123;</span><br><span class="line">    <span class="keyword">super</span>(name);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doSometing</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">//先输出自己</span></span><br><span class="line">    System.out.println(name);</span><br><span class="line">    如果还包含子节点，就输出子节点对象</span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">null</span> != components)&#123;</span><br><span class="line">      <span class="comment">//输出当前对象的子对象</span></span><br><span class="line">      <span class="keyword">for</span>(Component c : components)&#123;</span><br><span class="line">        c.doSomething();<span class="comment">//递归出每个子对象</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">//添加子节点 @param child 子节点</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addChild</span><span class="params">(Component child)</span></span>&#123;</span><br><span class="line">    components.add(child);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">//@param child 移除子节点</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">removeChild</span><span class="params">(Component child)</span></span>&#123;</span><br><span class="line">    components.remove(child);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">//@param 获取子节点  index 子节点对应下标  return 子节点</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> Component <span class="title">getChild</span><span class="params">(<span class="keyword">int</span> index)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> components.get(index);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//叶子节点</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Leaf</span> <span class="keyword">extends</span> <span class="title">Component</span></span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">Leaf</span><span class="params">(String name)</span></span>&#123;</span><br><span class="line">    <span class="keyword">super</span>(name);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doSomething</span><span class="params">()</span></span>&#123;</span><br><span class="line">    System.out.println(name);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//客户端Client</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Client</span></span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String []args)</span></span>&#123;</span><br><span class="line">    <span class="comment">//构造一个根节点</span></span><br><span class="line">    Composite root = <span class="keyword">new</span> Composite(<span class="string">"Root"</span>);</span><br><span class="line">    <span class="comment">//构造两个枝干节点</span></span><br><span class="line">    Composite branch1 = <span class="keyword">new</span> Composite(<span class="string">"Branch1"</span>);</span><br><span class="line">    Composite branch2 = <span class="keyword">new</span> Composite(<span class="string">"Branch2"</span>);</span><br><span class="line">    <span class="comment">//构造两个叶子节点</span></span><br><span class="line">    Leaf leaf1 = <span class="keyword">new</span> Leaf(<span class="string">"Leaf1"</span>);</span><br><span class="line">    Leaf leaf2 = <span class="keyword">new</span> Leaf(<span class="string">"Leaf2"</span>);</span><br><span class="line">    <span class="comment">//将叶子节点节点添加到枝干节点</span></span><br><span class="line">    branch1.addChild(leaf1);</span><br><span class="line">    branch2.addChild(leaf2);</span><br><span class="line">    <span class="comment">//将枝干节点添加至根节点中</span></span><br><span class="line">    root.addChild(branch1);</span><br><span class="line">    root.addChild(branch2);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//执行方法</span></span><br><span class="line">    root.doSomething();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">输出</span><br><span class="line">Root</span><br><span class="line">Branch1</span><br><span class="line">Leaf1</span><br><span class="line">Branch2</span><br><span class="line">Leaf2</span><br></pre></td></tr></table></figure>
+<p>显然，枝干节点对象Composite给出了addchild等方法的声明和实现，而叶子节点对象则没有给出，这就是安全做法，由于这个特点，客户端不可能错误调用叶子节点的这些方法，因为没有2333，强制调用会导致错误。其缺点是不够透明，因为叶子节点对象和枝干节点对象具有不同的接口。</p>
+<p>客户端直接调用的是Component的实现类，与依赖倒置原则相违背，而Component则作用不大，对于面向接口编程而言，应把更多焦点放在接口设计上。</p>
+<p><strong>透明式组合模式</strong></p>
+<p>与安全组合模式不同，透明式的组合模式要求所有的子节点或者说具体构建类，不论叶子节点还是枝干节点都要有相同结构，均符合一个固定接口。意味着必须在方法的内部得到子节点的类型，而无法通过getChild方法得到。</p>
+<p><img src="http://p05pz65vj.bkt.clouddn.com/%E7%BB%84%E5%90%88%E6%A8%A1%E5%BC%8F%E2%80%94%E9%80%8F%E6%98%8E%E5%BC%8F.png" alt="透明式组合模式"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//抽象根节点</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Component</span></span>&#123;</span><br><span class="line">  <span class="keyword">protected</span> String name;<span class="comment">//节点名</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">Component</span><span class="params">(String name)</span></span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name = name;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">//具体逻辑的方法由子类实现</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">doSomething</span><span class="params">()</span></span>;</span><br><span class="line">  <span class="comment">//添加子节点 @param child 子节点</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">addChild</span><span class="params">(Component child)</span></span>;</span><br><span class="line">  <span class="comment">//@param child 移除子节点</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">removeChild</span><span class="params">(Component child)</span></span>;</span><br><span class="line">  <span class="comment">//@param 获取子节点  index 子节点对应下标  return 子节点</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> Component <span class="title">getChild</span><span class="params">(<span class="keyword">int</span> index)</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//枝干节点</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Composite</span> <span class="keyword">extends</span> <span class="title">Component</span></span>&#123;</span><br><span class="line">  <span class="comment">//存储节点的容器</span></span><br><span class="line">  <span class="keyword">private</span> List&lt;Component&gt; components = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">  <span class="comment">//name 组合对象或节点的名字</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">Composite</span><span class="params">(String name)</span></span>&#123;</span><br><span class="line">    <span class="keyword">super</span>(name);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doSometing</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">//先输出自己</span></span><br><span class="line">    System.out.println(name);</span><br><span class="line">    如果还包含子节点，就输出子节点对象</span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">null</span> != components)&#123;</span><br><span class="line">      <span class="comment">//输出当前对象的子对象</span></span><br><span class="line">      <span class="keyword">for</span>(Component c : components)&#123;</span><br><span class="line">        c.doSomething();<span class="comment">//递归出每个子对象</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">//添加子节点 @param child 子节点</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addChild</span><span class="params">(Component child)</span></span>&#123;</span><br><span class="line">    components.add(child);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">//@param child 移除子节点</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">removeChild</span><span class="params">(Component child)</span></span>&#123;</span><br><span class="line">    components.remove(child);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">//@param 获取子节点  index 子节点对应下标  return 子节点</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> Component <span class="title">getChild</span><span class="params">(<span class="keyword">int</span> index)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> components.get(index);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//叶子节点</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Leaf</span> <span class="keyword">extends</span> <span class="title">Component</span></span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">Leaf</span><span class="params">(String name)</span></span>&#123;</span><br><span class="line">    <span class="keyword">super</span>(name);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doSomething</span><span class="params">()</span></span>&#123;</span><br><span class="line">    System.out.println(name);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addChild</span><span class="params">(Component child)</span></span>&#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> UnsupportedOperationException(<span class="string">"叶子节点没有子节点"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">removeChild</span><span class="params">(Component child)</span></span>&#123;</span><br><span class="line">   <span class="keyword">throw</span> <span class="keyword">new</span> UnsupportedOperationException(<span class="string">"叶子节点没有子节点"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> Component <span class="title">getChild</span><span class="params">(<span class="keyword">int</span> index)</span></span>&#123;</span><br><span class="line">     <span class="keyword">throw</span> <span class="keyword">new</span> UnsupportedOperationException(<span class="string">"叶子节点没有子节点"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//客户端Client</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Client</span></span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String []args)</span></span>&#123;</span><br><span class="line">    <span class="comment">//构造一个根节点</span></span><br><span class="line">    Component root = <span class="keyword">new</span> Composite(<span class="string">"Root"</span>);</span><br><span class="line">    <span class="comment">//构造两个枝干节点</span></span><br><span class="line">       Component branch1 = <span class="keyword">new</span> Composite(<span class="string">"Branch1"</span>);</span><br><span class="line">       Component branch2 = <span class="keyword">new</span> Composite(<span class="string">"Branch2"</span>);</span><br><span class="line">    <span class="comment">//构造两个叶子节点</span></span><br><span class="line">      Component leaf1 = <span class="keyword">new</span> Leaf(<span class="string">"Leaf1"</span>);</span><br><span class="line">       Component leaf2 = <span class="keyword">new</span> Leaf(<span class="string">"Leaf2"</span>);</span><br><span class="line">    <span class="comment">//将叶子节点节点添加到枝干节点</span></span><br><span class="line">    branch1.addChild(leaf1);</span><br><span class="line">    branch2.addChild(leaf2);</span><br><span class="line">    <span class="comment">//将枝干节点添加至根节点中</span></span><br><span class="line">    root.addChild(branch1);</span><br><span class="line">    root.addChild(branch2);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//执行方法</span></span><br><span class="line">    root.doSomething();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">输出</span><br><span class="line">Root</span><br><span class="line">Branch1</span><br><span class="line">Leaf1</span><br><span class="line">Branch2</span><br><span class="line">Leaf2</span><br></pre></td></tr></table></figure>
+<p>由此可见，客户端无需再区分操作的是枝干对象还是叶子对象，对于调用者或客户端而言都是Component对象。</p>
+<p>五、总结</p>
+<p>有分析可知所谓的组合模式的安全性是指：从客户端使用组合模式上看是否安全，如果安全，就不会发生失误操作的可能，能访问的方法都是被支持的</p>
+<p>而所谓的透明性是指：从客户端使用组合模式时，是否需要区分到底是枝干对象还是叶子对象。如果是透明的，那就不用区分，于客户端而言都是Component对象，具体的类型对于客户端而言是透明的，无需关心。</p>
+<p>实际工作中，二者比较而言，更看重透明性，毕竟组合模式的目的即是让客户端不在区分操作的是组合对象还是单一对象，而是统一的方式。而对于安全性而言，需要区分，有时还需进行类型转换，会导致信息丢失，这方面将反而是不够安全的。因此多采用透明式。</p>
+<p>优点：</p>
+<ul>
+<li>可以把复杂对象分层次定义，表示对象的整体—部分，让高层模块忽略层次的差异，方便整体控制</li>
+<li>高层模块可以一致性的使用一个组合结构或单个对象，不必关心处理的是单个对象还是组合对象，简化了高层模块的代码</li>
+<li>新增节点对象很方便，无需对现有类库修改，符合开闭原则</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>新增节点不容易改变类型，必须进行类型检查</li>
+</ul>
+
+        </div>
+        <footer class="article-footer">
+            
+    <div class="jiathis_style">
+    <span class="jiathis_txt">分享到：</span>
+    <a class="jiathis_button_qzone">QQ空间</a>
+    <a class="jiathis_button_tsina">新浪微博</a>
+    <a class="jiathis_button_tqq">腾讯微博</a>
+    <a class="jiathis_button_weixin">微信</a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+    <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<style>
+    .jiathis_style div:first-child:not(.jiadiv_01) {
+        width: auto !important;
+        border: none !important;
+    }
+    .jiathis_style .jiadiv_01 {
+        margin: 10px 0;
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .jiathis_style .jiadiv_01 div:first-child {
+        display: none;
+    }
+    .jiathis_style .jiadiv_02 {
+        padding: 7px 0 !important;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle {
+        width: 85px;
+        border: none;
+        height: auto;
+        margin: 3px 10px;
+        padding: 6px 10px;
+        border-radius: 4px;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:hover {
+        border: none;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:nth-child(even) {
+        margin-left: 0;
+    }
+    .jiathis_style .jtico:hover {
+        opacity: 1;
+    }
+    .jiathis_style .ckepopBottom,
+    .jiathis_style .centerBottom {
+        width: auto !important;
+        padding: 5px;
+        background: #f7f7f7;
+    }
+</style>
+
+
+
+
+        </footer>
+    </div>
+</article>
+<!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zMjA1Ni84NjIw">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/xuer80" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2018/03/22/第二十二章-享元模式/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            第二十二章-享元模式
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2018/01/22/第二十章-适配器模式/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">第二十章-适配器模式</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="no-thumbnail">
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/散文/">散文</a></p>
+                            <p class="item-title"><a href="/2018/04/20/中兴良药/" class="title">中兴良药</a></p>
+                            <p class="item-date"><time datetime="2018-04-20T03:52:53.000Z" itemprop="datePublished">2018-04-20</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Android/">Android</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/Android/Android应用层/">Android应用层</a></p>
+                            <p class="item-title"><a href="/2018/04/06/MVC架构/" class="title">MVC架构</a></p>
+                            <p class="item-date"><time datetime="2018-04-06T14:47:52.000Z" itemprop="datePublished">2018-04-06</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/屠龙技/">屠龙技</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/屠龙技/设计模式/">设计模式</a></p>
+                            <p class="item-title"><a href="/2018/04/05/第二十五章-易混淆设计模式盘点/" class="title">第二十五章-易混淆设计模式盘点</a></p>
+                            <p class="item-date"><time datetime="2018-04-05T09:16:34.000Z" itemprop="datePublished">2018-04-05</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/屠龙技/">屠龙技</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/屠龙技/设计模式/">设计模式</a></p>
+                            <p class="item-title"><a href="/2018/03/29/第二十四章-桥接模式/" class="title">第二十四章-桥接模式</a></p>
+                            <p class="item-date"><time datetime="2018-03-29T14:01:20.000Z" itemprop="datePublished">2018-03-29</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/屠龙技/">屠龙技</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/屠龙技/设计模式/">设计模式</a></p>
+                            <p class="item-title"><a href="/2018/03/23/第二十三章-外观模式/" class="title">第二十三章-外观模式</a></p>
+                            <p class="item-date"><time datetime="2018-03-23T09:26:58.000Z" itemprop="datePublished">2018-03-23</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/Android应用层/">Android应用层</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/Android应用层/Android架构/">Android架构</a><span class="category-list-count">2</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/屠龙技/">屠龙技</a><span class="category-list-count">26</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/屠龙技/数据结构与算法/">数据结构与算法</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/屠龙技/数据结构与算法/算法/">算法</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/屠龙技/设计模式/">设计模式</a><span class="category-list-count">25</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发工具/">开发工具</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/开发工具/Git/">Git</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/操作系统/">操作系统</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/操作系统/Linux/">Linux</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/操作系统/Linux/linux基础/">linux基础</a><span class="category-list-count">2</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/散文/">散文</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/">编程语言</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/C/">C</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/C/C-Primer-Plus/">C Primer Plus</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/Java/">Java</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/Java/Java核心技术/">Java核心技术</a><span class="category-list-count">2</span></li></ul></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">13</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Android架构/" style="font-size: 13.33px;">Android架构</a> <a href="/tags/C/" style="font-size: 16.67px;">C</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Java/" style="font-size: 13.33px;">Java</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/linux/" style="font-size: 13.33px;">linux</a> <a href="/tags/散文/" style="font-size: 13.33px;">散文</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/设计模式/" style="font-size: 20px;">设计模式</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 xuer80</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'http://xuer80.com/2018/03/22/第二十一章-组合模式/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

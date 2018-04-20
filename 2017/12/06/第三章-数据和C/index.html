@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>第三章-数据和C | Xuer80</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="C" />
+    
+    <meta name="description" content="变量与常量数据  数据就是承载信息的数字和字符 有些数据类型在程序使用之前已预先设定，并在整个程序运行过程中没有变化，即为常量，constant 其他数据类型在程序运行期间可能会改变或被赋值，称为变量。   数据：数据类型关键字 C语言中，最初有int long short unsigned char float double 7个关键字，C90加了signed,void关键字，C99添加了_B">
+<meta name="keywords" content="C">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第三章-数据和C">
+<meta property="og:url" content="http://xuer80.com/2017/12/06/第三章-数据和C/index.html">
+<meta property="og:site_name" content="Xuer80">
+<meta property="og:description" content="变量与常量数据  数据就是承载信息的数字和字符 有些数据类型在程序使用之前已预先设定，并在整个程序运行过程中没有变化，即为常量，constant 其他数据类型在程序运行期间可能会改变或被赋值，称为变量。   数据：数据类型关键字 C语言中，最初有int long short unsigned char float double 7个关键字，C90加了signed,void关键字，C99添加了_B">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://p05pz65vj.bkt.clouddn.com/%E8%BD%AC%E4%B9%89%E5%BA%8F%E5%88%97.PNG">
+<meta property="og:updated_time" content="2017-12-08T13:27:33.497Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="第三章-数据和C">
+<meta name="twitter:description" content="变量与常量数据  数据就是承载信息的数字和字符 有些数据类型在程序使用之前已预先设定，并在整个程序运行过程中没有变化，即为常量，constant 其他数据类型在程序运行期间可能会改变或被赋值，称为变量。   数据：数据类型关键字 C语言中，最初有int long short unsigned char float double 7个关键字，C90加了signed,void关键字，C99添加了_B">
+<meta name="twitter:image" content="http://p05pz65vj.bkt.clouddn.com/%E8%BD%AC%E4%B9%89%E5%BA%8F%E5%88%97.PNG">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?5afbe52ffe1cab6bf0db3773c7af2e11";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+    
+
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">大道无为</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Android/">Android</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Android/Android应用层/">Android应用层</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/屠龙技/">屠龙技</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/屠龙技/数据结构与算法/">数据结构与算法</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/屠龙技/设计模式/">设计模式</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发工具/">开发工具</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发工具/Git/">Git</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/操作系统/">操作系统</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/操作系统/Linux/">Linux</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/散文/">散文</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/编程语言/">编程语言</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/编程语言/C/">C</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/编程语言/Java/">Java</a></li></ul></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">关于</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/booklist/index.html">书单</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><input type="hidden" name="sitesearch" value="http://xuer80.com"></form>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/编程语言/">编程语言</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/编程语言/C/">C</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/编程语言/C/C-Primer-Plus/">C Primer Plus</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-第三章-数据和C" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        第三章-数据和C
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2017/12/06/第三章-数据和C/" class="article-date">
+            <time datetime="2017-12-06T08:20:49.000Z" itemprop="datePublished">2017-12-06</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/C/">C</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <ol>
+<li><p>变量与常量数据</p>
+<ul>
+<li>数据就是承载信息的数字和字符</li>
+<li>有些数据类型在程序使用之前已预先设定，并在整个程序运行过程中没有变化，即为常量，constant</li>
+<li>其他数据类型在程序运行期间可能会改变或被赋值，称为变量。</li>
+</ul>
+</li>
+<li><p>数据：数据类型关键字</p>
+<p>C语言中，最初有int long short unsigned char float double 7个关键字，C90加了signed,void关键字，C99添加了_Bool , _Complex, _Imaginary三个关键字。</p>
+<p>计算机存储方式分两大基本类型：整数类型和浮点类型</p>
+<blockquote>
+<p>位、字节和字是描述计算机数据单元或存储单元的术语</p>
+<p>最小的存储单元是位bit，可存储0或1。位是计算机内存的基本构建块</p>
+<p>字节byte是常用的计算机存储单位。一字节均为8位(至少衡量存储单位时是这样)，那么8位直接就有256(2的8次方)种可能的0、1组合。通过二进制编码，可表示0~255的整数或一组字符。</p>
+<p>字是设计计算机时给定的自然存储单位，如现在计算机的32位，64位等，计算机的字长越大，其数据转移越快，允许的内存访问也更多</p>
+</blockquote>
+<ul>
+<li>计算机以二进制数字存储整数，如存7，二进制是111，存在8位字节中，需要把前5位都设置为0，后三位设置成1.</li>
+<li>一个值后面加小数点就成为了浮点值。计算机把浮点数分成小数部分和指数部分两部分存储。浮点数可表示的范围比整数大。</li>
+<li>因为任何区间内都有无数个实数，所以计算机浮点数不能表示区间所有值，浮点数只能近似于实际值。</li>
+</ul>
+</li>
+<li><p>C语言基本数据类型</p>
+<ol>
+<li><p>int类型</p>
+<p>C语言中的整型类型可表示不同的取值范围和正负值。int类型是符号整型，其取值范围依计算机系统而异。一般而言，存储一个int要占用一个机器字长，如个人计算机32位，那么用32位来存储一个int值。ISO C规定int取值范围最小为-32768~32767。</p>
+<ul>
+<li><p>声明int变量</p>
+<p>int a;</p>
+<p>int a,b,c;</p>
+<p>以上均是有效声明</p>
+</li>
+<li><p>初始化变量</p>
+<p>初始化变量即为变量赋一个初始值。</p>
+<p>int a = 21;</p>
+<p>int b =22,c = 23;</p>
+<p>=为赋值符号。</p>
+<p>声明类型，为变量创建和标记存储空间，初始化，则为其内存空间赋值。</p>
+</li>
+<li><p>int类型常量</p>
+<p>22,23等都是整型常量或整型字面量。C把不含小数点和指数的数作为整数。非常大的整数除外，可能是long类型。 %d(转换说明)与int值匹配，可以使int类型的常量、变量或表达式</p>
+</li>
+<li><p>八进制和十六进制</p>
+<p>因为8和16都是2的幂，所以很常用。如十六进制3是0011,5是0101。35的位组合是00110101,53的组合是01010011.这种对应关系使得十六进制和二进制转换很方便。用0X或0x前缀表示十六进制。单独的0表示八进制。当然无论采用哪种进制表示，计算机内部都以二进制进行编码。十进制显示数字用%d；以八进制显示数字用%o；以十六进制显示数字用%x。如果要显示其前缀，必须使用%#o,%#0X。</p>
+</li>
+</ul>
+</li>
+<li><p>其他整数类型</p>
+<p>C语言提供3个附属关键字修饰基本整数类型：short、long和unsigned。</p>
+<ul>
+<li>short int类型(简写short) 占用存储空间可能比int类型少，常用于较小数值以节约空间，与int类似，其有符合类型</li>
+<li>long int 或long  占用的存储空间可能比int多，用于较大数值场合，也是有符号类型。</li>
+<li>long long int 或long long(C99标准加入)，占用的存储空间可能比long多，适用于更大数值场合。该类型至少占64位。也是有符号类型</li>
+<li>unsigned int 或 unsigned只用于非负值的场合。这种类型与有符号类型表示的范围不同，如16位unsigned int允许的取值范围是0~65535，而不是-32768~32767.因此无符号整数可表示更大的数。</li>
+<li>C90标准中，添加了unsigned long int或unsigned long、unsigned short int或unsigned short类型，C99标准又添加了unsigned long long int 或unsigned long long。</li>
+<li>在任何有符号类型前面添加关键字signed，可强调使用有符号类型的意图。无符号类型一定要加unsigned以区分。</li>
+</ul>
+<blockquote>
+<p>为何short类型<strong>可能</strong>比iint类型占用的空间少，long类型<strong>可能</strong>比int类型占用的空间多？因为C语言只规定short占用的存储空间不能多于int，long占用的存储空间不能少于int。这样规定是为了适应不同的机器。</p>
+<p>C标准对基本数据类型只规定了允许的最小值。如16位机，short和int最小取值范围是[-32768,32767]，32位机，long的最小取值也有规定。</p>
+<p>int类型，首先应用考虑unsigned类型，通常用于计数，因为不用负值，可以表示更大的正数。</p>
+<p>一般程序的数值默认为int类型。更大的会根据实际情况选择不同的类型。</p>
+</blockquote>
+<p><strong>整数溢出</strong> ：即整数超出了相应类型的取值范围。比如对于 int和unsigned int超过最大值时，变量会从最小值重新计数，不同的是unsigned从0开始重新计数，int则从负数最小值开始计数。当然C标准为定义有符号类型的溢出规则，还应注意其他情况。</p>
+<p><strong>打印输出</strong>：unsigned int类型，用%u转换说明；long  %ld；%lx表示十六进制打印long类型；%lo表示八进制打印long类型。</p>
+<p>对于short类型，可用h前缀。%hd表示十进制显示short；%ho 八进制显示；%lu</p>
+<p>用错误的转换会得到意外的结果。</p>
+<p>为何要进行转换：int类型被认为是计算机处理整数类型时最高效的类型，因此在short和int大小不同的计算系统中，用int类型的参数传递速度更快。</p>
+<p>h修饰符啥用？使用h修饰符可以显示较大整数被截断成short类型的情况。</p>
+<p>so,在使用printf时，检查转换说明与类型匹配很重要。</p>
+</li>
+<li><p>使用字符：char类型</p>
+<p>char类型用于存储字符(如字母或标点符号)，但从技术层面看，char是整数类型，因为char实际上存储的是整数而不是字符。计算机使用数字编码来处理字符，即用特定的整数表示特定的字符，本书用ASCII编码，其中整数65代表A,因此存储字母实际上存储的是整数65。</p>
+<p>标准ASCII码的范围是0~127，只需7位二进制数即可表示。一般char类型被定义为8位的存储单元，容纳ASCII码绰绰有余。</p>
+<p>C语言把1字节定义为char类型占用的位bit数，因此无论是多少位的系统，都可以使用char类型。</p>
+<ul>
+<li><p>声明   </p>
+<p>char re;</p>
+<p>char a,b;</p>
+</li>
+<li><p>字符常量和初始化</p>
+<p>char re = ‘A’;   C中单引号括起来的字符被称为<strong>字符常量</strong>，编译器一发现’A’，就会将其转换成相应的代码值。</p>
+<p>单引号只适用于字符、数字和标点符号，有一些ASCII字符打印不出。C提供3种方式表示</p>
+<p>如使用ASCII码  char beep = 7;  蜂鸣字符的ASCII码值是7</p>
+<p>使用转移序列   PS:把转移序列赋给字符变量时，必须用单引号把转移序列括起来。</p>
+<p><img src="http://p05pz65vj.bkt.clouddn.com/%E8%BD%AC%E4%B9%89%E5%BA%8F%E5%88%97.PNG" alt="转义序列"></p>
+<p>如char ne = ‘\n’表示换行。C标准规定警报字符不得改变光标位置。其余字符如分页，换行等字符主要是对活跃位置或光标位置的影响。</p>
+</li>
+<li><p>转义序列和ASCII码之间，转义序列更具可移植性，优先使用</p>
+</li>
+<li><p>%c指明打印的字符。如果用%d则会打印相应的整数值。</p>
+</li>
+<li><p>char如果为有符号类型，则取值-128~127，无符号则0~255.根据C90标准，C允许char前用signed或unsigned修饰。这在处理<strong>小整数</strong>时很有用，如果用来处理字符，那么char前就无需使用任何修饰符。</p>
+</li>
+</ul>
+</li>
+<li><p>_Bool类型</p>
+<p>C99标准添加_Bool类型，用于表示布尔值，即逻辑值true和false。C用1表示true，0表示false。所以 _Bool类型实际上也是一种整数类型。但原则上仅占1位存储空间，因为对0和1而言，1位存储空间足够了。</p>
+</li>
+<li><p>可移植类型：stdint.h和inttypes.h</p>
+<p>没看懂</p>
+</li>
+<li><p>float、double和long double</p>
+<p>浮点类型是包括小数在内更大范围的数，类似于科学计数法，常表示非常大或非常小的数，有float、double和long double类型。如322.56，科学计数表示3.2256x10^2，指数计数法3.2256e2。</p>
+<p>C标准规定，float类型必须至少能表示6位有效数字。通常系统存储一个浮点数要占用32位，其中8位用于表示指数的值和符号，剩下24位用于表示非指数部分(也叫作尾数或有效数)及其符号。</p>
+<p>C提供的另一种浮点类型是double(双精度)，其和float类型的最小最值范围相同，但至少必须能表示10位有效数字。一般double占用64位，系统将多的32位全部用来表示非指数部分，不仅增加了有效数字的位数(即提高了精度),而且还减少了舍入误差。无论哪种分配方式，double类型的值至少有13位有效数字，超过了标准的最低位数规定。</p>
+<p>C语言规定的第三种浮点类型是long double，以满足比double类型更高的精度要求。不过C只能保证其至少与double类型的精度相同。</p>
+<ul>
+<li><p>浮点型常量</p>
+<p>有符号的数字    -1.23E+12     2.87-3。</p>
+<p>正号可省略，小数点和指数部分不能同时省略。如 3.13   .2   4e16   .8E-5   100.</p>
+<p>编辑器默认浮点型是double类型精度，在浮点数后加后缀f，即可看成float类型运算。加L则表示long double类型。</p>
+</li>
+<li><p>C99添加新的浮点常量格式：用十六进制表示浮点型常量，即十六进制数前加十六制前缀0x，用p代表e，用2的幂代替10的幂，如0xa.1fp10</p>
+<p>十六进制a等于十进制10,.lf是1/16加上15/256，p10是2^10或1024。</p>
+</li>
+<li><p>打印 用%f转换说明表示打印十进制计数法的float和double类型浮点数，%e打印指数计数法的浮点数。如系统支持十六进制格式浮点数，可用a和A代替e和E。打印long double类型要使用%lf、%le或%la转换说明。</p>
+</li>
+<li><p>浮点值的上溢和下溢</p>
+<p>当计算导致数字过大，超过当前类型表达范围，就会发生上溢。C规定，这种情况下会给其赋一个表示无穷大的值。</p>
+<p>当除以一个很小的数时则较为复杂。float类型的数以指数和尾数部分存储。计算过程中损失原末尾有效位上数字的情况称为下溢。C把损失了类型全精度的浮点值称为<strong>低于正常的浮点值</strong>。C库已提供了用于检查计算是否会产生低于正常值的函数。</p>
+</li>
+</ul>
+<p>​</p>
+<p>​</p>
+</li>
+</ol>
+</li>
+</ol>
+
+        </div>
+        <footer class="article-footer">
+            
+    <div class="jiathis_style">
+    <span class="jiathis_txt">分享到：</span>
+    <a class="jiathis_button_qzone">QQ空间</a>
+    <a class="jiathis_button_tsina">新浪微博</a>
+    <a class="jiathis_button_tqq">腾讯微博</a>
+    <a class="jiathis_button_weixin">微信</a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+    <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<style>
+    .jiathis_style div:first-child:not(.jiadiv_01) {
+        width: auto !important;
+        border: none !important;
+    }
+    .jiathis_style .jiadiv_01 {
+        margin: 10px 0;
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .jiathis_style .jiadiv_01 div:first-child {
+        display: none;
+    }
+    .jiathis_style .jiadiv_02 {
+        padding: 7px 0 !important;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle {
+        width: 85px;
+        border: none;
+        height: auto;
+        margin: 3px 10px;
+        padding: 6px 10px;
+        border-radius: 4px;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:hover {
+        border: none;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:nth-child(even) {
+        margin-left: 0;
+    }
+    .jiathis_style .jtico:hover {
+        opacity: 1;
+    }
+    .jiathis_style .ckepopBottom,
+    .jiathis_style .centerBottom {
+        width: auto !important;
+        padding: 5px;
+        background: #f7f7f7;
+    }
+</style>
+
+
+
+
+        </footer>
+    </div>
+</article>
+<!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zMjA1Ni84NjIw">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/xuer80" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2017/12/07/第六章-抽象工厂模式/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            第六章-抽象工厂模式
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2017/11/30/第五章-工厂方法模式/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">第五章-工厂方法模式</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="no-thumbnail">
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/散文/">散文</a></p>
+                            <p class="item-title"><a href="/2018/04/20/中兴良药/" class="title">中兴良药</a></p>
+                            <p class="item-date"><time datetime="2018-04-20T03:52:53.000Z" itemprop="datePublished">2018-04-20</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Android/">Android</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/Android/Android应用层/">Android应用层</a></p>
+                            <p class="item-title"><a href="/2018/04/06/MVC架构/" class="title">MVC架构</a></p>
+                            <p class="item-date"><time datetime="2018-04-06T14:47:52.000Z" itemprop="datePublished">2018-04-06</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/屠龙技/">屠龙技</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/屠龙技/设计模式/">设计模式</a></p>
+                            <p class="item-title"><a href="/2018/04/05/第二十五章-易混淆设计模式盘点/" class="title">第二十五章-易混淆设计模式盘点</a></p>
+                            <p class="item-date"><time datetime="2018-04-05T09:16:34.000Z" itemprop="datePublished">2018-04-05</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/屠龙技/">屠龙技</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/屠龙技/设计模式/">设计模式</a></p>
+                            <p class="item-title"><a href="/2018/03/29/第二十四章-桥接模式/" class="title">第二十四章-桥接模式</a></p>
+                            <p class="item-date"><time datetime="2018-03-29T14:01:20.000Z" itemprop="datePublished">2018-03-29</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/屠龙技/">屠龙技</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/屠龙技/设计模式/">设计模式</a></p>
+                            <p class="item-title"><a href="/2018/03/23/第二十三章-外观模式/" class="title">第二十三章-外观模式</a></p>
+                            <p class="item-date"><time datetime="2018-03-23T09:26:58.000Z" itemprop="datePublished">2018-03-23</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/Android应用层/">Android应用层</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/Android应用层/Android架构/">Android架构</a><span class="category-list-count">2</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/屠龙技/">屠龙技</a><span class="category-list-count">26</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/屠龙技/数据结构与算法/">数据结构与算法</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/屠龙技/数据结构与算法/算法/">算法</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/屠龙技/设计模式/">设计模式</a><span class="category-list-count">25</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发工具/">开发工具</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/开发工具/Git/">Git</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/操作系统/">操作系统</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/操作系统/Linux/">Linux</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/操作系统/Linux/linux基础/">linux基础</a><span class="category-list-count">2</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/散文/">散文</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/">编程语言</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/C/">C</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/C/C-Primer-Plus/">C Primer Plus</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/Java/">Java</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/Java/Java核心技术/">Java核心技术</a><span class="category-list-count">2</span></li></ul></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">13</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Android架构/" style="font-size: 13.33px;">Android架构</a> <a href="/tags/C/" style="font-size: 16.67px;">C</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Java/" style="font-size: 13.33px;">Java</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/linux/" style="font-size: 13.33px;">linux</a> <a href="/tags/散文/" style="font-size: 13.33px;">散文</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/设计模式/" style="font-size: 20px;">设计模式</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 xuer80</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'http://xuer80.com/2017/12/06/第三章-数据和C/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

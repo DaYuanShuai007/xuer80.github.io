@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>第二章 linux基础命令 | Xuer80</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="linux" />
+    
+    <meta name="description" content="强大的shell linux系统内核负责驱动硬件、管理活动和分配/管理硬件资源等任务，让计算机各个硬件各司其职。用户不建议直接去编辑内核参数，可通过基于“系统调用接口”开发出的程序/服务管理计算机。 shell即壳，充当的是人与内核(硬件)的翻译官，shell终端按照用户的命令调用相应程序。现在很多linux系统默认的字符Shell终端是Bash(Bourne-Again-SHell)解释器。主">
+<meta name="keywords" content="linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第二章 linux基础命令">
+<meta property="og:url" content="http://xuer80.com/2017/11/23/第二章-linux基础命令/index.html">
+<meta property="og:site_name" content="Xuer80">
+<meta property="og:description" content="强大的shell linux系统内核负责驱动硬件、管理活动和分配/管理硬件资源等任务，让计算机各个硬件各司其职。用户不建议直接去编辑内核参数，可通过基于“系统调用接口”开发出的程序/服务管理计算机。 shell即壳，充当的是人与内核(硬件)的翻译官，shell终端按照用户的命令调用相应程序。现在很多linux系统默认的字符Shell终端是Bash(Bourne-Again-SHell)解释器。主">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2017-11-23T15:29:58.476Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="第二章 linux基础命令">
+<meta name="twitter:description" content="强大的shell linux系统内核负责驱动硬件、管理活动和分配/管理硬件资源等任务，让计算机各个硬件各司其职。用户不建议直接去编辑内核参数，可通过基于“系统调用接口”开发出的程序/服务管理计算机。 shell即壳，充当的是人与内核(硬件)的翻译官，shell终端按照用户的命令调用相应程序。现在很多linux系统默认的字符Shell终端是Bash(Bourne-Again-SHell)解释器。主">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?5afbe52ffe1cab6bf0db3773c7af2e11";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+    
+
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">大道无为</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Android/">Android</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Android/Android应用层/">Android应用层</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/屠龙技/">屠龙技</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/屠龙技/数据结构与算法/">数据结构与算法</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/屠龙技/设计模式/">设计模式</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发工具/">开发工具</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发工具/Git/">Git</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/操作系统/">操作系统</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/操作系统/Linux/">Linux</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/散文/">散文</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/编程语言/">编程语言</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/编程语言/C/">C</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/编程语言/Java/">Java</a></li></ul></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">关于</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/booklist/index.html">书单</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><input type="hidden" name="sitesearch" value="http://xuer80.com"></form>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/操作系统/">操作系统</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/操作系统/Linux/">Linux</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/操作系统/Linux/linux基础/">linux基础</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-第二章-linux基础命令" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        第二章 linux基础命令
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2017/11/23/第二章-linux基础命令/" class="article-date">
+            <time datetime="2017-11-23T09:50:54.000Z" itemprop="datePublished">2017-11-23</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/linux/">linux</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <ol>
+<li><p>强大的shell</p>
+<p>linux系统内核负责驱动硬件、管理活动和分配/管理硬件资源等任务，让计算机各个硬件各司其职。用户不建议直接去编辑内核参数，可通过基于“系统调用接口”开发出的程序/服务管理计算机。</p>
+<p>shell即壳，充当的是人与内核(硬件)的翻译官，shell终端按照用户的命令调用相应程序。现在很多linux系统默认的字符Shell终端是Bash(Bourne-Again-SHell)解释器。主流linux系统选择Bash解释器作为命令行终端有以下4个优势</p>
+<ul>
+<li>通过上下方向键来调取过往执行过的linux命令。</li>
+<li>命令或参数仅需输入前几位就可以用tab键补全</li>
+<li>强大的批处理脚本</li>
+<li>实用的环境变量</li>
+</ul>
+</li>
+<li><p>执行查看帮助命令</p>
+<p>常见的linux命令格式如下</p>
+<blockquote>
+<p><strong>命令名称 [命令参数][命令对象]</strong></p>
+<p>注意:命令名称，命令参数，命令对象之间请用空格键分隔。</p>
+</blockquote>
+<p>命令对象一般指要被处理的文件、目录、用户等资源，而命令参数可以选用<strong>长格式</strong> (完整的选项名称)也可以选<strong>短格式</strong> ，一般分别用–与-做前缀。</p>
+<blockquote>
+<p>长格式如:man <strong>–help</strong></p>
+<p>短格式如:man <strong>-h</strong></p>
+</blockquote>
+<p>在终端输入man man 命令来查看man命令自身的帮助信息</p>
+<p>进入man命令帮助信息界面后，常用的操作按键</p>
+<p>|     按键      |           用处           |<br>| :———: | :——————–: |<br>|     空格键     |         向下翻一页。         |<br>| [Page Down] |         向下翻一页。         |<br>|  [Page Up]  |         向上翻一页。         |<br>|   [HOME]    |        直接前往首页。         |<br>|    [END]    |        直接前往尾页。         |<br>|    /关键词     | 从上至下搜索某个关键词,如”/linux”。 |<br>|    ?关键词     | 从下至上搜索某个关键词,如”?linux”。 |<br>|      n      |     定位到下一个搜索到的关键词。     |<br>|      N      |     定位到上一个搜索到的关键词。     |<br>|      q      |        退出帮助文档。         |</p>
+<p>man命令输出帮助信息的结构主要包括：</p>
+<p>|    结构名称     |     代表意义     |<br>| :———: | :———-: |<br>|    NAME     |    命令的名称     |<br>|  SYNOPSIS   |  参数的大致使用方法   |<br>| DESCRIPTION |     介绍说明     |<br>|  EXAMPLES   |  演示（附带简单说明）  |<br>|  OVERVIEW   |      概述      |<br>|  DEFAULTS   |    默认的功能     |<br>|   OPTIONS   | 具体的可用选项（带介绍） |<br>| ENVIRONMENT |     环境变量     |<br>|    FILES    |    用到的文件     |<br>|  SEE ALSO   |    相关的资料     |<br>|   HISTORY   |  维护历史与联系方式   |</p>
+</li>
+<li><p>常用系统工作命令</p>
+<p>echo命令用于在终端显示字符串或输出变量提取后的值，格式为：echo [字符串|$变量]</p>
+<p>把指定字符串输出到终端屏幕：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@linuxprobe ~]# echo Linuxprobe.Com</span><br><span class="line">Linuxprobe.Com</span><br></pre></td></tr></table></figure>
+<p>使用$变量 的方式提取变量值并输出到屏幕：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@linuxprobe ~]# echo $SHELL</span><br><span class="line">/bin/bash</span><br></pre></td></tr></table></figure>
+<p>date命令用于显示及设置系统的时间或日期，格式为：date [选项] 【+指定的格式】。</p>
+<p>强大的date命令只需要键入以+开头的参数即可按照指定格式来输出系统的时间或日期，日常工作便可以把打包数据的备份命令与指定格式输出的时间信息结合到一起，便可以便捷的了解到每个文件的备份时间。date命令常见格式：</p>
+<p>|  参数  |           作用            |<br>| :–: | :———————: |<br>|  %t  |        跳格[TAB键]         |<br>|  %H  |        小时(00-23)        |<br>|  %I  |        小时(00-12)        |<br>|  %M  |        分钟(00-59)        |<br>|  %S  |        秒（00-59）         |<br>|  %X  |     相当于%I:%M:%S %p      |<br>|  %Z  |          显示时区           |<br>|  %p  |        显示本地AM或PM        |<br>|  %A  |  星期几 (Sunday-Saturday)  |<br>|  %a  |      星期几 (Sun-Sat)      |<br>|  %B  | 完整月份 (January-December) |<br>|  %b  |     缩写月份 (Jan-Dec)      |<br>|  %d  |        日(01-31)         |<br>|  %j  |    一年中的第几天(001-366)     |<br>|  %m  |        月份(01-12)        |<br>|  %Y  |          完整的年份          |</p>
+</li>
+</ol>
+<p>reboot命令用于重启系统，格式为 reboot</p>
+<p>poweroff命令由于关闭系统，格式为poweroff</p>
+<p>wget命令用于在终端中下载网络文件，格式为: wget [参数] 下载地址。其参数为</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">-b</th>
+<th style="text-align:center">后台下载模式。</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">-O</td>
+<td style="text-align:center">下载到指定目录。</td>
+</tr>
+<tr>
+<td style="text-align:center">-t</td>
+<td style="text-align:center">最大尝试次数。</td>
+</tr>
+<tr>
+<td style="text-align:center">-c</td>
+<td style="text-align:center">断点续传</td>
+</tr>
+<tr>
+<td style="text-align:center">-p</td>
+<td style="text-align:center">下载页面内所有资源,包括图片、视频等。</td>
+</tr>
+<tr>
+<td style="text-align:center">-r</td>
+<td style="text-align:center">递归下载</td>
+</tr>
+</tbody>
+</table>
+<p>ps命令用于查看系统中的进程状态，格式为： ps [参数]。常见ps命令参数有：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">参数</th>
+<th style="text-align:center">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">-a</td>
+<td style="text-align:center">显示所有的进程（包括其他用户的）</td>
+</tr>
+<tr>
+<td style="text-align:center">-u</td>
+<td style="text-align:center">用户以及其他详细信息</td>
+</tr>
+<tr>
+<td style="text-align:center">-x</td>
+<td style="text-align:center">显示没有控制终端的进程</td>
+</tr>
+</tbody>
+</table>
+<p>linux系统中运行许多进程，合理管理有利于系统优化，最常见的5种进程是运行、中断、不可中断、僵死与停止，含义为</p>
+<p>R(运行)：正在运行或在运行队列中等待</p>
+<p>S(中断)：休眠中，在等待某个条件的形成或接收到信号</p>
+<p>D(不可中断)：收到信号不唤醒和不可运行，进程必须等待直到有中断发生</p>
+<p>Z(僵死)：进程已终止，但进程的描述符存在，知道父进程调用wait4()系统调用后释放。</p>
+<p>T(停止)：进程收到SIGSTOP,SIGSTP,SIGTIN,SIGTOU信号后停止运行。</p>
+<p>top命令用于动态的监视进程活动与系统负载等信息，格式为：top。可看作强化版的windows任务管理器。</p>
+<p>top命令前面五行为系统整体的统计信息</p>
+<blockquote>
+<p>第<strong>1</strong>行:系统时间，运行时间，登录终端数，系统负载（分别为1分钟、5分钟、15分钟的平均值，数值越小意味着负载越低）。</p>
+<p>第<strong>2</strong>行:进程总数，运行中的，睡眠中的，停止的，僵死的。</p>
+<p>第<strong>3</strong>行:用户占用资源，系统内核占用资源，改变过优先级的进程，空闲的资源，等待输入输出的时间。</p>
+<p>此行数据均为CPU数据并以百分比格式显示，例如”99.2 id”意味着有99.2%的CPU处理器资源正在空闲中。</p>
+<p>第<strong>4</strong>行:物理内存总量，使用量，空闲量，作为内核缓存的内存量。</p>
+<p>第<strong>5</strong>行:虚拟内存总量，使用量，空闲量，已被提前加载的内存数据。</p>
+</blockquote>
+<p>pidof命令用于查询某个指定服务进程的PID号码值，格式为：pidof [参数] 【服务名称】</p>
+<p>pid是区别每个进程的唯一号码，每次在计算机上运行相同的服务程序都很少会获得同样值得pid号码。</p>
+<p>kill命令用于终止某个指定pid号码的服务进程，格式为： kill [参数] 【进程PID号】</p>
+<p>killall命令用于终止某个指定名称的服务所对应的全部进程，格式为：kill [参数] 【进程名称】</p>
+<p>平时在系统终端执行一个命令后，如果想立刻停止他，可同时按下系统组合键ctrl+C，这样命令的进程就会立即终止。如果在执行命令最后加一个&amp;符合，那么命令就会被放到后台执行了。</p>
+<ol start="4">
+<li><p>系统状态检测命令</p>
+<p>ifconfig用于获取网卡配置与网络状态等信息：格式为 ifconfig [网络设备] 【参数】</p>
+<p>uname命令用于查看系统内核与系统版本信息，格式为： uname [-a]</p>
+<p>一般-a参数来完整查看当前系统的硬件信息。</p>
+<p>uptime命令用于查看系统的负载信息，格式为：uptime。</p>
+<p>可以显示当前系统时间、系统已运行时间、启用终端数量以及平均负载值等信息数据。平均负载值是最近1分钟，5分钟，15分钟的系统压力情况，负载值越小越好，尽量不要长期超过1。另可搭配watch -n 1 uptime命令来每秒刷新一次来获得当前的系统负载情况。</p>
+<p>free命令用于显示当前系统中内存的使用量信息，格式为：free [-h] 。</p>
+<p>|       总计内存量        |  已用量  | 可用量  | 进程共享的内存量 | 磁盘缓存的内存量 | 缓存的内存量  |        |<br>| :—————-: | :—: | :–: | :——: | :——: | :—–: | :—-: |<br>|                    | total | used |   free   |  shared  | buffers | cached |<br>|        Mem:        | 1.8G  | 1.3G |   542M   |   9.8M   |  1.6M   |  413M  |<br>| -/+ buffers/cache: |       | 869M |   957M   |          |         |        |<br>|       Swap:        | 2.0G  |  0B  |   2.0G   |          |         |        |</p>
+</li>
+</ol>
+
+        </div>
+        <footer class="article-footer">
+            
+    <div class="jiathis_style">
+    <span class="jiathis_txt">分享到：</span>
+    <a class="jiathis_button_qzone">QQ空间</a>
+    <a class="jiathis_button_tsina">新浪微博</a>
+    <a class="jiathis_button_tqq">腾讯微博</a>
+    <a class="jiathis_button_weixin">微信</a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+    <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<style>
+    .jiathis_style div:first-child:not(.jiadiv_01) {
+        width: auto !important;
+        border: none !important;
+    }
+    .jiathis_style .jiadiv_01 {
+        margin: 10px 0;
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .jiathis_style .jiadiv_01 div:first-child {
+        display: none;
+    }
+    .jiathis_style .jiadiv_02 {
+        padding: 7px 0 !important;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle {
+        width: 85px;
+        border: none;
+        height: auto;
+        margin: 3px 10px;
+        padding: 6px 10px;
+        border-radius: 4px;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:hover {
+        border: none;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:nth-child(even) {
+        margin-left: 0;
+    }
+    .jiathis_style .jtico:hover {
+        opacity: 1;
+    }
+    .jiathis_style .ckepopBottom,
+    .jiathis_style .centerBottom {
+        width: auto !important;
+        padding: 5px;
+        background: #f7f7f7;
+    }
+</style>
+
+
+
+
+        </footer>
+    </div>
+</article>
+<!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zMjA1Ni84NjIw">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/xuer80" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2017/11/24/第一章-设计模式纲要及七大原则/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            第一章-设计模式纲要及七大原则
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2017/11/23/第一章-Linux初探/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">第一章 Linux初探</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="no-thumbnail">
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/散文/">散文</a></p>
+                            <p class="item-title"><a href="/2018/04/20/中兴良药/" class="title">中兴良药</a></p>
+                            <p class="item-date"><time datetime="2018-04-20T03:52:53.000Z" itemprop="datePublished">2018-04-20</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Android/">Android</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/Android/Android应用层/">Android应用层</a></p>
+                            <p class="item-title"><a href="/2018/04/06/MVC架构/" class="title">MVC架构</a></p>
+                            <p class="item-date"><time datetime="2018-04-06T14:47:52.000Z" itemprop="datePublished">2018-04-06</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/屠龙技/">屠龙技</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/屠龙技/设计模式/">设计模式</a></p>
+                            <p class="item-title"><a href="/2018/04/05/第二十五章-易混淆设计模式盘点/" class="title">第二十五章-易混淆设计模式盘点</a></p>
+                            <p class="item-date"><time datetime="2018-04-05T09:16:34.000Z" itemprop="datePublished">2018-04-05</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/屠龙技/">屠龙技</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/屠龙技/设计模式/">设计模式</a></p>
+                            <p class="item-title"><a href="/2018/03/29/第二十四章-桥接模式/" class="title">第二十四章-桥接模式</a></p>
+                            <p class="item-date"><time datetime="2018-03-29T14:01:20.000Z" itemprop="datePublished">2018-03-29</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/屠龙技/">屠龙技</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/屠龙技/设计模式/">设计模式</a></p>
+                            <p class="item-title"><a href="/2018/03/23/第二十三章-外观模式/" class="title">第二十三章-外观模式</a></p>
+                            <p class="item-date"><time datetime="2018-03-23T09:26:58.000Z" itemprop="datePublished">2018-03-23</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/Android应用层/">Android应用层</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/Android应用层/Android架构/">Android架构</a><span class="category-list-count">2</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/屠龙技/">屠龙技</a><span class="category-list-count">26</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/屠龙技/数据结构与算法/">数据结构与算法</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/屠龙技/数据结构与算法/算法/">算法</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/屠龙技/设计模式/">设计模式</a><span class="category-list-count">25</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发工具/">开发工具</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/开发工具/Git/">Git</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/操作系统/">操作系统</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/操作系统/Linux/">Linux</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/操作系统/Linux/linux基础/">linux基础</a><span class="category-list-count">2</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/散文/">散文</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/">编程语言</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/C/">C</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/C/C-Primer-Plus/">C Primer Plus</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/Java/">Java</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/Java/Java核心技术/">Java核心技术</a><span class="category-list-count">2</span></li></ul></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">13</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Android架构/" style="font-size: 13.33px;">Android架构</a> <a href="/tags/C/" style="font-size: 16.67px;">C</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Java/" style="font-size: 13.33px;">Java</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/linux/" style="font-size: 13.33px;">linux</a> <a href="/tags/散文/" style="font-size: 13.33px;">散文</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/设计模式/" style="font-size: 20px;">设计模式</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 xuer80</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'http://xuer80.com/2017/11/23/第二章-linux基础命令/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>第一章 初识C语言 | Xuer80</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="C" />
+    
+    <meta name="description" content="C语言起源 1972年，在开发Unix操作系统时在B语言的基础上设计，设计初衷是将其作为程序员使用的编程工具。  选择C语言的理由  设计特性 C是一门流行语言，融合了计算机科学理论和实践的控制特性。其设计理念让用户轻松完成自顶向下的规划、结构化编程和模块化设计。用C语言编写程序更易懂和可靠。PS:现在比C更易懂的，如Java,Python等在骂mmp  高效性 C是高效的语言，程序相对紧凑，运">
+<meta name="keywords" content="C">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第一章 初识C语言">
+<meta property="og:url" content="http://xuer80.com/2017/11/21/第一章-初识C语言/index.html">
+<meta property="og:site_name" content="Xuer80">
+<meta property="og:description" content="C语言起源 1972年，在开发Unix操作系统时在B语言的基础上设计，设计初衷是将其作为程序员使用的编程工具。  选择C语言的理由  设计特性 C是一门流行语言，融合了计算机科学理论和实践的控制特性。其设计理念让用户轻松完成自顶向下的规划、结构化编程和模块化设计。用C语言编写程序更易懂和可靠。PS:现在比C更易懂的，如Java,Python等在骂mmp  高效性 C是高效的语言，程序相对紧凑，运">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2017-12-06T08:22:41.477Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="第一章 初识C语言">
+<meta name="twitter:description" content="C语言起源 1972年，在开发Unix操作系统时在B语言的基础上设计，设计初衷是将其作为程序员使用的编程工具。  选择C语言的理由  设计特性 C是一门流行语言，融合了计算机科学理论和实践的控制特性。其设计理念让用户轻松完成自顶向下的规划、结构化编程和模块化设计。用C语言编写程序更易懂和可靠。PS:现在比C更易懂的，如Java,Python等在骂mmp  高效性 C是高效的语言，程序相对紧凑，运">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?5afbe52ffe1cab6bf0db3773c7af2e11";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+    
+
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">大道无为</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Android/">Android</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Android/Android应用层/">Android应用层</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/屠龙技/">屠龙技</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/屠龙技/数据结构与算法/">数据结构与算法</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/屠龙技/设计模式/">设计模式</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发工具/">开发工具</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发工具/Git/">Git</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/操作系统/">操作系统</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/操作系统/Linux/">Linux</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/散文/">散文</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/编程语言/">编程语言</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/编程语言/C/">C</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/编程语言/Java/">Java</a></li></ul></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">关于</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/booklist/index.html">书单</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><input type="hidden" name="sitesearch" value="http://xuer80.com"></form>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/编程语言/">编程语言</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/编程语言/C/">C</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/编程语言/C/C-Primer-Plus/">C Primer Plus</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-第一章-初识C语言" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        第一章 初识C语言
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2017/11/21/第一章-初识C语言/" class="article-date">
+            <time datetime="2017-11-21T11:40:43.000Z" itemprop="datePublished">2017-11-21</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/C/">C</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <ol>
+<li><p>C语言起源</p>
+<p>1972年，在开发Unix操作系统时在B语言的基础上设计，设计初衷是将其作为程序员使用的编程工具。</p>
+</li>
+<li><p>选择C语言的理由</p>
+<ol>
+<li><p>设计特性</p>
+<p>C是一门流行语言，融合了计算机科学理论和实践的控制特性。其设计理念让用户轻松完成自顶向下的规划、结构化编程和模块化设计。用C语言编写程序更易懂和可靠。PS:现在比C更易懂的，如Java,Python等在骂mmp</p>
+</li>
+<li><p>高效性</p>
+<p>C是高效的语言，程序相对紧凑，运行速度快；具有汇编语言才具有的微调控制能力，可根据具体情况微调程序以获得最大运行速度或最有效的使用内存。强大的控制结构、快速、代码紧凑–让程序更小，可移植到其他计算机是C的优点。PS:在现代高级语言看来，这几条依然有效，但可移植相比之下就搞笑了。。。</p>
+</li>
+<li><p>可移植性</p>
+<p>C是可移植语言，主要是因为无论是linux，windows系统都有相应的C编译器(即把C代码转换成计算机内部指令的程序)，在这一系统中C程序稍作修改，如更改程序头文件等就可以运行。但程序移植一直都是麻烦的事儿，尤其是程序中针对特殊硬件设备(显示器？)或操作系统编写的部分，通常是不可移植的。</p>
+</li>
+<li><p>强大而灵活</p>
+<p>Unix系统及衍生系统大部分都是C语言编写，其他语言Python,logo,basic的许多编译器和解释器也都是采用C来编写。</p>
+</li>
+<li><p>面向程序员</p>
+<p>利用C可以访问硬件、操控内存中的位。丰富的运算符更易表达。C有大型的库，包含众多的C函数，利于解决问题。</p>
+</li>
+<li><p>缺点</p>
+<p>C语言使用指针，方便但又易出错。大量的运算符，让程序紧凑但也可以编写让人费解的代码。等等吧</p>
+</li>
+</ol>
+</li>
+<li><p>C语言的应用范围</p>
+<p>20世纪80年成为小型计算机(Unix系统)的主流语言，现在已经在科学运算，游戏，PC应用，嵌入式系统编程，操作系统等流行。C++在C得基础上嫁接了面向对象的编程工具，几乎是C的超集。学C相当于学了许多C++的知识。</p>
+</li>
+<li><p>计算机能做什么</p>
+<p>CPU(中央处理单元，承担大部分运算工作)从内存(存储程序和文件的工作区)获取并执行一条指令，然后再从内存中获取并执行下一条指令。CPU有若干寄存器组成，每个寄存器存储一个数字，一个寄存器储存下一条指令的内存地址，CPU使用该地址来获取和更新下一条指令。获取指令后，CPU在另一个寄存器中储存该指令，并更新第1个寄存器储存下一条指令的地址。计算机程序最终以数字指令码(即机器语言)来表示。</p>
+</li>
+<li><p>高级计算机语言和编译器</p>
+<p>编译器是把高级语言程序翻译成计算机能理解的机器语言指令集的程序。高级语言可以更抽象人性的方式描述行为，不受限特定的CPU或指令集。</p>
+</li>
+<li><p>语言标准</p>
+<p>1987年布莱恩和丹尼斯合著TCPL即C语言程序设计第一版是公认的C标准，UNIX提供的库成为了标准库。但都是默认。</p>
+<ol>
+<li><p>第一个ANSI/ISO C标准</p>
+<p>美国国家标准协会(ANSI)1989公布ANSI C标准，定义了C语言和C标准库。国际标准化组织1990年采用这套标准ISO C，这两套标准是完全相同的，最终成为C89或C90，业界通常使用ANSI C。并表述C精神。</p>
+<ul>
+<li>信任程序员</li>
+<li>不要妨碍程序员做需要做的事</li>
+<li>保持语言精炼简单</li>
+<li>只提供一种方法执行一项操作</li>
+<li>让程序运行更快，即使不能保证其可移植性</li>
+</ul>
+</li>
+<li><p>C99标准</p>
+<p>C99遵循C90标准语言精炼简单，并没添加新特性，而达到新目标。第一，支持国际化编程，如提供多种方法处理国际字符集；第二，调整现有实践致力于解决明显的缺陷；第三，为适应科学和工程项目中的关键数值计算，提高C的适应性。并尽量与C90和C++兼容。</p>
+</li>
+<li><p>C11标准</p>
+<p>出去对编程安全担忧，不在强调信任程序员，添加了可选项支持当前使用处理器的计算机。</p>
+<p>​</p>
+</li>
+</ol>
+</li>
+<li><p>使用C语言的7个步骤</p>
+<p>C是编译型语言，理想状态下(实际项目可能有复用改进等情况)，编写C程序的过程有7步</p>
+<ol>
+<li><p>第一步：定义程序的目标</p>
+<p>写程序之前，要有清晰思路。要明确要解决的具体问题或者达到的目标，思考程序需要哪些信息，进行哪些计算和控制，程序需要反馈什么信息，这个步骤可以用流程图，UML图等等分析</p>
+</li>
+<li><p>设计程序</p>
+<p>了解程序应该完成的目标任务后，应考虑如何用程序完成它，如用户界面，程序架构，目标用户，时间安排等。除此之外，还要考虑如何表示数据和处理数据等等。</p>
+</li>
+<li><p>编写代码</p>
+<p>设计好程序后，用C代码来实现思路。</p>
+</li>
+<li><p>编译</p>
+<p>编译的细节取决于编程的环境，编译器把源代码转换成可执行代码(即机器语言表示的代码)，这种语言由数字码表示的指令组成。C编译器还将源代码与C库的代码合并成最终程序，生成一个用户可运行的执行文件，里面包含计算机能理解的代码。编译时的错误处理也是一项特殊的任务。</p>
+</li>
+<li><p>运行程序</p>
+<p>可执行文件是可运行的程序，在常见系统(windows,linuxs)中运行程序要输入可执行文件的名字，其他环境可能要通过命令来运行。最终生成的程序可通过单击或双击文件名或图标直接运行在操作系统中。</p>
+</li>
+<li><p>测试和调试程序</p>
+<p>程序中的错误成为bug，查找并修复的过程称为调试debug。</p>
+</li>
+<li><p>维护和修改代码</p>
+<p>如程序有错或扩展程序的用途，就需要不断地修改，在编程时适当的注释和合理的设计方案，有助于日后的维护和扩展。</p>
+<p>磨刀不误砍柴工，先规划再写代码是好习惯，记录下程序的目标和设计框架，编写代码时更加得心应手。</p>
+</li>
+</ol>
+</li>
+<li><p>编程机制</p>
+<p>生成程序的具体过程因计算机环境(windows,linux,unix等)而异，C是可移植语言，在许多环境都可以运行。我们分析不同环境共有的方面即可。</p>
+<p>C编写的程序储存在文本文件中，成为源代码文件，格式是budget.c形式，budget即 . 之前的内容为基本名，.之后即c称为扩展名，他们共同组成文件名。不同系统对文件名或基本名的长度有不同的要求，但linux，windows和mac os都允许长文件名。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># <span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"Concrete contains gravel and cement.\n"</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol>
+<li><p>目标代码文件(.obj)、可执行文件(.exe)和库</p>
+<p>C通过编译和链接两个步骤把源代码文件转换为可执行文件。编译器把源代码转换成中间代码，链接器把中间代码和其他代码(如库)合并，生成可执行文件。</p>
+<p>中间文件有多种形式，这里将最普遍的一种，即把源代码转换为机器语言代码，并把结果放到目标代码文件(目标文件)，虽然目标文件包含机器语言代码但不能运行，因为目标文件存储的是编译器翻译的源代码，还不是一个完整的程序。</p>
+<p>目标代码文件缺失“启动代码”，启动代码充当着程序和操作系统之间的接口，不同操作系统的启动代码不同。</p>
+<p>目标代码还缺少库函数，几乎所有C程序都要使用C标准库的函数。</p>
+<p>链接器的作用就是把你编写的目标代码、系统的标准启动代码和库代码这3部分合并成一个文件，即可执行文件。对于库代码，链接器只会把程序要用到的库函数代码提取出来。</p>
+<p>简言之，目标文件和可执行文件都是由机器语言指令组成的。编译器把源代码.c翻译成目标文件.obj，链接器通过引用库文件代码和启动代码与目标文件合并组成可执行代码.exe。有的系统需要分别运行编译程序和链接程序，有的系统编译程序会自动启动连接器。</p>
+</li>
+<li><p>UNIX系统</p>
+<p>C因UNIX而生，也因此流行，FreeBSD也是其分支。</p>
+<ol>
+<li><p>在UNIX系统上编辑</p>
+<p>unix C没有自己的编辑器，但可以用通用UNIX编辑器，如vi,emacs等</p>
+<p>unix区分大小写</p>
+<p>源文件是编译过程的开始</p>
+</li>
+<li><p>在UNIX系统上编译</p>
+<p>用户可以以cc命令作为编译器的别名，用来编译C源码，如<code>cc inform.c</code>，其输出的可执行文件是a.out，其包含已编译的可执行文件，运行，输入<code>a.out</code>即可。如果要存储该文件需要重命名，否则会被下一次编译程序生成的新的a.out文件替换。PS：鸡肋啊，这改善一下就可以了，为啥不完善，每次都要重命名。。</p>
+<p>这里的流程C编译器会创建一个与源代码基本名相同的目标文件，扩展名是.o，该例就是inform.o，然而一旦连接器生成完整的可执行程序，就会将其删除，如果原始代码有多个源文件代码，则会保留目标文件。</p>
+</li>
+</ol>
+</li>
+<li><p>GNU编译器集合和LLVM项目</p>
+<p>GNU项目目的在于开发大量免费的UNIX软件集合。项目产品之一就是GNU编译器集合，即GCC，其中包含GCC C编译器。GCC紧跟C标准开发，有不同版本适应不同的硬件平台和操作系统，包括unix，linux，windows。用gcc命令调用GCC C编译器。许多人用cc作为gcc别名。</p>
+<p>LVVM目的是取代cc，用clang编译器处理C代码，通过clang调用。其对新版本c标准也支持。</p>
+</li>
+<li><p>Linux系统</p>
+<p>Linux是一个开源，流行的类UNIX系统，其准备C程序和UNIX系统几乎一样，不同的是使用GNU提供的GCC公共域C编译器。命令行用cc代替gcc。</p>
+</li>
+<li><p>PC的命令行编译器</p>
+<p>windows里没有C编译器软件包，可以下载minGW,在PC上通过命令行使用GCC编译器。minGW在windows得命令提示模式中运行。</p>
+</li>
+<li><p>集成开发环境(windows)</p>
+<p>ide</p>
+</li>
+<li><p>windows/linux</p>
+</li>
+<li><p>mac os</p>
+</li>
+</ol>
+<p>讲真，第一章还是蛮重要的，但是罗里吧嗦的喋喋不休不知道是不是老外的通病。。。。</p>
+</li>
+</ol>
+
+        </div>
+        <footer class="article-footer">
+            
+    <div class="jiathis_style">
+    <span class="jiathis_txt">分享到：</span>
+    <a class="jiathis_button_qzone">QQ空间</a>
+    <a class="jiathis_button_tsina">新浪微博</a>
+    <a class="jiathis_button_tqq">腾讯微博</a>
+    <a class="jiathis_button_weixin">微信</a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+    <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<style>
+    .jiathis_style div:first-child:not(.jiadiv_01) {
+        width: auto !important;
+        border: none !important;
+    }
+    .jiathis_style .jiadiv_01 {
+        margin: 10px 0;
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .jiathis_style .jiadiv_01 div:first-child {
+        display: none;
+    }
+    .jiathis_style .jiadiv_02 {
+        padding: 7px 0 !important;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle {
+        width: 85px;
+        border: none;
+        height: auto;
+        margin: 3px 10px;
+        padding: 6px 10px;
+        border-radius: 4px;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:hover {
+        border: none;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:nth-child(even) {
+        margin-left: 0;
+    }
+    .jiathis_style .jtico:hover {
+        opacity: 1;
+    }
+    .jiathis_style .ckepopBottom,
+    .jiathis_style .centerBottom {
+        width: auto !important;
+        padding: 5px;
+        background: #f7f7f7;
+    }
+</style>
+
+
+
+
+        </footer>
+    </div>
+</article>
+<!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zMjA1Ni84NjIw">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/xuer80" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2017/11/22/Git基础/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            Git基础
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2017/11/21/第一章-Java程序设计概述/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">第一章 Java程序设计概述</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="no-thumbnail">
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/散文/">散文</a></p>
+                            <p class="item-title"><a href="/2018/04/20/中兴良药/" class="title">中兴良药</a></p>
+                            <p class="item-date"><time datetime="2018-04-20T03:52:53.000Z" itemprop="datePublished">2018-04-20</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Android/">Android</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/Android/Android应用层/">Android应用层</a></p>
+                            <p class="item-title"><a href="/2018/04/06/MVC架构/" class="title">MVC架构</a></p>
+                            <p class="item-date"><time datetime="2018-04-06T14:47:52.000Z" itemprop="datePublished">2018-04-06</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/屠龙技/">屠龙技</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/屠龙技/设计模式/">设计模式</a></p>
+                            <p class="item-title"><a href="/2018/04/05/第二十五章-易混淆设计模式盘点/" class="title">第二十五章-易混淆设计模式盘点</a></p>
+                            <p class="item-date"><time datetime="2018-04-05T09:16:34.000Z" itemprop="datePublished">2018-04-05</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/屠龙技/">屠龙技</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/屠龙技/设计模式/">设计模式</a></p>
+                            <p class="item-title"><a href="/2018/03/29/第二十四章-桥接模式/" class="title">第二十四章-桥接模式</a></p>
+                            <p class="item-date"><time datetime="2018-03-29T14:01:20.000Z" itemprop="datePublished">2018-03-29</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/屠龙技/">屠龙技</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/屠龙技/设计模式/">设计模式</a></p>
+                            <p class="item-title"><a href="/2018/03/23/第二十三章-外观模式/" class="title">第二十三章-外观模式</a></p>
+                            <p class="item-date"><time datetime="2018-03-23T09:26:58.000Z" itemprop="datePublished">2018-03-23</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/Android应用层/">Android应用层</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/Android应用层/Android架构/">Android架构</a><span class="category-list-count">2</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/屠龙技/">屠龙技</a><span class="category-list-count">26</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/屠龙技/数据结构与算法/">数据结构与算法</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/屠龙技/数据结构与算法/算法/">算法</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/屠龙技/设计模式/">设计模式</a><span class="category-list-count">25</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发工具/">开发工具</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/开发工具/Git/">Git</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/操作系统/">操作系统</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/操作系统/Linux/">Linux</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/操作系统/Linux/linux基础/">linux基础</a><span class="category-list-count">2</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/散文/">散文</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/">编程语言</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/C/">C</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/C/C-Primer-Plus/">C Primer Plus</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/Java/">Java</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/Java/Java核心技术/">Java核心技术</a><span class="category-list-count">2</span></li></ul></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">13</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Android架构/" style="font-size: 13.33px;">Android架构</a> <a href="/tags/C/" style="font-size: 16.67px;">C</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Java/" style="font-size: 13.33px;">Java</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/linux/" style="font-size: 13.33px;">linux</a> <a href="/tags/散文/" style="font-size: 13.33px;">散文</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/设计模式/" style="font-size: 20px;">设计模式</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 xuer80</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'http://xuer80.com/2017/11/21/第一章-初识C语言/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
