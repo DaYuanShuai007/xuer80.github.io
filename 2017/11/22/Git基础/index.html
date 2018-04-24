@@ -18,7 +18,7 @@
 <meta property="og:description" content="Git是Android开发必不可少的版本控制工具，本人用了git之后，完全抛弃了svn，哈哈，Git教程网上很多，我基本是自己摸索的，我觉得廖雪峰 的网站Git教程讲的最浅显易懂，现在把我当初学习的笔记分享下咯~ Git是目前世界上最先进的分布式版本控制系统。版本控制是一种记录一个或若干文件内容变化，以便将来查阅特定版本修订情况的系统。  Git简史 Linus1991创建开源linux，随着代码">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://p05pz65vj.bkt.clouddn.com/Git%E7%89%88%E6%9C%AC%E5%BA%93%E6%BC%94%E7%A4%BA%E5%9B%BE.jpg">
-<meta property="og:updated_time" content="2018-04-21T02:59:21.727Z">
+<meta property="og:updated_time" content="2018-04-24T09:58:20.855Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Git基础">
 <meta name="twitter:description" content="Git是Android开发必不可少的版本控制工具，本人用了git之后，完全抛弃了svn，哈哈，Git教程网上很多，我基本是自己摸索的，我觉得廖雪峰 的网站Git教程讲的最浅显易懂，现在把我当初学习的笔记分享下咯~ Git是目前世界上最先进的分布式版本控制系统。版本控制是一种记录一个或若干文件内容变化，以便将来查阅特定版本修订情况的系统。  Git简史 Linus1991创建开源linux，随着代码">
@@ -241,13 +241,17 @@ var _hmt = _hmt || [];
 <p>文件修改后没放进暂存区，现在撤销修改就回到和版本库一摸一样的状态；</p>
 <p>如果修改add到了暂存区，还没有commit，可以用命令git reset HEAD [file]把暂存区的修改撤销掉，重新放回工作区(注意这个时候只是把暂存区的文件回退到工作区，工作区的文件内容修改并没有撤销，可以用git checkout 撤销修改，或者直接删除修改)。git reset命令既可以回退版本，也可以把暂存区的修改回退到工作区。用HEAD时，表示最新的版本。</p>
 <p>如果不小心commit到了版本库，就只能用版本回退了。如果是推送到了远程仓库。。。额。。。┏┛墓┗┓…(((m -__-)m</p>
-<p>​</p>
+<p><strong>已经远程推送的push版本回退</strong></p>
+<p>首先 git reset –hard 版本号   本地回退到指定版本</p>
+<p>然后 git push -f origin sb 将远程的也回退到指定版本</p>
 </li>
 <li><p>删除文件</p>
 <ul>
 <li>删除工作区文件 rm [文件名]即可</li>
 <li>删除版本库文件 git rm [文件名]，然后git commit</li>
 <li>如果工作区文件删错了，git checkout – [文件名] 即可还原。其实是用版本库里的版本替换工作区的版本</li>
+<li>本地同步  远程删除的分支 git fetch ori -p用来清除已经没有远程信息的分支，这样git brach -a就不会拉取远程已经删除的分支了</li>
+<li>git fetch -p可以删除掉没有与远程分支对应的本地分支</li>
 </ul>
 </li>
 <li><p>远程仓库</p>
@@ -269,6 +273,10 @@ var _hmt = _hmt || [];
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone git@github.com:xuer80/newRepo.git</span><br></pre></td></tr></table></figure>
 <p>Github给出了两个地址分别支持不同的协议，https以及默认git://的ssh协议。具体根据公司实际开发情况而定</p>
 </li>
+<li><p>查看远程仓库的信息以及本地分支的信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">$ git remote show origin</span><br><span class="line">* remote origin</span><br><span class="line">  Fetch URL: git@github.com:xuer80/GItTestRepo.git</span><br><span class="line">  Push  URL: git@github.com:xuer80/GItTestRepo.git</span><br><span class="line">  HEAD branch: master</span><br><span class="line">  Remote branches:</span><br><span class="line">    master tracked</span><br><span class="line">    sb     tracked</span><br><span class="line">  Local branch configured for &apos;git pull&apos;:</span><br><span class="line">    master merges with remote master</span><br><span class="line">  Local refs configured for &apos;git push&apos;:</span><br><span class="line">    master pushes to master (up to date)</span><br><span class="line">    sb     pushes to sb     (fast-forwardable)</span><br></pre></td></tr></table></figure>
+<p>​</p>
+</li>
 </ol>
 </li>
 <li><p>分支管理</p>
@@ -283,6 +291,8 @@ var _hmt = _hmt || [];
 <p>然后用git branch 命令查看当前分支</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git branch</span><br><span class="line">  master</span><br><span class="line">* ox</span><br></pre></td></tr></table></figure>
 <p>git branch会列出所有分支，当前分支钱会有个*号标记</p>
+<p>查看远程全部的分支，白色表示本地有的，红色表示本地没有，仅再远程存在</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ git branch -a</span><br><span class="line">* master</span><br><span class="line">  sb</span><br><span class="line">  remotes/origin/master</span><br><span class="line">  remotes/origin/sb</span><br></pre></td></tr></table></figure>
 <p>然后我们就可在ox分支上正常提交了，如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ git add lala.txt</span><br><span class="line">$ git commit -m &quot;new branch ox&quot;</span><br><span class="line">[ox b96c9e3] new branch ox</span><br><span class="line"> 1 file changed, 2 insertions(+), 1 deletion(-)</span><br></pre></td></tr></table></figure>
 <p>现在ox分支工作完成，我们切换回master分支：</p>
@@ -298,12 +308,259 @@ var _hmt = _hmt || [];
 <p>鉴于此，在分支上完成任务，合并后再删除分支，效果和master上一样，但对源任务更安全</p>
 </li>
 <li><p>解决冲突</p>
+<p>新建一个新的分支ooxx，并添加提交新内容</p>
+<p>切换到master分支，再添加提交新的不同于分支的内容</p>
+<p>如此master分支和ooxx分支都有了新的不同的提交</p>
+<p>这种情况下，git无法快速合并，只能试图把各自修改合并起来，一旦合并就会有冲突</p>
+<p>运行git merge ooxx ，显示readme.txt文件存在冲突，必须手动解决再提交，git status也可以看出</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">$ git status</span><br><span class="line">On branch master</span><br><span class="line">Your branch is ahead of <span class="string">'origin/master'</span> by <span class="number">2</span> commits.</span><br><span class="line">  (use <span class="string">"git push"</span> to publish your local commits)</span><br><span class="line"></span><br><span class="line">You have unmerged paths.</span><br><span class="line">  (fix conflicts and run <span class="string">"git commit"</span>)</span><br><span class="line">  (use <span class="string">"git merge --abort"</span> to abort the merge)</span><br><span class="line"></span><br><span class="line">Unmerged paths:</span><br><span class="line">  (use <span class="string">"git add &lt;file&gt;..."</span> to mark resolution)</span><br><span class="line"></span><br><span class="line">        both modified:   readme.txt</span><br><span class="line"></span><br><span class="line"><span class="function">no changes added to <span class="title">commit</span> <span class="params">(use <span class="string">"git add"</span> and/or <span class="string">"git commit -a"</span>)</span></span></span><br></pre></td></tr></table></figure>
+<p>而readme.txt的内容则变成了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">哈哈你也有今天</span><br><span class="line">你去死</span><br><span class="line">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</span><br><span class="line">气死你气死你，gaga</span><br><span class="line">=======</span><br><span class="line">我就不死，哈哈</span><br><span class="line">&gt;&gt;&gt;&gt;&gt;&gt;&gt; ooxx</span><br></pre></td></tr></table></figure>
 <p>​</p>
-<p>​</p>
-<p>​</p>
+<p>git用&lt;&lt;&lt;&lt;&lt;&lt;&lt;,======,&gt;&gt;&gt;&gt;&gt;&gt;标记出不同分支的内容</p>
+<p>我们可以手动修改内容，再提交奥</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git add readme.txt </span><br><span class="line">$ git commit -m &quot;解决分支内容冲突&quot;</span><br><span class="line">[master 2ee3f4d] 解决分支内容冲突</span><br></pre></td></tr></table></figure>
+<p>用带参数的git log可看出分支合并情况</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$ git log --graph --pretty=oneline --abbrev-commit</span><br><span class="line">*   <span class="number">2</span>ee3f4d (HEAD -&gt; master) 解决分支内容冲突</span><br><span class="line">|\</span><br><span class="line">| * <span class="number">6e452</span>e1 (ooxx) ooxx我就不死，哈哈</span><br><span class="line">* | b118938 master气死你</span><br><span class="line">|/</span><br><span class="line">* <span class="number">50</span>d70b9 新ooxx文件</span><br><span class="line">* <span class="number">05369</span>be (origin/master) 删除lala.txt</span><br><span class="line">* e1f92e1 添加lala文件</span><br><span class="line">* <span class="number">260089</span>d 修改格式为UTF-<span class="number">8</span></span><br><span class="line">* <span class="number">2</span>c60b1e restore readme die</span><br><span class="line">* <span class="number">0f</span>e25f6 create reademe file</span><br></pre></td></tr></table></figure>
+<p>最后删除ooxx分支</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git branch -d ooxx</span><br><span class="line"><span class="function">Deleted branch <span class="title">ooxx</span> <span class="params">(was <span class="number">6e452</span>e1)</span>.</span></span><br></pre></td></tr></table></figure>
 <p>​</p>
 </li>
+<li><p>分支管理策略</p>
+<p>一般合并分支时，如果可能，Git会用Fast forward模式，但这种模式删除分支后，会丢掉分支信息。如果强制禁用Ff模式，Git就会再merge时生成一个新的commit，这样，从分支历史上就可看出分支信息。</p>
+<p>下面实战下禁用Ff模式的合并，即–no-ff方式的git merge</p>
+<p>首先创建分支sb</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout -b sb</span><br><span class="line">Switched to a new branch &apos;sb&apos;</span><br></pre></td></tr></table></figure>
+<p>修改readme.txt，并提交</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ git add readme.txt</span><br><span class="line">$ git commit -m <span class="string">"添加分支sb"</span></span><br><span class="line">[sb c946b61] 添加分支sb</span><br><span class="line"> <span class="number">1</span> file changed, <span class="number">1</span> insertion(+)</span><br></pre></td></tr></table></figure>
+<p>切换会master分支，准备合并sb分支，并加上–no-ff参数，表示禁用Fast forward</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ git merge --no-ff -m &quot;合并分支sb，并禁用ff&quot; sb</span><br><span class="line">Merge made by the &apos;recursive&apos; strategy.</span><br><span class="line"> readme.txt | 1 +</span><br><span class="line"> 1 file changed, 1 insertion(+)</span><br></pre></td></tr></table></figure>
+<p>本次合并创建一个新的commit，加上-m参数，把commit描述写进去</p>
+<p>git log查看分支历史</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">$ git log --graph --pretty=oneline --abbrev-commit</span><br><span class="line">*   <span class="number">2</span>b137b8 (HEAD -&gt; master) 合并分支sb，并禁用ff</span><br><span class="line">|\</span><br><span class="line">| * c946b61 (sb) 添加分支sb</span><br><span class="line">|/</span><br><span class="line">*   <span class="number">2</span>ee3f4d 解决分支内容冲突</span><br><span class="line">|\</span><br><span class="line">| * <span class="number">6e452</span>e1 ooxx我就不死，哈哈</span><br><span class="line">* | b118938 master气死你</span><br><span class="line">|/</span><br><span class="line">* <span class="number">50</span>d70b9 新ooxx文件</span><br><span class="line">* <span class="number">05369</span>be (origin/master) 删除lala.txt</span><br><span class="line">* e1f92e1 添加lala文件</span><br><span class="line">* <span class="number">260089</span>d 修改格式为UTF-<span class="number">8</span></span><br><span class="line">* <span class="number">2</span>c60b1e restore readme die</span><br><span class="line">* <span class="number">0f</span>e25f6 create reademe file</span><br></pre></td></tr></table></figure>
+<p>实际开发中，应该按如下几个原则为进行分支管理：</p>
+<ul>
+<li>master分支应该保持稳定，也就是仅用来发布新版本，平时尽量不再其上干活</li>
+<li>干活尽量再其他分支，比如sb分支上，该分支不稳定，可以持续开发，到版本发布时，再把sb分支何并到master上，再master分支发布稳定版本</li>
+<li>团队合作是，每个人都在sb分支上干活，每个人都有属于自己的分支，不定时往sb分支上合并就行了</li>
+</ul>
+<p>所以团队合作分支看起来就如下图</p>
+<p><img src="http://p05pz65vj.bkt.clouddn.com/Git%E5%90%88%E5%B9%B6%E5%88%86%E6%94%AF.png" alt=""></p>
+<p>合并分支时，加参数–no-ff就可以用普通模式合并，合并后的历史有分支，能看出曾经做过合并而Ff模式合并就看不出曾经做过合并。</p>
+</li>
+<li><p>Bug分支</p>
+<p>开发中遇到Bug，可以通过一个新的临时的分支来修复，修复后，合并分支，然后将临时分支删除。</p>
+<p>当再sb分支工作时，接到修复代号为110的Bug任务时，很显然，可以创建一个issue-110分支来修复它，但是sb分支的工作还没完成，也没有提交，此时如何不影响工作的情况下，修复bug呢？</p>
+<p>用git stash功能，可以把当前工作现场“储藏 起来，等以后恢复继续工作</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git stash</span><br><span class="line">Saved working directory and index state WIP on master: 2b137b8 合并分支sb，并禁用ff</span><br></pre></td></tr></table></figure>
+<p>此时用git status火车cat查看工作区，就是干净的，因此可以放心创建分支来修复bug</p>
+<p>首先要确定在哪个分支上修复bug，比如需要再master分支上修复，就从master创建临时分支</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"> git checkout -b issue-110</span><br><span class="line">Switched to a new branch &apos;issue-110&apos;</span><br></pre></td></tr></table></figure>
+<p>现在修复bug，然后提交</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ git add readme.txt</span><br><span class="line">$ git commit -m &quot;fix bug 110&quot;</span><br><span class="line">[issue-110 7d24065] fix bug 110</span><br><span class="line"> 1 file changed, 1 insertion(+), 1 deletion(-)</span><br></pre></td></tr></table></figure>
+<p>修复完成后，切换到master分支，并完成合并，最后删除issue-110</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout master</span><br><span class="line">Switched to branch <span class="string">'master'</span></span><br><span class="line">Your branch is ahead of <span class="string">'origin/master'</span> by <span class="number">6</span> commits.</span><br><span class="line">  (use <span class="string">"git push"</span> to publish your local commits)</span><br><span class="line">$ git merge --no-ff -m <span class="string">"合并bug fix issue110"</span> issue-<span class="number">110</span></span><br><span class="line">Merge made by the <span class="string">'recursive'</span> strategy.</span><br><span class="line"> readme.txt | <span class="number">2</span> +-</span><br><span class="line"> <span class="number">1</span> file changed, <span class="number">1</span> insertion(+), <span class="number">1</span> deletion(-)</span><br><span class="line">$ git branch -d issue-<span class="number">110</span></span><br><span class="line">Deleted branch issue-<span class="number">110</span> (was <span class="number">7</span>d24065).</span><br></pre></td></tr></table></figure>
+<p>然后我们就可以继续回到sb分支干活了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout sb</span><br><span class="line">Switched to branch &apos;sb&apos;</span><br><span class="line">$ git status</span><br><span class="line">On branch sb</span><br><span class="line">nothing to commit, working tree clean</span><br></pre></td></tr></table></figure>
+<p>工作区时干净的，刚才的工作现场保存到哪儿了呢？用git stash list命令查看</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git stash list</span><br><span class="line">stash@&#123;<span class="number">0</span>&#125;: WIP on master: <span class="number">2</span>b137b8 合并分支sb，并禁用ff</span><br></pre></td></tr></table></figure>
+<p>要恢复之前的工作现场，有两个办法</p>
+<p>一，用git stash apply恢复，但是恢复后，stash内容并不删除，你需要用git stash drop来删除</p>
+<p>二，用git stash pop，恢复内容的同时把stash内容也删了：推荐如此</p>
+<p>再用git stash  list查看，就看不到任何stash内容了</p>
+<p>也可以多次stash，恢复时先用git stash list 查看，然后恢复指定的stash，用命令</p>
+<p>git stash apply stash@{0}</p>
+<p>​</p>
+<p>​</p>
+<p>git stash pop 和 git stash apply 区别</p>
+<p>原来git stash pop stash@{id}命令会在执行后将对应的stash id 从stash list里删除，而 git stash apply stash@{id} 命令则会继续保存stash id。</p>
+<p>实际上git stash是将未提交到本地或服务器的代码推入到Git的栈中，这时工作区间和上次提交的内容是一样的</p>
+</li>
+<li><p>Feature分支</p>
+<p>软件开发中，每添加一个新功能，未避免扰乱主分支master稳定，最好新建feature分支，开发完成后，合并，最后再删除该分支。</p>
+<p>比如新功能开发代号vvn,于是可以再sb分支上再添加分支feature-vvn，开发完毕切回sb分支，准备合并，但此时如果新功能需要取消，不用再合并</p>
+<p> 采用git branch -d feature-vvn删除失败，因为该分支没被合并，如果删除将丢失修改，强行删除使用命令git branch -D feature-vvn。记住，此时分支是再sb分支，而不是feature-vvn分支。</p>
+</li>
+<li><p>多人协作</p>
+<p>当从远程仓库克隆时，实际上Git自动把本地的master分支和远程的master分支对应起来了，并且，远程仓库的默认名称时origin。</p>
+<p>查看远程仓库的信息，用git remote 或用git remote -v显示更详细的信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ git remote</span><br><span class="line">origin</span><br><span class="line">$ git remote -v</span><br><span class="line">origin  git@github.com:xuer80/GItTestRepo.git (fetch)</span><br><span class="line">origin  git@github.com:xuer80/GItTestRepo.git (push)</span><br></pre></td></tr></table></figure>
+<p>上面显示了可抓取和推送的origin的地址。如果没有推送权限，就看不到push的地址</p>
+<p><strong>推送分支</strong> </p>
+<p>推送分支就是把该分支上所有本地提交 推送到远程仓库。推送时，要指定本地分支，这样Git就会把该分支推送到远程库对应的远程分支上：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ git push origin master</span><br><span class="line">Counting objects: 20, done.</span><br><span class="line">Delta compression using up to 12 threads.</span><br><span class="line">Compressing objects: 100% (19/19), done.</span><br><span class="line">Writing objects: 100% (20/20), 1.93 KiB | 659.00 KiB/s, done.</span><br><span class="line">Total 20 (delta 5), reused 0 (delta 0)</span><br><span class="line">remote: Resolving deltas: 100% (5/5), done.</span><br><span class="line">To github.com:xuer80/GItTestRepo.git</span><br><span class="line">   05369be..98621fa  master -&gt; master</span><br></pre></td></tr></table></figure>
+<p>如果要推送其他分支，比如sb，就改成</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ git push origin sb</span><br><span class="line">Counting objects: 6, done.</span><br><span class="line">Delta compression using up to 12 threads.</span><br><span class="line">Compressing objects: 100% (5/5), done.</span><br><span class="line">Writing objects: 100% (6/6), 628 bytes | 628.00 KiB/s, done.</span><br><span class="line">Total 6 (delta 1), reused 0 (delta 0)</span><br><span class="line">remote: Resolving deltas: 100% (1/1), completed with 1 local object.</span><br><span class="line">To github.com:xuer80/GItTestRepo.git</span><br><span class="line"> * [new branch]      sb -&gt; sb</span><br></pre></td></tr></table></figure>
+<p>但是并非一定要把本地分支往远程推送，如何取舍？</p>
+<ul>
+<li>master分支是主分支，因此要时刻与远程同步</li>
+<li>sb分支是开发分支，团队所有成员都需要再上面工作，所以也需要与远程同步</li>
+<li>bug分支只用于修复bug，就没必要推送，除非特殊要求</li>
+<li>feature分支是否推送到远程，取决于是否和团队合作再上面开发</li>
+</ul>
+<p>总之，在Git中，所有分支可以存在本地，是否远程推送，根据具体要求</p>
+<h2 id="抓取分支"><a href="#抓取分支" class="headerlink" title="抓取分支"></a><strong>抓取分支</strong></h2><p>团队协作时，大家都会再master和sb分支上推送各自的修改</p>
+<p>当你的团队小伙伴从远程库clone时，默认情况下，只能看到本地的master分支，用git branch可以查看只有一个master分支</p>
+<p>如果团队成员要再分支sb上开发，就必须创建远程origin的sb分支到本地，于是用了</p>
+<p>git checkout -b sb origin/sb    来创建本地sb分支</p>
+<p>然后再sb上继续开发修改，之后把sb分支push推送到远程</p>
+<p>git push origin sb</p>
+<p>团队成员已在origin/sb分支推送了他的提交，而如果你也对同样的文件做了修改，并试图push远程推送</p>
+<p>推送失败，因为团队成员的最新提交和你试图推送的提交有冲突。解决办法很简单，先用git pull把最新的提交从origin/sb抓取下来，然后本地合并，解决冲突，再推送</p>
+<p>如果git pull也失败了，证明是没有指定本地sb分支与远程origin/sb分支的链接，根据提示，设置sb和origin/sb的链接</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git branch --set-upstream sb origin/sb</span><br><span class="line">Branch dev set up to track remote branch sb from origin.</span><br></pre></td></tr></table></figure>
+<p>再用git pull成功，但合并有冲突，需手动解决，和分支管理解决冲突一样，解决后再提交，再push:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ git commit -m &quot;merge &amp; fix hello.py&quot;</span><br><span class="line">[dev adca45d] merge &amp; fix hello.py</span><br><span class="line">$ git push origin sb</span><br><span class="line">Counting objects: 10, done.</span><br><span class="line">Delta compression using up to 4 threads.</span><br><span class="line">Compressing objects: 100% (5/5), done.</span><br><span class="line">Writing objects: 100% (6/6), 747 bytes, done.</span><br><span class="line">Total 6 (delta 0), reused 0 (delta 0)</span><br><span class="line">To git@github.com:michaelliao/learngit.git</span><br><span class="line">   291bea8..adca45d  sb -&gt; sb</span><br></pre></td></tr></table></figure>
+<p>总结一下，团队工作模式通常如下</p>
+<p>首先，可以试图用git push origin branch-name推送自己的修改</p>
+<p>其次，如果推送失败，则因为远程分支比你的本地分支更新，需要先用git pull试图合并；</p>
+<p>如果合并有冲突，则解决冲突，并再本地提交</p>
+<p>没有冲突或解决掉冲突后，再用git push origin branch-name推送就能成功</p>
+<p>若git pull 提示  “no tracking information”则说明本地分支和远程分支的链接关系没有创建，用命令git branch –set-upstream branch-name origin/brach-name.</p>
+<p>这就是团队工作模式</p>
+<p>注意：本地新建的分支如不推送到远程，对其他人就是不可见的</p>
+<p>本地创建和远程分支对应的分支使用 git checkout -b branch-name origin/branch-name，本地和远程分支名称最好一致</p>
+<p>建立本地分支和远程分支的关联，使用git branch –set-upstream branch-name origin/branch-name </p>
+<p>从远程抓取分支，使用git pull，如果有冲突，要先处理冲突</p>
+</li>
 </ol>
+</li>
+<li><p>标签管理</p>
+<p>发布一个版本时，通常会再版本库中打一个tag标签，这样就唯一确定了打标签时刻的版本。将来无论何时取某个标签的版本，就是把哪个打标签的时刻的历史版本取出来。so,标签也是版本库的一个快照。</p>
+<p>Git的标签虽然是版本库的快照，但其实它就是指向某个commit的指针(和分支很像，但分支可以移动，标签不可以)，所以创建和删除标签都是瞬间完成的</p>
+<p>Git为何再有commit的情况下，引入tag呢？</p>
+<p>因为commit的HEAD数字太长不好记，哈哈</p>
+<p>所以版本号V1.2之类的就好记多了</p>
+<p>tag容易标记，和某个commit绑定一起，按照tag查找相应的commit就行</p>
+<ol>
+<li><p>创建标签</p>
+<p>再git中打标签非常简单，首先切换到需要打标签的分支上：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ git branch</span><br><span class="line">  master</span><br><span class="line">* sb</span><br><span class="line">$ git checkout master</span><br><span class="line">Switched to branch <span class="string">'master'</span></span><br><span class="line">Your branch is up to date with <span class="string">'origin/master'</span>.</span><br></pre></td></tr></table></figure>
+<p>然后敲命令git tag tag-name就可以打一个新标签了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git tag v1.0</span><br></pre></td></tr></table></figure>
+<p>可以用命令git tag 查看所有标签</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git tag</span><br><span class="line">v1.0</span><br></pre></td></tr></table></figure>
+<p>默认标签是打在最新提交的commit上。如果忘了打标签，只需要找到历史提交的commit id，然后打上就可以了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ git log --pretty=oneline --abbrev-commit</span><br><span class="line">98621fa (HEAD -&gt; master, tag: v1.0, origin/master) 合并bug fix issue110</span><br><span class="line">7d24065 fix bug 110</span><br><span class="line">2b137b8 合并分支sb，并禁用ff</span><br><span class="line">c946b61 添加分支sb</span><br><span class="line">2ee3f4d 解决分支内容冲突</span><br><span class="line">b118938 master气死你</span><br><span class="line">6e452e1 ooxx我就不死，哈哈</span><br><span class="line">50d70b9 新ooxx文件</span><br><span class="line">05369be 删除lala.txt</span><br><span class="line">e1f92e1 添加lala文件</span><br><span class="line">260089d 修改格式为UTF-8</span><br><span class="line">2c60b1e restore readme die</span><br><span class="line">0fe25f6 create reademe file</span><br></pre></td></tr></table></figure>
+<p>比如说合并bug这里需要提交打标签，其对应的commit id为98621fa，敲入命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git tag v1.1 98621fa</span><br></pre></td></tr></table></figure>
+<p>再用命令查看</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git tag</span><br><span class="line">v1.0</span><br><span class="line">v1.1</span><br></pre></td></tr></table></figure>
+<p>需要注意的是标签不是按时间顺序列出，而是按字母排序的，可以用git show tagname查看标签信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ git show v1.1</span><br><span class="line">commit 98621fa127dad426e5a0a301be3783ee03324316 (HEAD -&gt; master, tag: v1.1, tag: v1.0, origin/master)</span><br><span class="line">Merge: 2b137b8 7d24065</span><br><span class="line">Author: xuer80 &lt;zxscool@outlook.com&gt;</span><br><span class="line">Date:   Mon Apr 23 18:03:39 2018 +0800</span><br><span class="line"></span><br><span class="line">    合并bug fix issue110</span><br></pre></td></tr></table></figure>
+<p>可以看到标签v1.1确实打在合并bug这个提交</p>
+<p>还可以创建带有说明的标签，用-a指定标签名，-m指定说明文字</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">$ git tag -a v0.9 -m &quot;修复bug&quot; 7d24065</span><br><span class="line">$ git show v0.9</span><br><span class="line">tag v0.9</span><br><span class="line">Tagger: xuer80 &lt;zxscool@outlook.com&gt;</span><br><span class="line">Date:   Tue Apr 24 15:37:45 2018 +0800</span><br><span class="line"></span><br><span class="line">修复bug</span><br><span class="line"></span><br><span class="line">commit 7d2406517311fd09125e1a2fabd777f6b2aadef6 (tag: v0.9)</span><br><span class="line">Author: xuer80 &lt;zxscool@outlook.com&gt;</span><br><span class="line">Date:   Mon Apr 23 18:01:37 2018 +0800</span><br><span class="line"></span><br><span class="line">    fix bug 110</span><br><span class="line"></span><br><span class="line">diff --git a/readme.txt b/readme.txt</span><br><span class="line">index 9b31486..4a64110 100644</span><br><span class="line">--- a/readme.txt</span><br><span class="line">+++ b/readme.txt</span><br><span class="line">@@ -3,4 +3,4 @@</span><br><span class="line"> 气死你气死你，gaga</span><br><span class="line"> 我就不死，哈哈ooxx</span><br><span class="line"> 你们好无聊</span><br><span class="line">-去死吧，sb</span><br><span class="line">+去死吧，sb        ---修复bug110</span><br></pre></td></tr></table></figure>
+<p>还可以通过-s用私钥签名一个标签</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ git tag -s v0.8 -m &quot;合并分支&quot; 2b137b8</span><br><span class="line">gpg: directory `/c/Users/momo/.gnupg&apos; created</span><br><span class="line">gpg: new configuration file `/c/Users/momo/.gnupg/gpg.conf&apos; created</span><br><span class="line">gpg: WARNING: options in `/c/Users/momo/.gnupg/gpg.conf&apos; are not yet active during this run</span><br><span class="line">gpg: keyring `/c/Users/momo/.gnupg/secring.gpg&apos; created</span><br><span class="line">gpg: keyring `/c/Users/momo/.gnupg/pubring.gpg&apos; created</span><br><span class="line">gpg: skipped &quot;xuer80 &lt;zxscool@outlook.com&gt;&quot;: secret key not available</span><br><span class="line">gpg: signing failed: secret key not available</span><br><span class="line">error: gpg failed to sign the data</span><br><span class="line">error: unable to sign the tag</span><br></pre></td></tr></table></figure>
+<p>签名必须采用PGP签名，因此必须首先安装gpg，如果没有找到gpg，或者没有gpg密钥对，就会报错</p>
+<p>可参考gpg文档配置key</p>
+<p>用命令git show tagname可看到pgp签名信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">$ git show v0.8</span><br><span class="line">tag v0.2</span><br><span class="line">Tagger: Michael Liao &lt;askxuefeng@gmail.com&gt;</span><br><span class="line">Date:   Mon Aug 26 07:28:33 2013 +0800</span><br><span class="line"></span><br><span class="line">signed version 0.2 released</span><br><span class="line">-----BEGIN PGP SIGNATURE-----</span><br><span class="line">Version: GnuPG v1.4.12 (Darwin)</span><br><span class="line"></span><br><span class="line">iQEcBAABAgAGBQJSGpMhAAoJEPUxHyDAhBpT4QQIAKeHfR3bo...</span><br><span class="line">-----END PGP SIGNATURE-----</span><br><span class="line"></span><br><span class="line">commit fec145accd63cdc9ed95a2f557ea0658a2a6537f</span><br><span class="line">Author: Michael Liao &lt;askxuefeng@gmail.com&gt;</span><br><span class="line">Date:   Thu Aug 22 10:37:30 2013 +0800</span><br><span class="line"></span><br><span class="line">    branch test</span><br></pre></td></tr></table></figure>
+<p>用pgp签名的标签时不可伪造的，因为可以验证pgp签名</p>
+<p>新建标签默认时HEAD，也可以指定commit id</p>
+<p>git tag可以查看所有标签</p>
+</li>
+<li><p>操作标签</p>
+<p>如果标签打错了，可以删除</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git tag -d v0.9</span><br><span class="line">Deleted tag &apos;v0.9&apos; (was d647fb3)</span><br></pre></td></tr></table></figure>
+<p>创建的标签只存储本地，不会自动推送到远程，所以打错的标签可以安全删除</p>
+<p>如果推送整个标签到远程，使用命令git push origin tag-name</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ git push origin v1.0</span><br><span class="line">Total 0 (delta 0), reused 0 (delta 0)</span><br><span class="line">To github.com:xuer80/GItTestRepo.git</span><br><span class="line"> * [new tag]         v1.0 -&gt; v1.0</span><br></pre></td></tr></table></figure>
+<p>或者一次性推送全部尚未推送的本地标签</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ git push origin --tags</span><br><span class="line">Total 0 (delta 0), reused 0 (delta 0)</span><br><span class="line">To github.com:xuer80/GItTestRepo.git</span><br><span class="line"> * [new tag]         v1.1 -&gt; v1.1</span><br></pre></td></tr></table></figure>
+<p>如果标签已经推送到远程，要删除远程标签就麻烦一些，先从本地删除</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git tag -d v1.1</span><br><span class="line">Deleted tag &apos;v1.1&apos; (was 98621fa)</span><br></pre></td></tr></table></figure>
+<p>然后远程删除，删除命令也是push,但是格式如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git push origin :refs/tags/v1.1</span><br><span class="line">To github.com:xuer80/GItTestRepo.git</span><br><span class="line"> - [deleted]         v1.1</span><br></pre></td></tr></table></figure>
+<p>如要查看远程库是否删了标签，可以登录Github查看</p>
+</li>
+</ol>
+</li>
+<li><p>自定义Git</p>
+<p>Git实际上有很多配置，不止user.name和user.email</p>
+<p>比如让Git显示颜色，让命令更醒目</p>
+<p>git config –global color.ui true</p>
+<p>这样Git会适当显示不同颜色</p>
+<ol>
+<li><p>忽略特殊文件</p>
+<p>有些文件必须有，但没必要提交，如一般的配置文件等</p>
+<p>我们可以再Git工作区创建一个特殊的.gitignore文件，然后把要忽略的文件名填进去，Git就会自动忽略这些文件</p>
+<p>不需要从头写该文件，github准备了各种配置文件，只需组合一下，就可以使用，配置文件可浏览链接<a href="https://github.com/github/gitignore" target="_blank" rel="noopener">https://github.com/github/gitignore</a></p>
+<p>忽略的原则是</p>
+<ul>
+<li>系统自动生成的文件，如缩略图等</li>
+<li>编译生成的中间文件，可执行文件等，比如java编译产生的.class文件</li>
+<li>带有敏感信息的配置文件，如存放口令的配置文件</li>
+</ul>
+<p>忽略文件配置好后，就是把.gitignore提交到Git就可以了，当然检验.gitignore的标准时git status命令是否有working directory clean.</p>
+<p>如果有时你需要添加某文件到Git，但发现无法添加，那么有可能该文件被.gitignore忽略了</p>
+<p>此时可以用-f强制添加</p>
+<p>git add -f sb.class</p>
+<p>如果角色忽略文件写的有问题，需要找出哪个规则写错了，可以用git check-ignore命令检查</p>
+<p>git check-ignore -v sb.class</p>
+<p>GIt会反馈.gitignore忽略了该文件的规则位置，然后我们可以根据需要修改规则</p>
+</li>
+<li><p>配置别名</p>
+<p>如果经常敲错命令怎么办，可以采用别名的方式，简化命令，比如git status改成git st</p>
+<p>git config –global alias.st status 这样就把git status改成了git st</p>
+<p>当然也可以改其他命令</p>
+<p>git config –global alias.co  checkout</p>
+<p>git config –global alias.ci commit</p>
+<p>git config –global alias.br branch</p>
+<p>–global参数时全局参数，也就是说这些命令再这台电脑上通用</p>
+<p>也有人丧心病狂，把lg配置成了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --global alias.lg &quot;log --color --graph --pretty=format:&apos;%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)&lt;%an&gt;%Creset&apos; --abbrev-commit&quot;</span><br></pre></td></tr></table></figure>
+<p>看git lg效果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">$ git lg</span><br><span class="line">*   98621fa - (HEAD -&gt; master, tag: v1.0, origin/master) 合并bug fix issue110 (23 hours ago) &lt;xuer80&gt;</span><br><span class="line">|\</span><br><span class="line">| * 7d24065 - fix bug 110 (23 hours ago) &lt;xuer80&gt;</span><br><span class="line">|/</span><br><span class="line">*   2b137b8 - 合并分支sb，并禁用ff (24 hours ago) &lt;xuer80&gt;</span><br><span class="line">|\</span><br><span class="line">| * c946b61 - 添加分支sb (24 hours ago) &lt;xuer80&gt;</span><br><span class="line">|/</span><br><span class="line">*   2ee3f4d - 解决分支内容冲突 (25 hours ago) &lt;xuer80&gt;</span><br><span class="line">|\</span><br><span class="line">| * 6e452e1 - ooxx我就不死，哈哈 (3 days ago) &lt;xuer80&gt;</span><br><span class="line">* | b118938 - master气死你 (3 days ago) &lt;xuer80&gt;</span><br><span class="line">|/</span><br><span class="line">* 50d70b9 - 新ooxx文件 (3 days ago) &lt;xuer80&gt;</span><br><span class="line">* 05369be - 删除lala.txt (3 days ago) &lt;xuer80&gt;</span><br><span class="line">* e1f92e1 - 添加lala文件 (3 days ago) &lt;xuer80&gt;</span><br><span class="line">* 260089d - 修改格式为UTF-8 (3 days ago) &lt;xuer80&gt;</span><br><span class="line">* 2c60b1e - restore readme die (4 days ago) &lt;xuer80&gt;</span><br><span class="line">* 0fe25f6 - create reademe file (4 days ago) &lt;xuer80&gt;</span><br></pre></td></tr></table></figure>
+<p><strong>配置文件</strong> </p>
+<p>配置Git时，加上–global时针对当前用户起作用的，如果不加，那只针对当前的仓库起作用</p>
+<p>每个仓库的.git/config文件中配置文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[core]</span><br><span class="line">	repositoryformatversion = 0</span><br><span class="line">	filemode = false</span><br><span class="line">	bare = false</span><br><span class="line">	logallrefupdates = true</span><br><span class="line">	symlinks = false</span><br><span class="line">	ignorecase = true</span><br><span class="line">[remote &quot;origin&quot;]</span><br><span class="line">	url = git@github.com:xuer80/GItTestRepo.git</span><br><span class="line">	fetch = +refs/heads/*:refs/remotes/origin/*</span><br><span class="line">[branch &quot;master&quot;]</span><br><span class="line">	remote = origin</span><br><span class="line">	merge = refs/heads/master</span><br><span class="line">	[alias]</span><br><span class="line">    last = log -1</span><br></pre></td></tr></table></figure>
+<p>别名就在alias后面，要删除别名，直接把对应的行删除掉就好</p>
+<p>而当前用户的Git配置文件放在用户主目录下的隐藏文件.gitconfig中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[user]</span><br><span class="line">	name = xuer80</span><br><span class="line">	email = zxscool@outlook.com</span><br><span class="line">[color]</span><br><span class="line">	ui = true</span><br><span class="line">[alias]</span><br><span class="line">	lg = log --color --graph --pretty=format:&apos;%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)&lt;%an&gt;%Creset&apos; --abbrev-commit</span><br></pre></td></tr></table></figure>
+<p>配置别名也可以直接修改这个文件，如果改错了，可以删掉文件重新通过命令配置</p>
+</li>
+<li><p>搭建Git服务器</p>
+<p>远程仓库实际上和本地仓库没啥不同，但可以为团队提供全天候的开机交换大家的修改</p>
+<p>对于公司来说，处于保密需要，可以自己搭建一台GIt服务器作为私有仓库使用。</p>
+<p>搭建Git服务器，需要linux系统配置的电脑，最好用ubuntu或Debian系统，通过简单的apt就可以安装</p>
+<p>第一步，安装git</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install git</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>​       第二步创建一个git用户，用来运行git服务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo adduser git</span><br></pre></td></tr></table></figure>
+<p>​    第三步，创建证书登录</p>
+<p>​    收集所有需要登录的用户的公钥，就是id_rsa.pub文件，把所有的公钥导入到/home/git/.ssh/autorized_keys文件里，一行一个</p>
+<p>​    第四步，初始化Git仓库</p>
+<p>​    先选定一个目录作为Git仓库假定是<code>/srv/sample.git</code>，在<code>/srv</code>目录下输入命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo git init --bare sample.git</span><br></pre></td></tr></table></figure>
+<p>Git就会创建一个裸仓库，裸仓库没有工作区，因为服务器上的Git仓库纯粹是为了共享，所以不让用户直接登录到服务器上去改工作区，并且服务器上的Git仓库通常都以<code>.git</code>结尾。然后，把owner改为<code>git</code>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo chown -R git:git sample.git</span><br></pre></td></tr></table></figure>
+<p>第五步，禁用shell登录：</p>
+<p>出于安全考虑，第二步创建的git用户不允许登录shell，这可以通过编辑<code>/etc/passwd</code>文件完成。找到类似下面的一行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git:x:1001:1001:,,,:/home/git:/bin/bash</span><br></pre></td></tr></table></figure>
+<p>改为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git:x:1001:1001:,,,:/home/git:/usr/bin/git-shell</span><br></pre></td></tr></table></figure>
+<p>这样，<code>git</code>用户可以正常通过ssh使用git，但无法登录shell，因为我们为<code>git</code>用户指定的<code>git-shell</code>每次一登录就自动退出。</p>
+<p>第六步，克隆远程仓库：</p>
+<p>现在，可以通过<code>git clone</code>命令克隆远程仓库了，在各自的电脑上运行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git clone git@server:/srv/sample.git</span><br><span class="line">Cloning into &apos;sample&apos;...</span><br><span class="line">warning: You appear to have cloned an empty repository.</span><br></pre></td></tr></table></figure>
+<p>剩下的推送就简单了。</p>
+<p><strong>管理公钥</strong></p>
+<p>如果团队很小，把每个人的公钥收集起来放到服务器的<code>/home/git/.ssh/authorized_keys</code>文件里就是可行的。如果团队有几百号人，就没法这么玩了，这时，可以用<a href="https://github.com/res0nat0r/gitosis" target="_blank" rel="noopener">Gitosis</a>来管理公钥。</p>
+<p><strong>管理权限</strong></p>
+<p>有很多不但视源代码如生命，而且视员工为窃贼的公司，会在版本控制系统里设置一套完善的权限控制，每个人是否有读写权限会精确到每个分支甚至每个目录下。因为Git是为Linux源代码托管而开发的，所以Git也继承了开源社区的精神，不支持权限控制。不过，因为Git支持钩子（hook），所以，可以在服务器端编写一系列脚本来控制提交等操作，达到权限控制的目的。<a href="https://github.com/sitaramc/gitolite" target="_blank" rel="noopener">Gitolite</a>就是这个工具</p>
+<p>​</p>
+<p>​</p>
+<p>​</p>
+<p>​</p>
+<p>​</p>
+<p>​</p>
+<h2 id="GIthub简介"><a href="#GIthub简介" class="headerlink" title="GIthub简介"></a>GIthub简介</h2><p>在Github社区，利用Git强大的克隆和分支功能，可以参与任意一个开源项目，点击Fork就在自己的帐号下克隆了一个相应项目的仓库，然后从自己帐号下clone,这样clone下的项目和你的远程仓库才是建立链接，才可以推送。如果从原作者那里clone,因为没有权限，将不能推送修改</p>
+<p>如果修复或添加一些功能，可以推送到自己仓库。如果希望官方或原作者可以接受修改，可以再Github上发起一个pull request，等待对方接受</p>
 <p>​</p>
 </li>
 </ol>
