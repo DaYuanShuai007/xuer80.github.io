@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="Xuer80">
 <meta property="og:description" content="面向对象程序设计概述 ​    面向对象的程序是由对象组成的，每个对象包含对用户公开和隐藏的实现部分。传统结构化设计是通过先确定算法，然后考虑存储数据的方式来设计。这也是算法+数据结构=程序的经典设计方案。而OOP将数据放在第一位，然后考虑数据的算法  类 ​    类是构造对象的模版或蓝图，由类构造对象的过程成为创建类的实例instance。 ​    封装可以将对象的数据和行为组合在一起，并">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-04-26T12:36:11.441Z">
+<meta property="og:updated_time" content="2018-04-27T12:11:52.336Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="第四章-对象与类">
 <meta name="twitter:description" content="面向对象程序设计概述 ​    面向对象的程序是由对象组成的，每个对象包含对用户公开和隐藏的实现部分。传统结构化设计是通过先确定算法，然后考虑存储数据的方式来设计。这也是算法+数据结构=程序的经典设计方案。而OOP将数据放在第一位，然后考虑数据的算法  类 ​    类是构造对象的模版或蓝图，由类构造对象的过程成为创建类的实例instance。 ​    封装可以将对象的数据和行为组合在一起，并">
@@ -290,26 +290,163 @@ var _hmt = _hmt || [];
 <p>​    C++有值调用和引用调用，Java只有值调用</p>
 </li>
 <li><p>对象构造</p>
+<p>由于对象构造非常重要，Java提供了多种编写构造器的机制</p>
 <ol>
-<li></li>
-<li></li>
-<li></li>
-<li></li>
-<li></li>
-<li></li>
-<li></li>
-<li></li>
-<li></li>
-<li></li>
+<li><p>重载</p>
+<p>类可以有多个构造器 如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">StringBuilder sb = new StringBuilder();</span><br><span class="line">StringBuilder sbTo = new StringBuilder(&quot;你好&quot;);</span><br></pre></td></tr></table></figure>
+<p>多个方法有相同的名字，不同的参数，便是重载。编译器通过各个方法给出的参数类型与特定方法调用所使用的值类型进行匹配来挑选出相应的方法。如找不到匹配的参数，就会产生编译时的错误，这个过程成为i额重载解析。</p>
+<blockquote>
+<p>Java允许重载任何方法，而不只是构造器方法。因此，要完整地描述一个方法，需要指出方法名以及参数类型，这称为方法的签名。</p>
+</blockquote>
+<p>返回类型不是方法签名的一部分，因此不能有两个名字、参数类型相同但返回类型不同的方法。</p>
+</li>
+<li><p>默认域初始化</p>
+<p>如果构造器没有显式地给域赋予初值，那么就会自动地赋为默认值：数值为0、布尔值为false、对象引用为null。如果不明确地对域进行初始化，会影响代码的可读性，开发中应避免。</p>
+<blockquote>
+<p>方法中的局部变量必须明确初始化，而类中的域，如未初始化，将自动初始化为默认值</p>
+</blockquote>
+</li>
+<li><p>无参数的构造器</p>
+<p>很多类都包含一个无参数的构造函数，对象由无参构造函数创建时，其状态会设置为适当的默认值。</p>
+<p>如果一个类没有编写任何构造器，那么系统就会提供一个无参构造器，其实例也设置为默认值。如果一个类提供仅提供一个有参构造器，而没有无参构造器时，系统并不会自动创建无参构造器，这样创建对象时，调用无参构造器将产生错误。</p>
+<p>所以，仅当类没有提供任何构造器时，系统才提供一个默认的构造器。如果系统所有域被赋予默认值，可采用以下形式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public ClassName()&#123;&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>显式域初始化</p>
+<p>通过重载类的构造器方法，可采用多种形式设置类的实例域的初始状态。确保不管怎样调用构造器，每个实例域都可以被设置为一个有意义的初值。</p>
+<p>在执行构造器前，先执行赋值操作。当一个类的所有构造器都希望把相同的值赋予某个特定的实例域时，这种方式非常有用</p>
+<p>初始值不一定是常量值，也可以调用方法进行初始化。</p>
+</li>
+<li><p>参数名</p>
+<p>参数变量可用与实例域同样的名字，但可以用this.实例域名字 这种形式访问实例域，因为this指隐式参数，也就是所构造的对象。</p>
+</li>
+<li><p>调用另一个构造器</p>
+<p>如果用this(…..)的形式，这个构造器将调用同一个类的另一个构造器。采用这种this关键字非常有用，这样对公共的构造器代码部分，只编写一次即可</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public people(String name)&#123;</span><br><span class="line">    this(Int age,name);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当调用people(String)时，people(Int age,name)也一同被调用。</p>
+</li>
+<li><p>初始化块</p>
+<ul>
+<li>在构造器中设置值</li>
+<li>在声明中赋值</li>
+</ul>
+<p>实际上，Java还有初始化块，在一个类的声明中，可包含多个代码块，只要构造类的对象，这些块就会被执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">Class people&#123;</span><br><span class="line">	private Static int year;</span><br><span class="line">    private String name;</span><br><span class="line">    private Int age;</span><br><span class="line">    private Int sum;</span><br><span class="line">    &#123;</span><br><span class="line">        sum = year;</span><br><span class="line">        year++;</span><br><span class="line">    &#125;</span><br><span class="line">    public people(String n,Int a)&#123;</span><br><span class="line">        name = n;</span><br><span class="line">        age = a;</span><br><span class="line">    &#125;</span><br><span class="line">    public people()&#123;</span><br><span class="line">        name=&quot;&quot;;</span><br><span class="line">        age=0;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如上，无论哪个构造器构造对象，sum域都再对象初始化块中被初始化，因为首先运行初始化块，然后才运行构造器的主体部分。不过应避免这种操作，通常可以直接将初始化代码放在构造器中。</p>
+<p>如果把一个代码块，加上关键字static，那么在类第一次加载时，将会对静态域进行初始化。</p>
+</li>
+<li><p>对象析构与finalize方法</p>
+<p>Java有自动的垃圾回收器，不需要人工回收内存，不支持析构器。可以为任何一个类添加finalize方法，其将再垃圾回收器清楚对象之前调用。但这个方法并不一定有效，因为并不确定它什么时候才能被调用。</p>
+</li>
 </ol>
 </li>
 <li><p>包</p>
+<p>​    Java允许使用包package将类组织起来，借助包可以方便管理代码，并将自己的代码和别人提供的代码分开管理</p>
+<p>​    使用包的主要原因是确保类名的唯一性，两个同名类，放再不同的包中就可以避免冲突。一般包的命名用公司域名倒置，如com.baidu.www形式。每一个包都是一个类集合</p>
+<ol>
+<li><p>类的导入</p>
+<p>一个类可以使用所属包中的所有类，以及其他包中的公有类。</p>
+<p>访问另一个包中的公有类，有两种方式，一，在每个类名前添加完整的包名，很繁琐；另一种是用import语句，这是一种引用包含再包中的类的简述，一旦使用了Import语句，在使用类时，就不必写出包的全名了。</p>
+<p>在包中定位类时编译器的工作，如有不同包但名称相同的类，可用完整的包名来区分。</p>
+</li>
+<li><p>静态导入</p>
+<p>import不仅可以导入类，还可导入静态方法和静态域的功能，如</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import static java.lang.System.*;</span><br></pre></td></tr></table></figure>
+<p>就可以使用System类的静态方法和静态域，而不必加类名前缀</p>
+</li>
+<li><p>将类放入包中</p>
+<p>如果想把一个类放入特定的包中，可以在定义类的代码前，将包的名字放在源文件开头，否则就默认放在默认包中。</p>
+</li>
+<li><p>包作用域</p>
+<p>修饰符，标记为public的部分可以被任意类访问；标记为private的部分只能被定义它们的类使用；如果没有指定，那么这个部分(类、方法或变量)可以被同一个包的所有方法访问</p>
+</li>
+</ol>
 </li>
 <li><p>类路径</p>
+<p>​    类存储再文件系统的子目录中，类的路径必须与包名匹配</p>
+<p>​    另外类也可以存在Jar(Java归档)文件中。在一个Jar文件中，可包含多个压缩形式的类文件和子目录，这样既可以节省空间又可以改善性能。</p>
+<p>​    为了使类能被多个程序共享，可做以下几点</p>
+<ul>
+<li>把类放到包树状结构的基目录中</li>
+<li>将Jar文件放在一个目录中</li>
+<li>设置类路径class path。类路径是所有包含类文件的路径的集合</li>
+</ul>
 </li>
 <li><p>文档注释</p>
+<p>JDK包含一个Javadoc的工具，可由源文件生成一个html文档。在源代码中以/**注释，可以将代码与注释保存再一个地方。由于文档注释与源代码再同一个文件中，在修改源代码的同时，重新运行javadoc就可以轻易保持二者一致。</p>
+<ol>
+<li><p>注释的插入</p>
+<p>javadoc实用程序从以下特征中抽取信息</p>
+<ul>
+<li>包</li>
+<li>公有类与接口</li>
+<li>公有的和受保护的构造器及方法</li>
+<li>公有的和受保护的域</li>
+</ul>
+<p>以上及部分可编写注释，注释应放置在这些部分前面。并以/*<em>开始， </em>/结束。</p>
+<p>每个/*<em>…  </em>/文档注释在标记之后，紧跟着自由格式文本，由@开始，如@author或@param</p>
+</li>
+<li><p>类注释</p>
+<p>类注释必须放在import语句之后，类定义之前</p>
+</li>
+<li><p>方法注释</p>
+<p>每一个方法注释必须放在所描述的方法之前。除了通用标记之外，还可以使用下面标记</p>
+<p>@param变量描述  一个方法的所有@param标记必须放一起，可占据多行</p>
+<p>@return描述  标记返回部分，可跨约多行</p>
+<p>@throws 描述可能抛出的异常</p>
+</li>
+<li><p>域注释</p>
+<p>只需要对公有域，通常是静态常量，建立文档。</p>
+<p>如</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line">the frut is shit</span><br><span class="line">*/</span><br><span class="line">public static final int frut = 2;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>通用注释</p>
+<p>下面的标记可用在类文档的注释中</p>
+<p>@author姓名   可以采用多个标记，每个标记对应一个作者</p>
+<p>@version文本  该标记是对当前版本的描述</p>
+<p>@since文本  该标记会产生一个since条目，可用于所有的文档注释中，这里的text可以是对引入特性的版本描述，如@since version 1.0</p>
+<p>@see引用 这个标记将在see also部分增加一个超链接，可用于类中，也可用于方法中</p>
+</li>
+<li><p>包与概述注释</p>
+<p>可直接将类、方法和变量的注释放置再Java源文件中，用/*<em>…  </em>/文档注释界定就可以了，但包注释，就需要在每一个包目录中添加一个单独的文件。可以有两个选择</p>
+<ul>
+<li>提供一个以包.html命名的html文件，里面的<body>…<body>文本都会抽取出来</body></body></li>
+<li>提供一个以package-info.java命名的文件，内部必须包括/*<em>和 </em>/界定的javadoc注释，跟随再一个包语句之后</li>
+</ul>
+</li>
+<li><p>注释的抽取</p>
+<p>如果是一个包，应运行命令</p>
+<p>javadoc -d docDirectory 包名</p>
+<p>如果多个包生成文档，运行</p>
+<p>javadoc -d docDirectory 包1  包2</p>
+<p>如果文件在默认包中，运行</p>
+<p>javadoc -d docDirectory *.java</p>
+</li>
+</ol>
 </li>
 <li><p>类设计技巧</p>
+<ul>
+<li><p>一定要保证数据私有</p>
+<p>绝对不要破坏封装性，最好保证实例域的私有</p>
+</li>
+<li><p>一定要对数据初始化</p>
+<p>Java不对局部变量初始化，但是会对对象的实例域进行初始化。不要依赖系统的默认值，而是应显式初始化所有的数据</p>
+</li>
+<li><p>不要再类中使用过多的基本类型</p>
+<p>可以用其他类代替多个相关的基本类型的使用，这样更易于理解和修改</p>
+</li>
+<li><p>不是所有的域都需要独立的域访问器和更改器</p>
+</li>
+<li><p>将职责过多的类进行分解</p>
+</li>
+<li><p>类名和方法名要能够体现职责</p>
+</li>
+<li><p>优先使用不可变类</p>
+<p>比如LocalDate包中的其他类是不可变的，没有方法能修改对象的状态，这样可以安全地再多个线程共享其对象。如果多线程同时更新一个对象，可能发生并发更改</p>
+<p>​</p>
+</li>
+</ul>
 </li>
 </ol>
 
@@ -446,6 +583,24 @@ var _hmt = _hmt || [];
                     <li>
                         
                         <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/04/27/Android活动Activity/" class="title">Android活动Activity</a></p>
+                            <p class="item-date"><time datetime="2018-04-27T00:59:19.000Z" itemprop="datePublished">2018-04-27</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Android/">Android</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/Android/Android应用层/">Android应用层</a></p>
+                            <p class="item-title"><a href="/2018/04/27/Android四大组件概述/" class="title">Android四大组件概述</a></p>
+                            <p class="item-date"><time datetime="2018-04-27T00:58:38.000Z" itemprop="datePublished">2018-04-27</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/编程语言/">编程语言</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/编程语言/Kotlin/">Kotlin</a></p>
                             <p class="item-title"><a href="/2018/04/26/第一章-认识kotlin/" class="title">第一章-认识kotlin</a></p>
                             <p class="item-date"><time datetime="2018-04-26T12:53:01.000Z" itemprop="datePublished">2018-04-26</time></p>
@@ -470,24 +625,6 @@ var _hmt = _hmt || [];
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/屠龙技/">屠龙技</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/屠龙技/数据结构与算法/">数据结构与算法</a></p>
-                            <p class="item-title"><a href="/2018/04/25/表栈队列/" class="title">表、栈和队列</a></p>
-                            <p class="item-date"><time datetime="2018-04-25T11:48:41.000Z" itemprop="datePublished">2018-04-25</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/开发工具/">开发工具</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/开发工具/AndroidStudio/">AndroidStudio</a></p>
-                            <p class="item-title"><a href="/2018/04/24/AS配置/" class="title">第一章AS初次见面</a></p>
-                            <p class="item-date"><time datetime="2018-04-24T15:15:50.000Z" itemprop="datePublished">2018-04-24</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -497,7 +634,7 @@ var _hmt = _hmt || [];
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">分类</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/Android应用层/">Android应用层</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/Android应用层/Android架构/">Android架构</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/Android框架层/">Android框架层</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/Android框架层/Android系统架构/">Android系统架构</a><span class="category-list-count">1</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/屠龙技/">屠龙技</a><span class="category-list-count">27</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/屠龙技/数据结构与算法/">数据结构与算法</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/屠龙技/数据结构与算法/数据结构/">数据结构</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/屠龙技/数据结构与算法/算法/">算法</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/屠龙技/设计模式/">设计模式</a><span class="category-list-count">25</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发工具/">开发工具</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/开发工具/AndroidStudio/">AndroidStudio</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发工具/Git/">Git</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/操作系统/">操作系统</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/操作系统/Linux/">Linux</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/操作系统/Linux/linux基础/">linux基础</a><span class="category-list-count">2</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/散文/">散文</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/">编程语言</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/C/">C</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/C/C-Primer-Plus/">C Primer Plus</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/Java/">Java</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/Kotlin/">Kotlin</a><span class="category-list-count">1</span></li></ul></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/Android应用层/">Android应用层</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/Android应用层/Android四大组件/">Android四大组件</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/Android应用层/Android架构/">Android架构</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/Android框架层/">Android框架层</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/Android框架层/Android系统架构/">Android系统架构</a><span class="category-list-count">1</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/屠龙技/">屠龙技</a><span class="category-list-count">27</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/屠龙技/数据结构与算法/">数据结构与算法</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/屠龙技/数据结构与算法/数据结构/">数据结构</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/屠龙技/数据结构与算法/算法/">算法</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/屠龙技/设计模式/">设计模式</a><span class="category-list-count">25</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发工具/">开发工具</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/开发工具/AndroidStudio/">AndroidStudio</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发工具/Git/">Git</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/操作系统/">操作系统</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/操作系统/Linux/">Linux</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/操作系统/Linux/linux基础/">linux基础</a><span class="category-list-count">2</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/散文/">散文</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/">编程语言</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/C/">C</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/C/C-Primer-Plus/">C Primer Plus</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/Java/">Java</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/Kotlin/">Kotlin</a><span class="category-list-count">1</span></li></ul></li></ul>
         </div>
     </div>
 
@@ -507,7 +644,7 @@ var _hmt = _hmt || [];
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">归档</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">13</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">13</span></li></ul>
         </div>
     </div>
 
@@ -517,7 +654,7 @@ var _hmt = _hmt || [];
     <div class="widget-wrap widget-float">
         <h3 class="widget-title">标签云</h3>
         <div class="widget tagcloud">
-            <a href="/tags/AndroidStudio/" style="font-size: 16.67px;">AndroidStudio</a> <a href="/tags/Android架构/" style="font-size: 13.33px;">Android架构</a> <a href="/tags/C/" style="font-size: 16.67px;">C</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Java/" style="font-size: 16.67px;">Java</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/kotlin/" style="font-size: 10px;">kotlin</a> <a href="/tags/linux/" style="font-size: 13.33px;">linux</a> <a href="/tags/散文/" style="font-size: 13.33px;">散文</a> <a href="/tags/数据结构/" style="font-size: 13.33px;">数据结构</a> <a href="/tags/设计模式/" style="font-size: 20px;">设计模式</a>
+            <a href="/tags/AndroidStudio/" style="font-size: 16.67px;">AndroidStudio</a> <a href="/tags/Android架构/" style="font-size: 13.33px;">Android架构</a> <a href="/tags/C/" style="font-size: 16.67px;">C</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Java/" style="font-size: 16.67px;">Java</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/kotlin/" style="font-size: 10px;">kotlin</a> <a href="/tags/linux/" style="font-size: 13.33px;">linux</a> <a href="/tags/四大组件/" style="font-size: 10px;">四大组件</a> <a href="/tags/散文/" style="font-size: 13.33px;">散文</a> <a href="/tags/数据结构/" style="font-size: 13.33px;">数据结构</a> <a href="/tags/设计模式/" style="font-size: 20px;">设计模式</a>
         </div>
     </div>
 
