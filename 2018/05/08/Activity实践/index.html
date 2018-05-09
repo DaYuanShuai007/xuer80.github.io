@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="Xuer80">
 <meta property="og:description" content="如何在界面或活动中使用menu？ 在res目录下新建menu文件夹，在其中新建名为main的文件，在里面添加item，包含id,title(菜单选项名称)内容。然后在Activity中重写onCreateOptionsMenu()重写方法即可。之后调用getMenuInflater().inflate方法即可加载menu的xml文件。之后重写onOptionsItemSelected方法，针对每">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-05-08T12:25:21.745Z">
+<meta property="og:updated_time" content="2018-05-08T16:19:24.602Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Activity实践">
 <meta name="twitter:description" content="如何在界面或活动中使用menu？ 在res目录下新建menu文件夹，在其中新建名为main的文件，在里面添加item，包含id,title(菜单选项名称)内容。然后在Activity中重写onCreateOptionsMenu()重写方法即可。之后调用getMenuInflater().inflate方法即可加载menu的xml文件。之后重写onOptionsItemSelected方法，针对每">
@@ -154,7 +154,7 @@ var _hmt = _hmt || [];
 <p>在res目录下新建menu文件夹，在其中新建名为main的文件，在里面添加item，包含id,title(菜单选项名称)内容。然后在Activity中重写onCreateOptionsMenu()重写方法即可。之后调用getMenuInflater().inflate方法即可加载menu的xml文件。之后重写onOptionsItemSelected方法，针对每一个item的id进行操作</p>
 </li>
 <li><p>数据传递和返回数据</p>
-<p>通过intent的putExtra和getString/Int/BooleanExtra()方法</p>
+<p>通过intent的putExtra和getString/Int/BooleanExtra()方法，可以传递的类型包括八大基本类型和实现Serializable或Parcelable接口的对象，也可以是ArrayList集合。</p>
 <p>通过startActivityForResult()可接收返回数据，可重写onBackPressed()方法，这样可以再back键时自动返回数据，里面填写intent传递数据的相关逻辑</p>
 </li>
 <li><p>如何知晓当前哪个活动运行</p>
@@ -166,6 +166,27 @@ var _hmt = _hmt || [];
 </li>
 <li><p>Activity是怎样构成的</p>
 <p>Activity视图会设置成window类，该类内部含有一个DecorView，这个View是整个窗口的顶级视图，而自定义布局则在DecorView的mContentParent布局中。</p>
+</li>
+<li><p>Intent的作用是什么</p>
+<p>Intent意图，是在不同组件提供运行时绑定的对象。一般有三种基本用法</p>
+<p>启动Activity；启动服务；发送广播</p>
+</li>
+<li><p>Android6.0权限问题</p>
+<p>用V7包可解决兼容问题，也可用RxPermissions库来请求非常简单 </p>
+</li>
+<li><p>Activity横竖屏问题</p>
+<p>一般会在清单中设置configChangs=”orientation|keyboardHidden|screenSize”</p>
+<ul>
+<li>如不设置此参数，切屏会重新调用生命周期</li>
+<li>仅设置configChanges=”orientation”切屏还是会重新调用生命周期，横竖屏各一次</li>
+<li>参数为orientation|keyboardHidden时，切屏不会重新调用各个生命周期，但会执行onConfigurationChanged()方法</li>
+</ul>
+<p>以上，在3.2系统API13之后，参数仅为configChanges=orientation|keyboardHidden后，还是会重新调用生命周期，因为横竖屏导致screenSize改变，在sdkVersion大于13的情况下，参数还要加上screenSize。</p>
+<p>​    如不允许切换横竖屏，可在screenOrientation配置，portrait是竖屏，landscape是横屏</p>
+</li>
+<li></li>
+<li><p>​</p>
+<p>​</p>
 <p>​</p>
 </li>
 </ol>
@@ -303,7 +324,7 @@ var _hmt = _hmt || [];
                     <li>
                         
                         <div class="item-inner">
-                            <p class="item-category"></p>
+                            <p class="item-category"><a class="article-category-link" href="/categories/Android/">Android</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/Android/Android应用层/">Android应用层</a></p>
                             <p class="item-title"><a href="/2018/05/08/Activity启动过程详述/" class="title">Activity启动过程详述</a></p>
                             <p class="item-date"><time datetime="2018-05-08T12:19:54.000Z" itemprop="datePublished">2018-05-08</time></p>
                         </div>
@@ -354,7 +375,7 @@ var _hmt = _hmt || [];
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">分类</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">6</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/Android应用层/">Android应用层</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/Android应用层/Android四大组件/">Android四大组件</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/Android应用层/Android架构/">Android架构</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/Android框架层/">Android框架层</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/Android框架层/Android系统架构/">Android系统架构</a><span class="category-list-count">1</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/屠龙技/">屠龙技</a><span class="category-list-count">27</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/屠龙技/数据结构与算法/">数据结构与算法</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/屠龙技/数据结构与算法/数据结构/">数据结构</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/屠龙技/数据结构与算法/算法/">算法</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/屠龙技/设计模式/">设计模式</a><span class="category-list-count">25</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发工具/">开发工具</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/开发工具/AndroidStudio/">AndroidStudio</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发工具/Git/">Git</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/操作系统/">操作系统</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/操作系统/Linux/">Linux</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/操作系统/Linux/linux基础/">linux基础</a><span class="category-list-count">2</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/散文/">散文</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/">编程语言</a><span class="category-list-count">10</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/C/">C</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/C/C-Primer-Plus/">C Primer Plus</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/Java/">Java</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/Kotlin/">Kotlin</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/Kotlin/kotlin基础/">kotlin基础</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/Kotlin/认识Kotlin/">认识Kotlin</a><span class="category-list-count">3</span></li></ul></li></ul></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/Android应用层/">Android应用层</a><span class="category-list-count">6</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/Android应用层/Android四大组件/">Android四大组件</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/Android应用层/Android架构/">Android架构</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/Android框架层/">Android框架层</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/Android框架层/Android系统架构/">Android系统架构</a><span class="category-list-count">1</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/屠龙技/">屠龙技</a><span class="category-list-count">27</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/屠龙技/数据结构与算法/">数据结构与算法</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/屠龙技/数据结构与算法/数据结构/">数据结构</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/屠龙技/数据结构与算法/算法/">算法</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/屠龙技/设计模式/">设计模式</a><span class="category-list-count">25</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发工具/">开发工具</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/开发工具/AndroidStudio/">AndroidStudio</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发工具/Git/">Git</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/操作系统/">操作系统</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/操作系统/Linux/">Linux</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/操作系统/Linux/linux基础/">linux基础</a><span class="category-list-count">2</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/散文/">散文</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/">编程语言</a><span class="category-list-count">10</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/C/">C</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/C/C-Primer-Plus/">C Primer Plus</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/Java/">Java</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/Kotlin/">Kotlin</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/Kotlin/kotlin基础/">kotlin基础</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/Kotlin/认识Kotlin/">认识Kotlin</a><span class="category-list-count">3</span></li></ul></li></ul></li></ul>
         </div>
     </div>
 
@@ -374,7 +395,7 @@ var _hmt = _hmt || [];
     <div class="widget-wrap widget-float">
         <h3 class="widget-title">标签云</h3>
         <div class="widget tagcloud">
-            <a href="/tags/AndroidStudio/" style="font-size: 15px;">AndroidStudio</a> <a href="/tags/Android架构/" style="font-size: 12.5px;">Android架构</a> <a href="/tags/C/" style="font-size: 15px;">C</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Java/" style="font-size: 15px;">Java</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/kotlin/" style="font-size: 17.5px;">kotlin</a> <a href="/tags/linux/" style="font-size: 12.5px;">linux</a> <a href="/tags/四大组件/" style="font-size: 17.5px;">四大组件</a> <a href="/tags/散文/" style="font-size: 12.5px;">散文</a> <a href="/tags/数据结构/" style="font-size: 12.5px;">数据结构</a> <a href="/tags/设计模式/" style="font-size: 20px;">设计模式</a>
+            <a href="/tags/AndroidStudio/" style="font-size: 14px;">AndroidStudio</a> <a href="/tags/Android架构/" style="font-size: 12px;">Android架构</a> <a href="/tags/C/" style="font-size: 14px;">C</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Java/" style="font-size: 14px;">Java</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/kotlin/" style="font-size: 16px;">kotlin</a> <a href="/tags/linux/" style="font-size: 12px;">linux</a> <a href="/tags/四大组件/" style="font-size: 18px;">四大组件</a> <a href="/tags/散文/" style="font-size: 12px;">散文</a> <a href="/tags/数据结构/" style="font-size: 12px;">数据结构</a> <a href="/tags/设计模式/" style="font-size: 20px;">设计模式</a>
         </div>
     </div>
 
