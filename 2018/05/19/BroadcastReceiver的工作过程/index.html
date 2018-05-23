@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>BroadcastReceiver的工作过程 | Xuer80</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="四大组件" />
+    
+    <meta name="description" content="一、广播的注册过程 BroadcastReceiver的注册分为两种，分别是静态注册和动态注册，静态注册在应用安装时由PackageManagerService来完成注册过程，除了广播，其他三大组件也都是再应用安装时由PMS解析并注册的。这里只介绍BroadcastReceiver的动态注册。要想动态注册BroadcastReceiver，需要调用registerReceiver方法，它的实现在">
+<meta name="keywords" content="四大组件">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BroadcastReceiver的工作过程">
+<meta property="og:url" content="http://xuer80.com/2018/05/19/BroadcastReceiver的工作过程/index.html">
+<meta property="og:site_name" content="Xuer80">
+<meta property="og:description" content="一、广播的注册过程 BroadcastReceiver的注册分为两种，分别是静态注册和动态注册，静态注册在应用安装时由PackageManagerService来完成注册过程，除了广播，其他三大组件也都是再应用安装时由PMS解析并注册的。这里只介绍BroadcastReceiver的动态注册。要想动态注册BroadcastReceiver，需要调用registerReceiver方法，它的实现在">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://p05pz65vj.bkt.clouddn.com/%E5%B9%BF%E6%92%AD%E6%B3%A8%E5%86%8C%E8%BF%87%E7%A8%8B.png">
+<meta property="og:updated_time" content="2018-05-23T10:55:23.453Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="BroadcastReceiver的工作过程">
+<meta name="twitter:description" content="一、广播的注册过程 BroadcastReceiver的注册分为两种，分别是静态注册和动态注册，静态注册在应用安装时由PackageManagerService来完成注册过程，除了广播，其他三大组件也都是再应用安装时由PMS解析并注册的。这里只介绍BroadcastReceiver的动态注册。要想动态注册BroadcastReceiver，需要调用registerReceiver方法，它的实现在">
+<meta name="twitter:image" content="http://p05pz65vj.bkt.clouddn.com/%E5%B9%BF%E6%92%AD%E6%B3%A8%E5%86%8C%E8%BF%87%E7%A8%8B.png">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?5afbe52ffe1cab6bf0db3773c7af2e11";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+    
+
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">大道无为</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Android/">Android</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Android/Android应用层/">Android应用层</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Android/Android框架层/">Android框架层</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Android，Android应用层，Android四大组件/">Android，Android应用层，Android四大组件</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/屠龙技/">屠龙技</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/屠龙技/数据结构与算法/">数据结构与算法</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/屠龙技/设计模式/">设计模式</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发工具/">开发工具</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发工具/AndroidStudio/">AndroidStudio</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发工具/Git/">Git</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/操作系统/">操作系统</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/操作系统/Linux/">Linux</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/散文/">散文</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/编程语言/">编程语言</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/编程语言/C/">C</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/编程语言/Java/">Java</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/编程语言/Kotlin/">Kotlin</a></li></ul></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">关于</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/booklist/index.html">书单</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><input type="hidden" name="sitesearch" value="http://xuer80.com"></form>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/Android，Android应用层，Android四大组件/">Android，Android应用层，Android四大组件</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-BroadcastReceiver的工作过程" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        BroadcastReceiver的工作过程
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2018/05/19/BroadcastReceiver的工作过程/" class="article-date">
+            <time datetime="2018-05-19T02:00:08.000Z" itemprop="datePublished">2018-05-19</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/四大组件/">四大组件</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <p> 一、广播的注册过程</p>
+<p>BroadcastReceiver的注册分为两种，分别是静态注册和动态注册，静态注册在应用安装时由PackageManagerService来完成注册过程，除了广播，其他三大组件也都是再应用安装时由PMS解析并注册的。这里只介绍BroadcastReceiver的动态注册。<br>要想动态注册BroadcastReceiver，需要调用registerReceiver方法，它的实现在ContextWrapper中，代码如下所示。</p>
+<p><strong>frameworks/base/core/java/android/content/ContextWrapper.java</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">public Intent registerReceiver(</span><br><span class="line">    BroadcastReceiver receiver, IntentFilter filter) &#123;</span><br><span class="line">    return mBase.registerReceiver(receiver, filter);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里mBase具体指向就是ContextImpl，ContextImpl的registerReceiver方法有很多重载的方法最终会调用registerReceiverInternal方法：<br><strong>frameworks/base/core/java/android/app/ContextImpl.java</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">private Intent registerReceiverInternal(BroadcastReceiver receiver, int userId,</span><br><span class="line">          IntentFilter filter, String broadcastPermission,</span><br><span class="line">          Handler scheduler, Context context) &#123;</span><br><span class="line">      IIntentReceiver rd = null;</span><br><span class="line">      if (receiver != null) &#123;</span><br><span class="line">          if (mPackageInfo != null &amp;&amp; context != null) &#123;//1</span><br><span class="line">              if (scheduler == null) &#123;</span><br><span class="line">                  scheduler = mMainThread.getHandler();</span><br><span class="line">              &#125;</span><br><span class="line">              rd = mPackageInfo.getReceiverDispatcher(</span><br><span class="line">                  receiver, context, scheduler,</span><br><span class="line">                  mMainThread.getInstrumentation(), true);//2</span><br><span class="line">          &#125; else &#123;</span><br><span class="line">              if (scheduler == null) &#123;</span><br><span class="line">                  scheduler = mMainThread.getHandler();</span><br><span class="line">              &#125;</span><br><span class="line">              rd = new LoadedApk.ReceiverDispatcher(</span><br><span class="line">                      receiver, context, scheduler, null, true).getIIntentReceiver();//3</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      try &#123;</span><br><span class="line">          final Intent intent = ActivityManagerNative.getDefault().registerReceiver(</span><br><span class="line">                  mMainThread.getApplicationThread(), mBasePackageName,</span><br><span class="line">                  rd, filter, broadcastPermission, userId);//4</span><br><span class="line">          if (intent != null) &#123;</span><br><span class="line">              intent.setExtrasClassLoader(getClassLoader());</span><br><span class="line">              intent.prepareToEnterProcess();</span><br><span class="line">          &#125;</span><br><span class="line">          return intent;</span><br><span class="line">      &#125; catch (RemoteException e) &#123;</span><br><span class="line">          throw e.rethrowFromSystemServer();</span><br><span class="line">      &#125;</span><br></pre></td></tr></table></figure>
+<p>在注释1处判断如果LoadedApk类型的mPackageInfo不等于null并且context不等null就调用注释2处的代码通过mPackageInfo的getReceiverDispatcher方法获取rd对象，否则就调用注释3处的代码来创建rd对象。注释2和3的代码的目的都是要获取IIntentReceiver类型的rd对象(IIntentReceiver采用跨进程的方式向AMS发送广播注册的请求)，IIntentReceiver是一个Binder接口，用于进行跨进程的通信(所以不直接采用BroadcastReceiver，因为不能直接跨进程传递信息)，它的具体实现在<br>LoadedApk.ReceiverDispatcher.InnerReceiver，如下所示。</p>
+<p><strong>frameworks/base/core/java/android/app/LoadedApk.java</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">static final class ReceiverDispatcher &#123;</span><br><span class="line">      final static class InnerReceiver extends IIntentReceiver.Stub &#123;</span><br><span class="line">          final WeakReference&lt;LoadedApk.ReceiverDispatcher&gt; mDispatcher;</span><br><span class="line">          final LoadedApk.ReceiverDispatcher mStrongRef;</span><br><span class="line">          InnerReceiver(LoadedApk.ReceiverDispatcher rd, boolean strong) &#123;</span><br><span class="line">              mDispatcher = new WeakReference&lt;LoadedApk.ReceiverDispatcher&gt;(rd);</span><br><span class="line">              mStrongRef = strong ? rd : null;</span><br><span class="line">          &#125;</span><br><span class="line">        ...  </span><br><span class="line">       &#125;</span><br><span class="line">      ... </span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<p>回到registerReceiverInternal方法，在注释4处调用了ActivityManagerProxy（AMP）的registerReceiver方法，最终会调用AMS的registerReceiver方法，并将rd传就去。<br>查看AMS的registerReceiver方法，如下所示。<br><strong>frameworks/base/services/core/java/com/android/server/am/ActivityManagerService.java</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">  public Intent registerReceiver(IApplicationThread caller, String callerPackage,</span><br><span class="line">            IIntentReceiver receiver, IntentFilter filter, String permission, int userId) &#123;</span><br><span class="line">...</span><br><span class="line"> synchronized(this) &#123;</span><br><span class="line">  ...</span><br><span class="line">            Iterator&lt;String&gt; actions = filter.actionsIterator();//1</span><br><span class="line">  ...</span><br><span class="line">            // Collect stickies of users</span><br><span class="line">            int[] userIds = &#123; UserHandle.USER_ALL, UserHandle.getUserId(callingUid) &#125;;</span><br><span class="line">            while (actions.hasNext()) &#123;</span><br><span class="line">                String action = actions.next();</span><br><span class="line">                for (int id : userIds) &#123;</span><br><span class="line">                    ArrayMap&lt;String, ArrayList&lt;Intent&gt;&gt; stickies = mStickyBroadcasts.get(id);</span><br><span class="line">                    if (stickies != null) &#123;</span><br><span class="line">                        ArrayList&lt;Intent&gt; intents = stickies.get(action);</span><br><span class="line">                        if (intents != null) &#123;</span><br><span class="line">                            if (stickyIntents == null) &#123;</span><br><span class="line">                                stickyIntents = new ArrayList&lt;Intent&gt;();</span><br><span class="line">                            &#125;</span><br><span class="line">                            stickyIntents.addAll(intents);//2</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">  ArrayList&lt;Intent&gt; allSticky = null;	</span><br><span class="line">        if (stickyIntents != null) &#123;</span><br><span class="line">            final ContentResolver resolver = mContext.getContentResolver();</span><br><span class="line">            for (int i = 0, N = stickyIntents.size(); i &lt; N; i++) &#123;</span><br><span class="line">                Intent intent = stickyIntents.get(i);</span><br><span class="line">                if (filter.match(resolver, intent, true, TAG) &gt;= 0) &#123;</span><br><span class="line">                    if (allSticky == null) &#123;</span><br><span class="line">                        allSticky = new ArrayList&lt;Intent&gt;();</span><br><span class="line">                    &#125;</span><br><span class="line">                    allSticky.add(intent);//3</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"> ...       </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注释1处根据传入的IntentFilter类型的filter的得到actions列表，根据actions列表和userIds（userIds可以理解为应用程序的uid）得到所有的粘性广播的intent，并在注释2处传入到stickyIntents中，在注释3处将这些粘性广播的intent存入到allSticky列表中，从这里可以看出粘性广播是存储在AMS中的。<br>接着查看AMS的registerReceiver方法的剩余内容：<br><strong>frameworks/base/services/core/java/com/android/server/am/ActivityManagerService.java</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">  public Intent registerReceiver(IApplicationThread caller, String callerPackage,</span><br><span class="line">            IIntentReceiver receiver, IntentFilter filter, String permission, int userId) &#123;</span><br><span class="line">...</span><br><span class="line">        synchronized (this) &#123;</span><br><span class="line">          ...</span><br><span class="line">            ReceiverList rl = mRegisteredReceivers.get(receiver.asBinder());//1</span><br><span class="line">            if (rl == null) &#123;</span><br><span class="line">                rl = new ReceiverList(this, callerApp, callingPid, callingUid,</span><br><span class="line">                        userId, receiver);//2</span><br><span class="line">                if (rl.app != null) &#123;</span><br><span class="line">                    rl.app.receivers.add(rl);</span><br><span class="line">                &#125; </span><br><span class="line">                ...</span><br><span class="line">            &#125;</span><br><span class="line">            ...</span><br><span class="line">            BroadcastFilter bf = new BroadcastFilter(filter, rl, callerPackage,</span><br><span class="line">                    permission, callingUid, userId);//3</span><br><span class="line">            rl.add(bf);//4</span><br><span class="line">            if (!bf.debugCheck()) &#123;</span><br><span class="line">                Slog.w(TAG, &quot;==&gt; For Dynamic broadcast&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">            mReceiverResolver.addFilter(bf);//5</span><br><span class="line">            ...</span><br><span class="line">            return sticky;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注释1处获取ReceiverList列表，如果为空则在注释2处创建，ReceiverList继承自ArrayList，用来存储广播接收者。在注释3处创建BroadcastFilter并传入此前创建的ReceiverList，BroadcastFilter用来描述注册的广播接收者，并在注释4通过add方法将自身添加到ReceiverList中。注释5处将BroadcastFilter添加到mReceiverResolver中，这样当AMS接收到广播时就可以从mReceiverResolver中找到对应的广播接收者了。下面给出广播的注册过程的时序图。</p>
+<p><img src="http://p05pz65vj.bkt.clouddn.com/%E5%B9%BF%E6%92%AD%E6%B3%A8%E5%86%8C%E8%BF%87%E7%A8%8B.png" alt=""></p>
+<p>二、广播的发送和接收过程</p>
+<p><img src="http://p05pz65vj.bkt.clouddn.com/%E5%B9%BF%E6%92%AD%E5%8F%91%E9%80%81%E6%8E%A5%E6%94%B6%E8%BF%87%E7%A8%8B.png" alt=""></p>
+<p>广播的发送有几种：普通广播、有序广播和粘性广播，他们的发送/接收流程是类似的，因此<br>只分析普通广播的实现。</p>
+<ol>
+<li>广播的发送和接收, 本质就是一个过程的两个阶段. 广播的发送仍然开始于ContextImpl#sendBroadcase()方法, 之所以不是Context, 那是因为Context#sendBroad()是一个抽象方法. 和广播的注册过程一样, ContextWrapper#sendBroadcast()仍然什么都不做, 只是把事情交给了ContextImpl去处理.</li>
+<li>ContextImpl里面也几乎什么都没有做, 内部直接向AMS发起了一个异步请求用于发送广播.</li>
+<li>调用AMS#broadcastIntent()方法，继续调用broadcastIntentLocked()方法。</li>
+<li>在broadcastIntentLocked()内部, 会根据intent-filter查找出匹配的广播接收者并经过一系列的条件过滤. 最终会将满足条件的广播接收者添加到BroadcastQueue中, 接着BroadcastQueue就会将广播发送给相应广播接收者.</li>
+<li>BroadcastQueue#scheduleBroadcastsLocked()方法内并没有立即发送广播, 而是发送了一个BROADCAST_INTENT_MSG类型的消息, BroadcastQueue收到消息后会调用processNextBroadcast()方法。</li>
+<li>无序广播存储在mParallelBroadcasts中, 系统会遍历这个集合并将其中的广播发送给他们所有的接收者, 具体的发送过程是通过deliverToRegisteredReceiverLocked()方法实现. deliverToRegisteredReceiverLocked()负责将一个广播发送给一个特定的接收者, 它的内部调用了performReceiverLocked方法来完成具体发送过程.</li>
+<li>performReceiverLocked()方法调用的ApplicationThread#scheduleRegisteredReceiver()实现比较简单, 它通过InnerReceiver来实现广播的接收</li>
+<li>scheduleRegisteredReceiver()方法中，receiver.performReceive()中的receiver对应着IIntentReceiver类型的接口. 而具体的实现就是ReceiverDispatcher$InnerReceiver. 这两个嵌套的内部类是所属在LoadedApk中的。</li>
+<li>又调用了LoadedApk$ReceiverDispatcher#performReceive()的方法.在performReceiver()这个方法中, 会创建一个Args对象并通过mActivityThread的post方法执行args中的逻辑. 而这些类的本质关系就是:<ul>
+<li>Args: 实现类Runnable</li>
+<li>mActivityThread: 是一个Handler, 就是ActivityThread中的mH. mH就是ActivityThread$H. 这个内部类H以前说过.</li>
+</ul>
+</li>
+<li>实现Runnable接口的Args中BroadcastReceiver#onReceive()方法被执行了, 也就是说应用已经接收到了广播, 同时onReceive()方法是在广播接收者的主线程中被调用的.</li>
+</ol>
+<p>android 3.1开始就增添了两个标记为. 分别是FLAG_INCLUDE_STOPPED_PACKAGES, FLAG_EXCLUDE_STOPPED_PACKAGES. 用来控制广播是否要对处于停止的应用起作用.</p>
+<ul>
+<li>FLAG_INCLUDE_STOPPED_PACKAGES: 包含停止应用, 广播会发送给已停止的应用.</li>
+<li>FLAG_EXCLUDE_STOPPED_PACKAGES: 不包含已停止应用, 广播不会发送给已停止的应用</li>
+</ul>
+<p>在android 3.1开始, 系统就为所有广播默认添加了FLAG_EXCLUDE_STOPPED_PACKAGES标识。 当这两个标记共存的时候以FLAG_INCLUDE_STOPPED_PACKAGES(非默认项为主).</p>
+<p>应用处于停止分为两种</p>
+<ul>
+<li>应用安装后未运行</li>
+<li>被手动或者其他应用强停</li>
+</ul>
+<p>开机广播同样受到了这个标志位的影响. 从Android 3.1开始处于停止状态的应用同样无法接受到开机广播, 而在android 3.1之前处于停止的状态也是可以接收到开机广播的.</p>
+
+        </div>
+        <footer class="article-footer">
+            
+    <div class="jiathis_style">
+    <span class="jiathis_txt">分享到：</span>
+    <a class="jiathis_button_qzone">QQ空间</a>
+    <a class="jiathis_button_tsina">新浪微博</a>
+    <a class="jiathis_button_tqq">腾讯微博</a>
+    <a class="jiathis_button_weixin">微信</a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+    <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<style>
+    .jiathis_style div:first-child:not(.jiadiv_01) {
+        width: auto !important;
+        border: none !important;
+    }
+    .jiathis_style .jiadiv_01 {
+        margin: 10px 0;
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .jiathis_style .jiadiv_01 div:first-child {
+        display: none;
+    }
+    .jiathis_style .jiadiv_02 {
+        padding: 7px 0 !important;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle {
+        width: 85px;
+        border: none;
+        height: auto;
+        margin: 3px 10px;
+        padding: 6px 10px;
+        border-radius: 4px;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:hover {
+        border: none;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:nth-child(even) {
+        margin-left: 0;
+    }
+    .jiathis_style .jtico:hover {
+        opacity: 1;
+    }
+    .jiathis_style .ckepopBottom,
+    .jiathis_style .centerBottom {
+        width: auto !important;
+        padding: 5px;
+        background: #f7f7f7;
+    }
+</style>
+
+
+
+
+        </footer>
+    </div>
+</article>
+<!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zMjA1Ni84NjIw">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/xuer80" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2018/05/18/BroadcastReceiver广播基础/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">BroadcastReceiver广播基础</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="no-thumbnail">
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Android，Android应用层，Android四大组件/">Android，Android应用层，Android四大组件</a></p>
+                            <p class="item-title"><a href="/2018/05/19/BroadcastReceiver的工作过程/" class="title">BroadcastReceiver的工作过程</a></p>
+                            <p class="item-date"><time datetime="2018-05-19T02:00:08.000Z" itemprop="datePublished">2018-05-19</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Android/">Android</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/Android/Android应用层/">Android应用层</a></p>
+                            <p class="item-title"><a href="/2018/05/18/BroadcastReceiver广播基础/" class="title">BroadcastReceiver广播基础</a></p>
+                            <p class="item-date"><time datetime="2018-05-18T03:19:19.000Z" itemprop="datePublished">2018-05-18</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Android/">Android</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/Android/Android应用层/">Android应用层</a></p>
+                            <p class="item-title"><a href="/2018/05/17/Service工作过程/" class="title">Service工作过程</a></p>
+                            <p class="item-date"><time datetime="2018-05-17T12:27:54.000Z" itemprop="datePublished">2018-05-17</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Android/">Android</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/Android/Android应用层/">Android应用层</a></p>
+                            <p class="item-title"><a href="/2018/05/17/Service概述/" class="title">Service概述</a></p>
+                            <p class="item-date"><time datetime="2018-05-17T09:46:29.000Z" itemprop="datePublished">2018-05-17</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Android/">Android</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/Android/Android应用层/">Android应用层</a></p>
+                            <p class="item-title"><a href="/2018/05/08/Activity启动过程详述/" class="title">Activity启动过程详述</a></p>
+                            <p class="item-date"><time datetime="2018-05-08T12:19:54.000Z" itemprop="datePublished">2018-05-08</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">10</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/Android应用层/">Android应用层</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/Android应用层/Android四大组件/">Android四大组件</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/Android应用层/Android架构/">Android架构</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/Android框架层/">Android框架层</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/Android框架层/Android系统架构/">Android系统架构</a><span class="category-list-count">1</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android，Android应用层，Android四大组件/">Android，Android应用层，Android四大组件</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/屠龙技/">屠龙技</a><span class="category-list-count">27</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/屠龙技/数据结构与算法/">数据结构与算法</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/屠龙技/数据结构与算法/数据结构/">数据结构</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/屠龙技/数据结构与算法/算法/">算法</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/屠龙技/设计模式/">设计模式</a><span class="category-list-count">25</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发工具/">开发工具</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/开发工具/AndroidStudio/">AndroidStudio</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发工具/Git/">Git</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/操作系统/">操作系统</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/操作系统/Linux/">Linux</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/操作系统/Linux/linux基础/">linux基础</a><span class="category-list-count">2</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/散文/">散文</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/">编程语言</a><span class="category-list-count">10</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/C/">C</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/C/C-Primer-Plus/">C Primer Plus</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/Java/">Java</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/Kotlin/">Kotlin</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/Kotlin/kotlin基础/">kotlin基础</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/Kotlin/认识Kotlin/">认识Kotlin</a><span class="category-list-count">3</span></li></ul></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">13</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/AndroidStudio/" style="font-size: 14px;">AndroidStudio</a> <a href="/tags/Android架构/" style="font-size: 12px;">Android架构</a> <a href="/tags/C/" style="font-size: 14px;">C</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Java/" style="font-size: 14px;">Java</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/kotlin/" style="font-size: 16px;">kotlin</a> <a href="/tags/linux/" style="font-size: 12px;">linux</a> <a href="/tags/四大组件/" style="font-size: 18px;">四大组件</a> <a href="/tags/散文/" style="font-size: 12px;">散文</a> <a href="/tags/数据结构/" style="font-size: 12px;">数据结构</a> <a href="/tags/设计模式/" style="font-size: 20px;">设计模式</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 xuer80</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'http://xuer80.com/2018/05/19/BroadcastReceiver的工作过程/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

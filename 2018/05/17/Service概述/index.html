@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>Service概述 | Xuer80</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="四大组件" />
+    
+    <meta name="description" content="一、Service介绍 ​    Service(服务)是一个专门在后台处理耗时任务的Android组件，适用于无需和用户交互而长期运行的任务。服务默认在主线程(UI线程)中执行，这时不要在Service中执行耗时操作，除非在服务中开启子线程执行耗时操作。 ​    Service运行不依赖于任何用户界面Activity，即使程序切换到后台或其他应用，仍然能保持运行，这也是Service的使用场">
+<meta name="keywords" content="四大组件">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Service概述">
+<meta property="og:url" content="http://xuer80.com/2018/05/17/Service概述/index.html">
+<meta property="og:site_name" content="Xuer80">
+<meta property="og:description" content="一、Service介绍 ​    Service(服务)是一个专门在后台处理耗时任务的Android组件，适用于无需和用户交互而长期运行的任务。服务默认在主线程(UI线程)中执行，这时不要在Service中执行耗时操作，除非在服务中开启子线程执行耗时操作。 ​    Service运行不依赖于任何用户界面Activity，即使程序切换到后台或其他应用，仍然能保持运行，这也是Service的使用场">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://p05pz65vj.bkt.clouddn.com/Service%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png">
+<meta property="og:updated_time" content="2018-05-17T12:24:07.181Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Service概述">
+<meta name="twitter:description" content="一、Service介绍 ​    Service(服务)是一个专门在后台处理耗时任务的Android组件，适用于无需和用户交互而长期运行的任务。服务默认在主线程(UI线程)中执行，这时不要在Service中执行耗时操作，除非在服务中开启子线程执行耗时操作。 ​    Service运行不依赖于任何用户界面Activity，即使程序切换到后台或其他应用，仍然能保持运行，这也是Service的使用场">
+<meta name="twitter:image" content="http://p05pz65vj.bkt.clouddn.com/Service%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?5afbe52ffe1cab6bf0db3773c7af2e11";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+    
+
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">大道无为</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Android/">Android</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Android/Android应用层/">Android应用层</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Android/Android框架层/">Android框架层</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Android，Android应用层，Android四大组件/">Android，Android应用层，Android四大组件</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/屠龙技/">屠龙技</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/屠龙技/数据结构与算法/">数据结构与算法</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/屠龙技/设计模式/">设计模式</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发工具/">开发工具</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发工具/AndroidStudio/">AndroidStudio</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发工具/Git/">Git</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/操作系统/">操作系统</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/操作系统/Linux/">Linux</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/散文/">散文</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/编程语言/">编程语言</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/编程语言/C/">C</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/编程语言/Java/">Java</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/编程语言/Kotlin/">Kotlin</a></li></ul></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">关于</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/booklist/index.html">书单</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><input type="hidden" name="sitesearch" value="http://xuer80.com"></form>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/Android/">Android</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/Android/Android应用层/">Android应用层</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/Android/Android应用层/Android四大组件/">Android四大组件</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-Service概述" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        Service概述
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2018/05/17/Service概述/" class="article-date">
+            <time datetime="2018-05-17T09:46:29.000Z" itemprop="datePublished">2018-05-17</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/四大组件/">四大组件</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <p> 一、Service介绍</p>
+<p>​    Service(服务)是一个专门在后台处理耗时任务的Android组件，适用于无需和用户交互而长期运行的任务。服务默认在主线程(<strong>UI线程</strong>)中执行，这时不要在Service中执行耗时操作，除非在服务中开启子线程执行耗时操作。</p>
+<p>​    Service运行不依赖于任何用户界面Activity，即使程序切换到后台或其他应用，仍然能保持运行，这也是Service的使用场景。正是由于服务组件系统优先级较高，程序进入后台也不会轻易被回收，所以比如下载文件，更新软件等，都可以后台执行耗时操作。不过当某个应用程序的进程被杀掉时，所有依赖该进程的Service也会停止运行</p>
+<p>​    Activity调用Service的方法主要有三种，通过Binder、Message、AIDL。</p>
+<p>二、Service用法</p>
+<pre><code>创建一个类继承Service，服务必须在清单中注册才能生效。
+</code></pre><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyService</span> <span class="keyword">extends</span> <span class="title">Service</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Nullable</span></span><br><span class="line">    <span class="meta">@Override</span> <span class="comment">//抽象方法，必须由子类实现</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> IBinder <span class="title">onBind</span><span class="params">(Intent intent)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span> <span class="comment">//服务创建时调用</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span> <span class="comment">//服务每次启动时调用，如希望服务一旦启动就执行任务，可把相关逻辑写入此中</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">onStartCommand</span><span class="params">(Intent intent, <span class="keyword">int</span> flags, <span class="keyword">int</span> startId)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">super</span>.onStartCommand(intent, flags, startId);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span> <span class="comment">//服务销毁时调用，一般回收不在使用的资源</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDestroy</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onDestroy();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>启动和停止服务</strong></p>
+<p>​    Service的启动和停止是需要借助Intent来实现，startService(intent)和stopService(intent)都定义在Context类中，因为Activity继承Context类，所可以直接调用这两个方法。</p>
+<p>​    stopService是借助Activity来决定服务停止，MyService可以调用stopSelf()让服务停下来。</p>
+<p><strong>绑定服务–活动和服务的通信</strong></p>
+<p>​    上述服务的启动虽在Activity中，但启动服务后，Activity就与服务没什么关系了，二者之间没有交互，所以就用到了onBind()绑定的方式来启动服务。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">ServiceConnection connection = <span class="keyword">new</span> ServiceConnection() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onServiceConnected</span><span class="params">(ComponentName name, IBinder service)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onServiceDisconnected</span><span class="params">(ComponentName name)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>​    可以在Activity中创建ServiceConnection(绑定服务的桥梁)匿名类，里面重写onServiceConnected()和onServiceDisconnected()方法，这两个方法分别会在活动与服务成功绑定以及解除绑定时调用。然后把ServiceConnection对象和Intent传入bindService和unbindService方法实现服务的绑定和解绑。当bindService方法运行时，会调用Service的onCreate方法，并不会调用onStartCommand方法。解绑时onDestroy方法依然会执行，并自动销毁。</p>
+<p>​    值得注意的是，任何一个服务在整个应用程序范围都是通用的，一个服务可以和多个活动绑定，并获得其中的实例。</p>
+<p>三、服务的生命周期</p>
+<p>​    如下图，onCreate()、onStartCommand()、onBind()和onDestroy()等方法都是服务生命周期内可能回调的方法。每次项目中调用了startService，相应的服务便会启动并回调onStartCommand方法，但是服务只存在一个实例，所以只需要一次stopService或stopSelf，服务便会终止。</p>
+<p><img src="http://p05pz65vj.bkt.clouddn.com/Service%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png" alt=""></p>
+<p>​    也可以通过bindService获取服务的链接，并回调onBind方法，由于调用方可以获取onBind()方法返回的IBinder实例，这样就可以自由地和服务进行通信了。如果同时调用startService和bindService方法，必须同时调用stopService和unbindService方法，onDestory才会执行，因为一个服务一旦被启动或绑定就会一直处于运行状态。如果多个Activity都绑定了一个Service，那么必须全部解绑才可以销毁。</p>
+<p>​    startService可长期运行于后台，但无法与Activity通讯，Activity也不能调用服务中的方法；bindService由于是Context的方法，所以可以与Activity通讯，但无法长期运行于后台。</p>
+<p>四、Service的应用</p>
+<p><strong>前台Service</strong></p>
+<p>​    服务一般运行于后台，但当系统内存不足时，还是可能被回收。如果提高其优先级，避免这种情况，可使用前台服务。前台服务和普通服务的区别在于，其有一个正在运行的图标在系统状态栏显示，下拉状态栏便可看到更加详细的信息，类似通知的效果。如天气类应用，可在前台service中定时更新通知栏上的天气信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public void onCreate() &#123;</span><br><span class="line">      super.onCreate();</span><br><span class="line">      Intent intent = new Intent(this,MainActivity.class);</span><br><span class="line">      PendingIntent pi = PendingIntent.getActivity(this,0,intent,0);</span><br><span class="line">      Notification no  = new Notification.Builder(this).setContentTitle(&quot;这是title&quot;)</span><br><span class="line">              .setContentText(&quot;这是contentText&quot;).setWhen(System.currentTimeMillis()).setSmallIcon(R.mipmap.ic_launcher).setLargeIcon(BitmapFactory.decodeResource(getResources(),R.mipmap.ic_launcher)).setContentIntent(pi).build();</span><br><span class="line">      startForeground(1,no);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>​    只需要在MyService的onCreate方法中的代码，即可开启前台服务。</p>
+<p><strong>IntentService</strong></p>
+<p>​    一般服务代码默认运行在主线程中，直接在服务中处理耗时操作，容易ANR。如果在清单文件中指定的process属性，可让其在另一个进程中运行。也可以在服务的每个方法开启子线程处理耗时操作。但这种服务一旦运行就不会停止，必须调用stopService或stopSelf()方法。系统提供的IntentService(Service的子类)类可以在执行完毕自动停止，其将用户的请求执行在一个子线程中，这也很好的解决了异步的问题。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyIntentService</span> <span class="keyword">extends</span> <span class="title">IntentService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MyIntentService</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(<span class="string">"MyIntentService"</span>);<span class="comment">//调用父类的有参构造函数</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onHandleIntent</span><span class="params">(@Nullable Intent intent)</span> </span>&#123;</span><br><span class="line">	<span class="comment">//具体逻辑</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDestroy</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onDestroy();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>子类必须实现onHandleIntent方法，这里可以处理一些具体逻辑，这个方法已经是在子线程运行的了。</p>
+<p><strong>如何确保Service不会在系统内存不足时被回收</strong></p>
+<ul>
+<li>startForeground把service设为前台服务</li>
+<li>在destroy中发送广播，在广播中重启服务</li>
+<li>双service保护，互相验证是否存活，一旦被杀就重启</li>
+</ul>
+
+        </div>
+        <footer class="article-footer">
+            
+    <div class="jiathis_style">
+    <span class="jiathis_txt">分享到：</span>
+    <a class="jiathis_button_qzone">QQ空间</a>
+    <a class="jiathis_button_tsina">新浪微博</a>
+    <a class="jiathis_button_tqq">腾讯微博</a>
+    <a class="jiathis_button_weixin">微信</a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+    <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<style>
+    .jiathis_style div:first-child:not(.jiadiv_01) {
+        width: auto !important;
+        border: none !important;
+    }
+    .jiathis_style .jiadiv_01 {
+        margin: 10px 0;
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .jiathis_style .jiadiv_01 div:first-child {
+        display: none;
+    }
+    .jiathis_style .jiadiv_02 {
+        padding: 7px 0 !important;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle {
+        width: 85px;
+        border: none;
+        height: auto;
+        margin: 3px 10px;
+        padding: 6px 10px;
+        border-radius: 4px;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:hover {
+        border: none;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:nth-child(even) {
+        margin-left: 0;
+    }
+    .jiathis_style .jtico:hover {
+        opacity: 1;
+    }
+    .jiathis_style .ckepopBottom,
+    .jiathis_style .centerBottom {
+        width: auto !important;
+        padding: 5px;
+        background: #f7f7f7;
+    }
+</style>
+
+
+
+
+        </footer>
+    </div>
+</article>
+<!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zMjA1Ni84NjIw">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/xuer80" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2018/05/17/Service工作过程/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            Service工作过程
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2018/05/08/Activity启动过程详述/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">Activity启动过程详述</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="no-thumbnail">
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Android，Android应用层，Android四大组件/">Android，Android应用层，Android四大组件</a></p>
+                            <p class="item-title"><a href="/2018/05/19/BroadcastReceiver的工作过程/" class="title">BroadcastReceiver的工作过程</a></p>
+                            <p class="item-date"><time datetime="2018-05-19T02:00:08.000Z" itemprop="datePublished">2018-05-19</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Android/">Android</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/Android/Android应用层/">Android应用层</a></p>
+                            <p class="item-title"><a href="/2018/05/18/BroadcastReceiver广播基础/" class="title">BroadcastReceiver广播基础</a></p>
+                            <p class="item-date"><time datetime="2018-05-18T03:19:19.000Z" itemprop="datePublished">2018-05-18</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Android/">Android</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/Android/Android应用层/">Android应用层</a></p>
+                            <p class="item-title"><a href="/2018/05/17/Service工作过程/" class="title">Service工作过程</a></p>
+                            <p class="item-date"><time datetime="2018-05-17T12:27:54.000Z" itemprop="datePublished">2018-05-17</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Android/">Android</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/Android/Android应用层/">Android应用层</a></p>
+                            <p class="item-title"><a href="/2018/05/17/Service概述/" class="title">Service概述</a></p>
+                            <p class="item-date"><time datetime="2018-05-17T09:46:29.000Z" itemprop="datePublished">2018-05-17</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Android/">Android</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/Android/Android应用层/">Android应用层</a></p>
+                            <p class="item-title"><a href="/2018/05/08/Activity启动过程详述/" class="title">Activity启动过程详述</a></p>
+                            <p class="item-date"><time datetime="2018-05-08T12:19:54.000Z" itemprop="datePublished">2018-05-08</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">10</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/Android应用层/">Android应用层</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/Android应用层/Android四大组件/">Android四大组件</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/Android应用层/Android架构/">Android架构</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/Android框架层/">Android框架层</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/Android框架层/Android系统架构/">Android系统架构</a><span class="category-list-count">1</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android，Android应用层，Android四大组件/">Android，Android应用层，Android四大组件</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/屠龙技/">屠龙技</a><span class="category-list-count">27</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/屠龙技/数据结构与算法/">数据结构与算法</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/屠龙技/数据结构与算法/数据结构/">数据结构</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/屠龙技/数据结构与算法/算法/">算法</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/屠龙技/设计模式/">设计模式</a><span class="category-list-count">25</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发工具/">开发工具</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/开发工具/AndroidStudio/">AndroidStudio</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发工具/Git/">Git</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/操作系统/">操作系统</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/操作系统/Linux/">Linux</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/操作系统/Linux/linux基础/">linux基础</a><span class="category-list-count">2</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/散文/">散文</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/">编程语言</a><span class="category-list-count">10</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/C/">C</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/C/C-Primer-Plus/">C Primer Plus</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/Java/">Java</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/Kotlin/">Kotlin</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/Kotlin/kotlin基础/">kotlin基础</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/Kotlin/认识Kotlin/">认识Kotlin</a><span class="category-list-count">3</span></li></ul></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">13</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/AndroidStudio/" style="font-size: 14px;">AndroidStudio</a> <a href="/tags/Android架构/" style="font-size: 12px;">Android架构</a> <a href="/tags/C/" style="font-size: 14px;">C</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Java/" style="font-size: 14px;">Java</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/kotlin/" style="font-size: 16px;">kotlin</a> <a href="/tags/linux/" style="font-size: 12px;">linux</a> <a href="/tags/四大组件/" style="font-size: 18px;">四大组件</a> <a href="/tags/散文/" style="font-size: 12px;">散文</a> <a href="/tags/数据结构/" style="font-size: 12px;">数据结构</a> <a href="/tags/设计模式/" style="font-size: 20px;">设计模式</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 xuer80</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'http://xuer80.com/2018/05/17/Service概述/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

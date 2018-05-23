@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>Service工作过程 | Xuer80</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="四大组件" />
+    
+    <meta name="description" content="Service有两种状态  启动状态：执行后台计算  绑定状态：用于和其他组件交互 这两种状态可以共存，通过Context的startService和bindService可以启动和绑定一个Service。 一、Service启动过程     Service的启动从 ContextWrapper 的 startService 开始 在ContextWrapper中，大部分操作通过一个 Contex">
+<meta name="keywords" content="四大组件">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Service工作过程">
+<meta property="og:url" content="http://xuer80.com/2018/05/17/Service工作过程/index.html">
+<meta property="og:site_name" content="Xuer80">
+<meta property="og:description" content="Service有两种状态  启动状态：执行后台计算  绑定状态：用于和其他组件交互 这两种状态可以共存，通过Context的startService和bindService可以启动和绑定一个Service。 一、Service启动过程     Service的启动从 ContextWrapper 的 startService 开始 在ContextWrapper中，大部分操作通过一个 Contex">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://p05pz65vj.bkt.clouddn.com/Service%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B.png">
+<meta property="og:updated_time" content="2018-05-17T13:11:26.247Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Service工作过程">
+<meta name="twitter:description" content="Service有两种状态  启动状态：执行后台计算  绑定状态：用于和其他组件交互 这两种状态可以共存，通过Context的startService和bindService可以启动和绑定一个Service。 一、Service启动过程     Service的启动从 ContextWrapper 的 startService 开始 在ContextWrapper中，大部分操作通过一个 Contex">
+<meta name="twitter:image" content="http://p05pz65vj.bkt.clouddn.com/Service%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B.png">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?5afbe52ffe1cab6bf0db3773c7af2e11";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+    
+
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">大道无为</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Android/">Android</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Android/Android应用层/">Android应用层</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Android/Android框架层/">Android框架层</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Android，Android应用层，Android四大组件/">Android，Android应用层，Android四大组件</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/屠龙技/">屠龙技</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/屠龙技/数据结构与算法/">数据结构与算法</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/屠龙技/设计模式/">设计模式</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发工具/">开发工具</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发工具/AndroidStudio/">AndroidStudio</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发工具/Git/">Git</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/操作系统/">操作系统</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/操作系统/Linux/">Linux</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/散文/">散文</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/编程语言/">编程语言</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/编程语言/C/">C</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/编程语言/Java/">Java</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/编程语言/Kotlin/">Kotlin</a></li></ul></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">关于</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/booklist/index.html">书单</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><input type="hidden" name="sitesearch" value="http://xuer80.com"></form>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/Android/">Android</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/Android/Android应用层/">Android应用层</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/Android/Android应用层/Android四大组件/">Android四大组件</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-Service工作过程" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        Service工作过程
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2018/05/17/Service工作过程/" class="article-date">
+            <time datetime="2018-05-17T12:27:54.000Z" itemprop="datePublished">2018-05-17</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/四大组件/">四大组件</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <p>Service有两种状态</p>
+<ul>
+<li><p>启动状态：执行后台计算</p>
+</li>
+<li><p>绑定状态：用于和其他组件交互</p>
+<p>这两种状态可以共存，通过Context的startService和bindService可以启动和绑定一个Service。</p>
+<p>一、Service启动过程</p>
+</li>
+</ul>
+<p><img src="http://p05pz65vj.bkt.clouddn.com/Service%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B.png" alt=""></p>
+<ol>
+<li>Service的启动从 ContextWrapper 的 startService 开始</li>
+<li>在ContextWrapper中，大部分操作通过一个 ContextImpl 对象mBase实现</li>
+<li>在ContextImpl中， mBase.startService() 会调用 startServiceCommon 方法，而<br>startServiceCommon方法又会通过 ActivityManagerNative.getDefault() （ 实际上就是AMS） 这个对象来启动一个服务。</li>
+<li>AMS会通过一个 ActiveService 对象（ 辅助AMS进行Service管理的类，包括Service的启动,绑定和停止等） mServices来完成启动Service： mServices.startServiceLocked() 。</li>
+<li>在mServices.startServiceLocked()最后会调用 startServiceInnerLocked() 方法：将Service的信息包装成一个 ServiceRecord 对象，ServiceRecord一直贯穿着整个Service的启动过程。通过 bringUpServiceLocked() 方法来处理，bringUpServiceLocked()又调用了 realStartServiceLocked() 方法，这才真正地去启动一个Service了。</li>
+<li>realStartServiceLocked()方法的工作如下：<ol>
+<li>app.thread.scheduleCreateService() 来创建Service并调用其onCreate()生命周期方法</li>
+<li>sendServiceArgsLocked() 调用其他生命周期方法，如onStartCommand()</li>
+<li>app.thread对象是 IApplicationThread 类型，实际上就是一个Binder，具体实现是ApplicationThread继承ApplictionThreadNative</li>
+</ol>
+</li>
+<li>具体看Application对Service的启动过程app.thread.scheduleCreateService()：通过 sendMessage(H.CREATE_SERVICE , s) ，这个过程和Activity启动过程类似，同时通过发送消息给Handler H来完成的。</li>
+<li>H会接受这个CREATE_SERVICE消息并通过ActivityThread的 handleCreateService() 来完成Service的最终启动。</li>
+<li>handleCreateService()完成了以下工作：<ol>
+<li>通过ClassLoader创建Service对象</li>
+<li>创建Service内部的Context对象</li>
+<li>创建Application，并调用其onCreate()（ 只会有一次）</li>
+<li>通过 service.attach() 方法建立Service与context的联系（ 与Activity类似）</li>
+<li>调用service的 onCreate() 生命周期方法，至此，Service已经启动了</li>
+<li>将Service对象存储到ActivityThread的一个ArrayMap中</li>
+</ol>
+</li>
+</ol>
+<p>二、Service绑定过程</p>
+<p><img src="http://p05pz65vj.bkt.clouddn.com/Service%E7%BB%91%E5%AE%9A%E8%BF%87%E7%A8%8B.png" alt=""></p>
+<p>和service的启动过程类似的：</p>
+<ol>
+<li>Service的绑定是从 ContextWrapper 的 bindService 开始</li>
+<li>在ContextWrapper中，交给 ContextImpl 对象 mBase.bindService()</li>
+<li>最终会调用ContextImpl的 bindServiceCommon 方法，这个方法完成两件事：<ul>
+<li>将客户端的ServiceConnection转化成 ServiceDispatcher.InnerConnection 对象。ServiceDispatcher连接ServiceConnection和InnerConnection。这个过程通过 LoadedApk 的 getServiceDispatcher 方法来实现，将客户端的ServiceConnection和ServiceDispatcher的映射关系存在一个ArrayMap中。</li>
+<li>通过AMS来完成Service的具体绑定过程 ActivityManagerNative.getDefault().bindService()</li>
+</ul>
+</li>
+<li>AMS中，bindService()方法再调用 bindServiceLocked() ，bindServiceLocked()再调用 bringUpServiceLocked() ，bringUpServiceLocked()又会调用 realStartServiceLocked() 。</li>
+<li>AMS的realStartServiceLocked()会调用 ActiveServices 的requrestServiceBindingLocked() 方法，最终是调用了ServiceRecord对象r的 app.thread.scheduleBindService() 方法。</li>
+<li>ApplicationThread的一系列以schedule开头的方法，内部都通过Handler H来中转：scheduleBindService()内部也是通过 sendMessage(H.BIND_SERVICE , s)</li>
+<li>在H内部接收到BIND_SERVICE这类消息时就交给 ActivityThread 的handleBindService() 方法处理：<ol>
+<li>根据Servcie的token取出Service对象</li>
+<li>调用Service的 onBind() 方法，至此，Service就处于绑定状态了。</li>
+<li>这时客户端还不知道已经成功连接Service，需要调用客户端的binder对象来调用客户端的ServiceConnection中的 onServiceConnected() 方法，这个通过 ActivityManagerNative.getDefault().publishService() 进行。ActivityManagerNative.getDefault()就是AMS。</li>
+</ol>
+</li>
+<li>AMS的publishService()交给ActivityService对象 mServices 的 publishServiceLocked() 来处理，核心代码就一句话 c.conn.connected(r.name,service) 。对象c的类型是 ConnectionRecord ，c.conn就是ServiceDispatcher.InnerConnection对象，service就是Service的onBind方法返回的Binder对象。</li>
+<li>c.conn.connected(r.name,service)内部实现是交给了mActivityThread.post(new RunnConnection(name ,service,0)); 实现。ServiceDispatcher的mActivityThread是一个Handler，其实就是ActivityThread中的H。这样一来RunConnection就经由H的post方法从而运行在主线程中，因此客户端ServiceConnection中的方法是在主线程中被回调的。</li>
+<li>RunConnection的定义如下：<ul>
+<li>继承Runnable接口， run() 方法的实现也是简单调用了ServiceDispatcher的 doConnected 方法。</li>
+<li>由于ServiceDispatcher内部保存了客户端的ServiceConntion对象，可以很方便地调用ServiceConntion对象的 onServiceConnected 方法。</li>
+<li>客户端的onServiceConnected方法执行后，Service的绑定过程也就完成了。</li>
+<li>根据步骤8、9、10service绑定后通过ServiceDispatcher通知客户端的过程可以说明ServiceDispatcher起着连接ServiceConnection和InnerConnection的作用。 至于Service的停止和解除绑定的过程，系统流程都是类似的。</li>
+</ul>
+</li>
+</ol>
+
+        </div>
+        <footer class="article-footer">
+            
+    <div class="jiathis_style">
+    <span class="jiathis_txt">分享到：</span>
+    <a class="jiathis_button_qzone">QQ空间</a>
+    <a class="jiathis_button_tsina">新浪微博</a>
+    <a class="jiathis_button_tqq">腾讯微博</a>
+    <a class="jiathis_button_weixin">微信</a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+    <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<style>
+    .jiathis_style div:first-child:not(.jiadiv_01) {
+        width: auto !important;
+        border: none !important;
+    }
+    .jiathis_style .jiadiv_01 {
+        margin: 10px 0;
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .jiathis_style .jiadiv_01 div:first-child {
+        display: none;
+    }
+    .jiathis_style .jiadiv_02 {
+        padding: 7px 0 !important;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle {
+        width: 85px;
+        border: none;
+        height: auto;
+        margin: 3px 10px;
+        padding: 6px 10px;
+        border-radius: 4px;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:hover {
+        border: none;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:nth-child(even) {
+        margin-left: 0;
+    }
+    .jiathis_style .jtico:hover {
+        opacity: 1;
+    }
+    .jiathis_style .ckepopBottom,
+    .jiathis_style .centerBottom {
+        width: auto !important;
+        padding: 5px;
+        background: #f7f7f7;
+    }
+</style>
+
+
+
+
+        </footer>
+    </div>
+</article>
+<!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zMjA1Ni84NjIw">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/xuer80" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2018/05/18/BroadcastReceiver广播基础/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            BroadcastReceiver广播基础
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2018/05/17/Service概述/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">Service概述</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="no-thumbnail">
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Android，Android应用层，Android四大组件/">Android，Android应用层，Android四大组件</a></p>
+                            <p class="item-title"><a href="/2018/05/19/BroadcastReceiver的工作过程/" class="title">BroadcastReceiver的工作过程</a></p>
+                            <p class="item-date"><time datetime="2018-05-19T02:00:08.000Z" itemprop="datePublished">2018-05-19</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Android/">Android</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/Android/Android应用层/">Android应用层</a></p>
+                            <p class="item-title"><a href="/2018/05/18/BroadcastReceiver广播基础/" class="title">BroadcastReceiver广播基础</a></p>
+                            <p class="item-date"><time datetime="2018-05-18T03:19:19.000Z" itemprop="datePublished">2018-05-18</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Android/">Android</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/Android/Android应用层/">Android应用层</a></p>
+                            <p class="item-title"><a href="/2018/05/17/Service工作过程/" class="title">Service工作过程</a></p>
+                            <p class="item-date"><time datetime="2018-05-17T12:27:54.000Z" itemprop="datePublished">2018-05-17</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Android/">Android</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/Android/Android应用层/">Android应用层</a></p>
+                            <p class="item-title"><a href="/2018/05/17/Service概述/" class="title">Service概述</a></p>
+                            <p class="item-date"><time datetime="2018-05-17T09:46:29.000Z" itemprop="datePublished">2018-05-17</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Android/">Android</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/Android/Android应用层/">Android应用层</a></p>
+                            <p class="item-title"><a href="/2018/05/08/Activity启动过程详述/" class="title">Activity启动过程详述</a></p>
+                            <p class="item-date"><time datetime="2018-05-08T12:19:54.000Z" itemprop="datePublished">2018-05-08</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">10</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/Android应用层/">Android应用层</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/Android应用层/Android四大组件/">Android四大组件</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/Android应用层/Android架构/">Android架构</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/Android框架层/">Android框架层</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/Android框架层/Android系统架构/">Android系统架构</a><span class="category-list-count">1</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android，Android应用层，Android四大组件/">Android，Android应用层，Android四大组件</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/屠龙技/">屠龙技</a><span class="category-list-count">27</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/屠龙技/数据结构与算法/">数据结构与算法</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/屠龙技/数据结构与算法/数据结构/">数据结构</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/屠龙技/数据结构与算法/算法/">算法</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/屠龙技/设计模式/">设计模式</a><span class="category-list-count">25</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发工具/">开发工具</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/开发工具/AndroidStudio/">AndroidStudio</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发工具/Git/">Git</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/操作系统/">操作系统</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/操作系统/Linux/">Linux</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/操作系统/Linux/linux基础/">linux基础</a><span class="category-list-count">2</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/散文/">散文</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/">编程语言</a><span class="category-list-count">10</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/C/">C</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/C/C-Primer-Plus/">C Primer Plus</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/Java/">Java</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/Kotlin/">Kotlin</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/Kotlin/kotlin基础/">kotlin基础</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/Kotlin/认识Kotlin/">认识Kotlin</a><span class="category-list-count">3</span></li></ul></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">13</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/AndroidStudio/" style="font-size: 14px;">AndroidStudio</a> <a href="/tags/Android架构/" style="font-size: 12px;">Android架构</a> <a href="/tags/C/" style="font-size: 14px;">C</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Java/" style="font-size: 14px;">Java</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/kotlin/" style="font-size: 16px;">kotlin</a> <a href="/tags/linux/" style="font-size: 12px;">linux</a> <a href="/tags/四大组件/" style="font-size: 18px;">四大组件</a> <a href="/tags/散文/" style="font-size: 12px;">散文</a> <a href="/tags/数据结构/" style="font-size: 12px;">数据结构</a> <a href="/tags/设计模式/" style="font-size: 20px;">设计模式</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 xuer80</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'http://xuer80.com/2018/05/17/Service工作过程/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
